@@ -11,6 +11,11 @@
 8. Si le type est ternaire alors le résultat est le diagramme de la courbe d'univolatilité en plus du point azétropique du mélange des trois composants.
 
 
+# Use case
 
+![Use-cases](./img/use_case.png)
 
+# Architecture
+
+![Architecture](./img/architecture.jpg)
 
