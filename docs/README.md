@@ -1,14 +1,15 @@
 # User story
 
 
-1. En tant qu'utilisateur final, je souhaite bénéficier d'une interface graphique soignée et performante pour une expérience utilisateur agréable.
-2. En tant qu'utilisateur final, je dois être capable de choisir deux ou trois composants afin de définir le mélange pour lancer le calcul.
-3. En tant qu'utilisateur final, je peux également ajouter un composant absent de la liste suggérée, pour une personnalisation accrue de mon modèle.
-4. En tant qu'utilisateur, je dois être capable de donner ou modifier des valeurs des coefficients A et alpha des interactions binaire de chaque couple du triplet des composants choisis afin de pouvoir faire le calcul nrtl.
-5. En tant qu'utilisateur final, je veux spécifier des paramêtres du modèle afin de générer un diagramme thermodynamique modélisant l’interaction entre plusieurs constituants d’un mélange.
-6. En tant qu'utilisateur final, j'ai la possibilité de sélectionner le type de la composition, soit binaire ou ternaire, pour déterminer le modèle avec lequel le calcul sera effectué.
-7. Si le type est binaire alors le résultat obtenu est le point azétropique du mélange des deux composants.
-8. Si le type est ternaire alors le résultat est le diagramme de la courbe d'univolatilité en plus du point azétropique du mélange des trois composants.
+1. En tant qu'utilisateur, je souhaite bénéficier d'une interface graphique soignée et performante pour une expérience utilisateur agréable.
+2. En tant qu'utilisateur, je dois être capable de choisir trois composants parmis la liste afin de définir le mélange pour lancer le calcul.
+3. En tant qu'utilisateur final, je veux visualiser un diagramme thermodynamique modélisant l’interaction entre trois constituants d’un mélange apres la selection des composants.
+4. En tant qu'utilisateur, je peux également ajouter un composant absent de la liste predefinie pour le calcul de la pression avec le modele Antoine et qui sera disponible dans la session ouverte, pour une personnalisation accrue de mon modèle.
+5. En tant qu'utilisateur final, je peux également modifier/supprimer un composant. 
+6. En tant qu'utilisateur, je dois être capable de donner ou modifier des valeurs des coefficients des interactions binaire de chaque couple du triplet des composants choisis afin de pouvoir faire le calcul nrtl.
+7. En tant qu'utilisateur, je veux savoir si les points sur les bords du triangle sont azétropique ou non.
+8. En tant qu'utilisateur, je peux choisir la forme du diagramme soit triangle rectangle ou triangle equilaterale
+9. En tant qu'utilisateur,  je veux visualiser les temperatures des points sur le bord du triangle.
 
 
 # Use case
