@@ -11,5 +11,5 @@ The first time you work on this project, you should do the following
 ```
 python3 -m pip install -r requirements.txt
 python3 -m pip install -r requirements-dev.txt
-pre-commit install
+python3 -m pre-commit install
 ```
