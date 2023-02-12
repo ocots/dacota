@@ -1,0 +1,18 @@
+name: smith-dev
+
+channels:
+  - conda-forge
+  - control-toolbox
+
+dependencies:
+  - cmake             #= 3.14.*
+  - python            #= 3.7.*
+  - pytest            #= 5.4.*
+  - scipy             #= 1.4.*
+  - nutopy            #= 0.3.*
+  - matplotlib        #= 3.2.*
+  - pandoc
+  - python            #= 3.7.*
+  - notebook
+  - jupyter
+  - jupyterlab
