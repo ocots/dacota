@@ -18,7 +18,7 @@ class Component(models.Model):
     c = models.FloatField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} (a={self.a}, b={self.b}, c={self.c})"
 
 
 class BinaryRelation(models.Model):
