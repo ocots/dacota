@@ -1,3 +1,5 @@
+from container_runner import start_container
+
 from ..models import BinaryRelation
 
 
@@ -29,13 +31,52 @@ class TernaryMixture:
                 component2=component2, component1=component3
             ),
             BinaryRelation.objects.get(
-                component3=component3, component1=component1
+                component1=component1, component3=component3
             ),
         ]
 
     def diagram(self):
-        # Your code to calculate the diagram based on the 3 components and their binary relation
-        pass
+        c1, c2, c3, a, alpha = self.getParameterForDiagram()
+        sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
+        # Call start_container method to generate the curves
+        curve_list = start_container(sc1, sc2, sc3, sa, salpha)
+        return curve_list
+
+    def getParameterForDiagram(self):
+        c1 = [self.component1.a, self.component1.b, self.component1.c]
+        c2 = [self.component2.a, self.component2.b, self.component2.c]
+        c3 = [self.component3.a, self.component3.b, self.component3.c]
+        a = [[0, None, None], [None, 0, None], [None, None, 0]]
+        alpha = [[0, None, None], [None, 0, None], [None, None, 0]]
+
+        a[0][1] = self.binary_relations[0].a12
+        a[1][0] = self.binary_relations[0].a21
+        alpha[0][1] = alpha[1][0] = self.binary_relations[0].alpha
+
+        a[1][2] = self.binary_relations[1].a12
+        a[2][1] = self.binary_relations[1].a21
+        alpha[1][2] = alpha[2][1] = self.binary_relations[1].alpha
+
+        a[0][2] = self.binary_relations[2].a12
+        a[2][0] = self.binary_relations[2].a21
+        alpha[0][2] = alpha[2][0] = self.binary_relations[2].alpha
+
+        return c1, c2, c3, a, alpha
+
+    def formatParameters(self, c1, c2, c3, a, alpha):
+        c1Formatted = f"'{c1}'"
+        c2Formatted = f"'{c2}'"
+        c3Formatted = f"'{c3}'"
+        aFormatted = f"'{a}'"
+        alphaFormatted = f"'{alpha}'"
+
+        return (
+            c1Formatted,
+            c2Formatted,
+            c3Formatted,
+            aFormatted,
+            alphaFormatted,
+        )
 
     def __str__(self):
         return (

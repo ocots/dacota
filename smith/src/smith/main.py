@@ -19,15 +19,15 @@ class NumpyArrayEncoder(JSONEncoder):
 
 def main(argv):
     L = list(argv)
-    C1 = ast.literal_eval(L[0])
-    C2 = ast.literal_eval(L[1])
-    C3 = ast.literal_eval(L[2])
+    c1 = ast.literal_eval(L[0])
+    c2 = ast.literal_eval(L[1])
+    c3 = ast.literal_eval(L[2])
 
-    A = np.array(ast.literal_eval(L[3]))
+    a = np.array(ast.literal_eval(L[3]))
     alpha = np.array(ast.literal_eval(L[4]))
 
-    pressure = smith.ternary.pressure.antoine(C1, C2, C3)
-    activity = smith.ternary.activity.nrtl(A, alpha)
+    pressure = smith.ternary.pressure.antoine(c1, c2, c3)
+    activity = smith.ternary.activity.nrtl(a, alpha)
 
     curves_list = univol.diagram(
         pressure, activity, options=univol.Options(Display="off")
