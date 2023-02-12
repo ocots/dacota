@@ -1,12 +1,23 @@
-{% extends 'ternary_azeotrope/layout.html' %} {% block content %}
+{% extends 'ternary_azeotrope/layout.html' %}
 
+{% load static %}
+{% block title %}Home{%endblock%}
 
-<form action="{% url 'run' %}" method="post">
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'index.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'run' %}" method="post" class="container text-center">
     {% csrf_token %}
     <div id="componenetsSelection">
+
         <div class="component">
-            Component 1:
-            <select name="component1">
+            <select name="component1" class="form-select" >
+                <option selected>Choose component 1</option>
                 {% for component in componenents%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
@@ -14,18 +25,17 @@
         </div
 
         <div class="component">
-            Component 2:
-            <select name="component2">
+            <select name="component2" class="form-select">
+                <option selected>Choose component 2</option>
                 {% for component in componenents%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
             </select>
         </div>
 
-
         <div class="component">
-            Component 3:
-            <select name="component3">
+            <select name="component3" class="form-select">
+                <option selected>Choose component 3</option>
                 {% for component in componenents%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
@@ -34,6 +44,6 @@
     </div>
 
 
-    <input type="submit" value="Run">
+    <input type="submit" value="Run" class="btn btn-primary">
 </form>
 {% endblock%}
