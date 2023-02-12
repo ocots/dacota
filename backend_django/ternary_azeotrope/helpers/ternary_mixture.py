@@ -63,11 +63,11 @@ class TernaryMixture:
         return c1, c2, c3, a, alpha
 
     def formatParameters(self, c1, c2, c3, a, alpha):
-        c1Formatted = f"'{c1}'"
-        c2Formatted = f"'{c2}'"
-        c3Formatted = f"'{c3}'"
-        aFormatted = f"'{a}'"
-        alphaFormatted = f"'{alpha}'"
+        c1Formatted = str(c1)
+        c2Formatted = str(c2)
+        c3Formatted = str(c3)
+        aFormatted = str(a)
+        alphaFormatted = str(alpha)
 
         return (
             c1Formatted,
