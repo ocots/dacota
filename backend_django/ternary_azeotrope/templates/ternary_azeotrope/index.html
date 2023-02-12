@@ -1,0 +1,39 @@
+{% extends 'ternary_azeotrope/layout.html' %} {% block content %}
+
+
+<form action="{% url 'run' %}" method="post">
+    {% csrf_token %}
+    <div id="componenetsSelection">
+        <div class="component">
+            Component 1:
+            <select name="component1">
+                {% for component in componenents%}
+                <option value="{{component.id}}">{{component}}</option>
+                {% endfor %}
+            </select>
+        </div
+
+        <div class="component">
+            Component 2:
+            <select name="component2">
+                {% for component in componenents%}
+                <option value="{{component.id}}">{{component}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="component">
+            Component 3:
+            <select name="component3">
+                {% for component in componenents%}
+                <option value="{{component.id}}">{{component}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+
+    <input type="submit" value="Run">
+</form>
+{% endblock%}
