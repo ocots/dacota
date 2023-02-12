@@ -1,8 +1,9 @@
 import json
+import sys
 
 import docker
 
-from ...backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
+from backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
 
 
 def start_container(c1, c2, c3, a, alpha):

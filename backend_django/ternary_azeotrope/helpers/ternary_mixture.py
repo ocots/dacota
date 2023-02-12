@@ -27,10 +27,10 @@ class TernaryMixture:
                 component1=component1, component2=component2
             ),
             BinaryRelation.objects.get(
-                component2=component2, component1=component3
+                component1=component2, component2=component3
             ),
             BinaryRelation.objects.get(
-                component1=component1, component3=component3
+                component1=component1, component2=component3
             ),
         ]
 

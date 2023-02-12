@@ -1,8 +1,11 @@
+import sys
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from ternary_azeotrope.models import Component
 
+sys.path.append(".helpers")
 from .helpers.ternary_mixture import TernaryMixture
 
 # Create your views here.
@@ -37,9 +40,9 @@ def run(request):
             ):
                 raise ValueError
 
-            # mixture = TernaryMixture(component1, component2, component3)
-            # curves = mixture.diagram()
-            # print(curves)
+            mixture = TernaryMixture(component1, component2, component3)
+            curves = mixture.diagram()
+            print(curves)
 
             # line only for test, to comment after generating diagram view is done etc
             return HttpResponse(
