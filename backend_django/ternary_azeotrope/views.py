@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from ternary_azeotrope.models import Component
 
+from .helpers.ternary_mixture import TernaryMixture
+
 # Create your views here.
 
 
@@ -34,6 +36,10 @@ def run(request):
                 or component2 == component3
             ):
                 raise ValueError
+
+            # mixture = TernaryMixture(component1, component2, component3)
+            # curves = mixture.diagram()
+            # print(curves)
 
             # line only for test, to comment after generating diagram view is done etc
             return HttpResponse(

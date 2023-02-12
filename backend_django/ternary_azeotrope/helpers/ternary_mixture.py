@@ -1,6 +1,5 @@
-from container_runner import start_container
-
 from ..models import BinaryRelation
+from .container_runner import start_container
 
 
 class TernaryMixture:
