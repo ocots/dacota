@@ -21,6 +21,7 @@
         </div>
         {% endif %}
 
+
         <div class="component">
             <select name="component1" class="form-select" >
                 <option selected>Choose component 1</option>
@@ -47,9 +48,18 @@
                 {% endfor %}
             </select>
         </div>
+
+        {% if not valid_components%}
+        <div class="alert alert-danger col-md-3" role="alert">
+            The three componenents are not valid.
+        </div>
+        {% endif %}
+
     </div>
 
 
     <input type="submit" value="Run" class="btn btn-primary">
+
+
 </form>
 {% endblock%}

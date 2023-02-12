@@ -1,16 +1,21 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from ternary_azeotrope.models import Component
 
 # Create your views here.
 
 
-def index(request):
+def index(request, valid_inputs=True):
     # return HttpResponse("Home page")
     return render(
         request,
         "ternary_azeotrope/index.html",
-        {"components": Component.objects.all(), "valid_components": True},
+
+        {
+            "componenents": Component.objects.all(),
+            "valid_components": valid_inputs,
+        }
     )
 
 
@@ -37,12 +42,8 @@ def run(request):
             )
 
         except ValueError:
-            """return render(
-                request,
-                "ternary_azeotrope/index.html",
-                {"valid_components": False},
-            )"""
-
-            return HttpResponse(
-                "user didn't select 3 components or components are not distinct"
-            )
+            # return HttpResponseRedirect(reverse("index", args=(False,)))
+            return index(request, False)
+            # return HttpResponse(
+            #    "user didn't select 3 components or components are not distinct"
+            # )
