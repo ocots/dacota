@@ -124,3 +124,12 @@ STATIC_URL = "ternary_azeotrope/static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Define a class that contains the possible values for the container language
+class ContainerLanguage:
+    PYTHON = "python"
+    JULIA = "julia"
+
+
+CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
