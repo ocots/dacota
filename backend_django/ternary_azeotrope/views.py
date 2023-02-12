@@ -7,15 +7,13 @@ from ternary_azeotrope.models import Component
 
 
 def index(request, valid_inputs=True):
-    # return HttpResponse("Home page")
     return render(
         request,
         "ternary_azeotrope/index.html",
-
         {
             "componenents": Component.objects.all(),
             "valid_components": valid_inputs,
-        }
+        },
     )
 
 
@@ -42,8 +40,4 @@ def run(request):
             )
 
         except ValueError:
-            # return HttpResponseRedirect(reverse("index", args=(False,)))
             return index(request, False)
-            # return HttpResponse(
-            #    "user didn't select 3 components or components are not distinct"
-            # )

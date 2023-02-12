@@ -1,65 +1,47 @@
-{% extends 'ternary_azeotrope/layout.html' %}
+{% extends 'ternary_azeotrope/layout.html' %} {% load static %} {% block title%}
+Home {%endblock%} {% block head %}
 
-{% load static %}
-{% block title %}Home{%endblock%}
+<link rel="stylesheet" href="{% static 'index.css' %}" />
 
-{% block head %}
-
-<link rel="stylesheet" href="{% static 'index.css' %}">
-
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <form action="{% url 'run' %}" method="post" class="container text-center">
-    {% csrf_token %}
-    <div id="componenetsSelection">
-
-        {% if not valid_components%}
-        <div class="alert alert-danger" role="alert">
-            The three components are not valid.
-        </div>
-        {% endif %}
-
-
-        <div class="component">
-            <select name="component1" class="form-select" >
-                <option selected>Choose component 1</option>
-                {% for component in components%}
-                <option value="{{component.id}}">{{component}}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="component">
-            <select name="component2" class="form-select">
-                <option selected>Choose component 2</option>
-                {% for component in components%}
-                <option value="{{component.id}}">{{component}}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="component">
-            <select name="component3" class="form-select">
-                <option selected>Choose component 3</option>
-                {% for component in components%}
-                <option value="{{component.id}}">{{component}}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        {% if not valid_components%}
-        <div class="alert alert-danger col-md-3" role="alert">
-            The three componenents are not valid.
-        </div>
-        {% endif %}
-
+  {% csrf_token %}
+  <div id="componenetsSelection">
+    <div class="component">
+      <select name="component1" class="form-select">
+        <option selected>Choose component 1</option>
+        {% for component in components%}
+        <option value="{{component.id}}">{{component}}</option>
+        {% endfor %}
+      </select>
     </div>
 
+    <div class="component">
+      <select name="component2" class="form-select">
+        <option selected>Choose component 2</option>
+        {% for component in components%}
+        <option value="{{component.id}}">{{component}}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-    <input type="submit" value="Run" class="btn btn-primary">
+    <div class="component">
+      <select name="component3" class="form-select">
+        <option selected>Choose component 3</option>
+        {% for component in components%}
+        <option value="{{component.id}}">{{component}}</option>
+        {% endfor %}
+      </select>
+    </div>
 
+    {% if not valid_components%}
+    <div class="alert alert-danger col-md-3" role="alert">
+      The three componenents are not valid.
+    </div>
+    {% endif %}
+  </div>
 
+  <input type="submit" value="Run" class="btn btn-primary" />
 </form>
 {% endblock%}
