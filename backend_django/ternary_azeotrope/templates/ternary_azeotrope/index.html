@@ -1,0 +1,25 @@
+{% extends 'ternary_azeotrope/layout.html' %} {% block content %}
+
+<div id="componenetsSelection">
+  Component 1:
+  <select name="component1">
+    {% for component in componenents%}
+    <option value="{{component.id}}">{{component}}</option>
+    {% endfor %}
+  </select>
+
+  Component 2:
+  <select name="component2">
+    {% for component in componenents%}
+    <option value="{{component.id}}">{{component}}</option>
+    {% endfor %}
+  </select>
+
+  Component 3:
+  <select name="component3">
+    {% for component in componenents%}
+    <option value="{{component.id}}">{{component}}</option>
+    {% endfor %}
+  </select>
+</div>
+{% endblock%}
