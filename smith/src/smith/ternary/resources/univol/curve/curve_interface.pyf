@@ -1,0 +1,39 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module curve_interface ! in
+    interface  ! in :curve_interface
+        subroutine fcurve(x,beta,modelname_p,npars_p,pars_p,modelname_g,npars_g,pars_g,indi,indj,y) ! in :curve_interface:func.f90
+            use mod_curve
+            double precision dimension(2),intent(in) :: x
+            double precision intent(in) :: beta
+            character*20 intent(in) :: modelname_p
+            integer, optional,intent(in),check(len(pars_p)>=npars_p),depend(pars_p) :: npars_p=len(pars_p)
+            double precision dimension(npars_p),intent(in) :: pars_p
+            character*20 intent(in) :: modelname_g
+            integer, optional,intent(in),check(len(pars_g)>=npars_g),depend(pars_g) :: npars_g=len(pars_g)
+            double precision dimension(npars_g),intent(in) :: pars_g
+            integer intent(in) :: indi
+            integer intent(in) :: indj
+            double precision dimension(2),intent(out) :: y
+        end subroutine fcurve
+        subroutine fcurve_jac(x,beta,modelname_p,npars_p,pars_p,modelname_g,npars_g,pars_g,indi,indj,dfdx,dfdb) ! in :curve_interface:func.f90
+            use mod_curve
+            double precision dimension(2),intent(in) :: x
+            double precision intent(in) :: beta
+            character*20 intent(in) :: modelname_p
+            integer, optional,intent(in),check(len(pars_p)>=npars_p),depend(pars_p) :: npars_p=len(pars_p)
+            double precision dimension(npars_p),intent(in) :: pars_p
+            character*20 intent(in) :: modelname_g
+            integer, optional,intent(in),check(len(pars_g)>=npars_g),depend(pars_g) :: npars_g=len(pars_g)
+            double precision dimension(npars_g),intent(in) :: pars_g
+            integer intent(in) :: indi
+            integer intent(in) :: indj
+            double precision dimension(2,2),intent(out) :: dfdx
+            double precision dimension(2,1),intent(out) :: dfdb
+        end subroutine fcurve_jac
+    end interface
+end python module curve_interface
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
