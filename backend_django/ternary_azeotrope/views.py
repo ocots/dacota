@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from backend_django.ternary_azeotrope.models import Component
 
