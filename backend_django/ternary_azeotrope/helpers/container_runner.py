@@ -14,9 +14,9 @@ def start_container(c1, c2, c3, a, alpha):
     If the language is unknown, an Exception is raised.
     """
     if CONTAINER_LANGUAGE == ContainerLanguage.PYTHON:
-        start_python_container(c1, c2, c3, a, alpha)
+        return start_python_container(c1, c2, c3, a, alpha)
     elif CONTAINER_LANGUAGE == ContainerLanguage.JULIA:
-        start_julia_container(c1, c2, c3, a, alpha)
+        return start_julia_container(c1, c2, c3, a, alpha)
     else:
         raise Exception("Unknown container language")
 
@@ -38,7 +38,6 @@ def start_python_container(c1, c2, c3, a, alpha):
         stdout=True,
     )
     curve_list = json.loads(container.decode("utf-8"))
-
     return curve_list
 
 

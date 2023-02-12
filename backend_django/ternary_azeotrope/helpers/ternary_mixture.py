@@ -36,6 +36,7 @@ class TernaryMixture:
 
     def diagram(self):
         c1, c2, c3, a, alpha = self.getParameterForDiagram()
+        # sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         # Call start_container method to generate the curves
         curve_list = start_container(sc1, sc2, sc3, sa, salpha)
