@@ -7,6 +7,7 @@ from ternary_azeotrope.models import Component
 
 
 def index(request, valid_inputs=True):
+    print(Component.objects.all())
     return render(
         request,
         "ternary_azeotrope/index.html",
