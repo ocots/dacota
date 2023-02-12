@@ -15,19 +15,26 @@
     {% csrf_token %}
     <div id="componenetsSelection">
 
+        {% if not valid_components%}
+        <div class="alert alert-danger" role="alert">
+            The three components are not valid.
+        </div>
+        {% endif %}
+
+
         <div class="component">
             <select name="component1" class="form-select" >
                 <option selected>Choose component 1</option>
-                {% for component in componenents%}
+                {% for component in components%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
             </select>
-        </div
+        </div>
 
         <div class="component">
             <select name="component2" class="form-select">
                 <option selected>Choose component 2</option>
-                {% for component in componenents%}
+                {% for component in components%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
             </select>
@@ -36,7 +43,7 @@
         <div class="component">
             <select name="component3" class="form-select">
                 <option selected>Choose component 3</option>
-                {% for component in componenents%}
+                {% for component in components%}
                 <option value="{{component.id}}">{{component}}</option>
                 {% endfor %}
             </select>

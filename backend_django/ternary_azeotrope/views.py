@@ -11,10 +11,11 @@ def index(request, valid_inputs=True):
     return render(
         request,
         "ternary_azeotrope/index.html",
+
         {
             "componenents": Component.objects.all(),
             "valid_components": valid_inputs,
-        },
+        }
     )
 
 
