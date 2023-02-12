@@ -11,7 +11,7 @@ def index(request, valid_inputs=True):
         request,
         "ternary_azeotrope/index.html",
         {
-            "componenents": Component.objects.all(),
+            "components": Component.objects.all(),
             "valid_components": valid_inputs,
         },
     )
