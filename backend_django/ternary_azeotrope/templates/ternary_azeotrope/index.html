@@ -15,6 +15,12 @@
     {% csrf_token %}
     <div id="componenetsSelection">
 
+        {% if not valid_components%}
+        <div class="alert alert-danger" role="alert">
+            The three componenents are not valid.
+        </div>
+        {% endif %}
+
         <div class="component">
             <select name="component1" class="form-select" >
                 <option selected>Choose component 1</option>
