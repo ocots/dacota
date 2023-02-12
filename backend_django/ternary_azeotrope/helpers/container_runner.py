@@ -58,7 +58,7 @@ def check_image(image_name="smith_container"):
         client.images.get(image_name)
     except docker.errors.ImageNotFound:
         print(
-            'You have to build this image first. To do it, you have to go to the smith folder present in the repo (You will find a Dockerfile there), then run: \n\t [docker build -t "smith_container" .]'
+            'You have to build this image first. To do it, you have to go to the smith folder present in the repo (You will find a Dockerfile there), then run: \n\t [docker build -t "smith_container" .] \n This takes several minutes'
         )
     except docker.errors.APIError:
         print("Docker API error")

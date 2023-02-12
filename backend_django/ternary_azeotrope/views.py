@@ -10,7 +10,7 @@ def index(request):
     return render(
         request,
         "ternary_azeotrope/index.html",
-        {"componenents": Component.objects.all(), "valid_components": True},
+        {"components": Component.objects.all(), "valid_components": True},
     )
 
 
