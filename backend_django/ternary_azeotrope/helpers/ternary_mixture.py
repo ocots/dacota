@@ -1,6 +1,5 @@
-from container_runner import start_container
-
 from ..models import BinaryRelation
+from .container_runner import start_container
 
 
 class TernaryMixture:
@@ -39,6 +38,7 @@ class TernaryMixture:
 
     def diagram(self):
         c1, c2, c3, a, alpha = self.getParameterForDiagram()
+        # sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         # Call start_container method to generate the curves
         curve_list = start_container(sc1, sc2, sc3, sa, salpha)
@@ -66,11 +66,11 @@ class TernaryMixture:
         return c1, c2, c3, a, alpha
 
     def formatParameters(self, c1, c2, c3, a, alpha):
-        c1Formatted = f"'{c1}'"
-        c2Formatted = f"'{c2}'"
-        c3Formatted = f"'{c3}'"
-        aFormatted = f"'{a}'"
-        alphaFormatted = f"'{alpha}'"
+        c1Formatted = str(c1)
+        c2Formatted = str(c2)
+        c3Formatted = str(c3)
+        aFormatted = str(a)
+        alphaFormatted = str(alpha)
 
         return (
             c1Formatted,

@@ -2,10 +2,22 @@
 Home {%endblock%} {% block head %}
 
 <link rel="stylesheet" href="{% static 'index.css' %}" />
+<script
+  type="text/javascript"
+  src="{% static 'js/index.js'%}"
+  charset="utf-8"
+></script>
 
 {% endblock %} {% block content %}
 
-<form action="{% url 'run' %}" method="post" class="container text-center">
+<h1>Generate univolatility diagrams of ternary mixtures in Thermodynamic</h1>
+
+<form
+  action="{% url 'run' %}"
+  method="post"
+  class="container text-center"
+  id="components-selection"
+>
   {% csrf_token %}
   <div id="componenetsSelection">
     <div class="component">
@@ -42,6 +54,17 @@ Home {%endblock%} {% block head %}
     {% endif %}
   </div>
 
-  <input type="submit" value="Run" class="btn btn-primary" />
+  <input id="submit-btn" type="submit" value="Run" class="btn btn-primary" />
 </form>
-{% endblock%}
+
+<div class="d-flex justify-content-center" id="diagram-container">
+  {% if diagram %}
+  <img
+    src="data:image/png;base64, {{diagram|safe}}"
+    class="img-fluid"
+    alt="Responsive image"
+  />
+  {% else %}
+  <div id="spinner" class="spinner-border text-primary" role="status"></div>
+  {% endif %} {% endblock%}
+</div>
