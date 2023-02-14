@@ -8,19 +8,15 @@ class User:
 
     def __init__(
         self,
-        db_components: list[Component],
-        db_binaryRelations: list[BinaryRelation],
         selected=None,
     ):
         """Constructor of the User class
 
         Args:
-            db_components (list[Componenet]: a list of componenets already present in the database of the web app
-            db_binaryRelations (list[BinaryRelation]): a list of binary relations already present in the database of the web app
             selected (list[Component], optional): List of three component chosen by the user for diagram generation. Defaults to None.
         """
-        self.components = db_components
-        self.binaryRelations = db_binaryRelations
+        self.components = list(Component.objects.all())
+        self.binaryRelations = list(BinaryRelation.objects.all())
         self.components_selected = selected
 
     def add_component(self, name: str, a: float, b: float, c: float):
@@ -33,7 +29,7 @@ class User:
             c (float): value c of the component
         """
 
-        self.components.append(Component(name, a, b, c))
+        self.components.append(Component(name=name, a=a, b=b, c=c))
 
     def add_binaryRelation(
         self,
@@ -58,7 +54,7 @@ class User:
         )
 
     def edit_component(
-        self, name: str, a: float | None, b: float | None, c: float | None
+        self, name: str, a: float = None, b: float = None, c: float = None
     ):
         for comp in self.components:
             if comp.name == name:
@@ -76,9 +72,9 @@ class User:
         self,
         name_component1: str,
         name_component2: str,
-        a12: float | None,
-        a21: float | None,
-        alpha: float | None,
+        a12: float = None,
+        a21: float = None,
+        alpha: float = None,
     ):
         """Edit one or multiple attribute of a relation which the name of its two components is given
 
