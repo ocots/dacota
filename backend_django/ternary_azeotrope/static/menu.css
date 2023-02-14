@@ -23,6 +23,27 @@
     font-size: 30px;
     cursor: pointer;
 }
+#menu-icons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
 p{
     color: rgb(174, 123, 27);
 }
+
+#menu-close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+  }
+  
+  #menu-close-icon i {
+    color: white !important;
+  }
+
+  
+  
