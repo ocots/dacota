@@ -13,3 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+var menuToggleIcon = document.getElementById("menu-icons");
+
+menuToggleIcon.addEventListener("click", function () {
+  if (menu.classList.contains("show")) {
+    menu.classList.remove("show");
+  }
+});
