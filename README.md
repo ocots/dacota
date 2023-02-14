@@ -3,6 +3,7 @@
 ## Prerequisites
 
 - Python 3.10
+- Docker installed in your system
 
 ## Installation
 <!-- https://www.architecture-performance.fr/ap_blog/some-pre-commit-git-hooks-for-python/ -->
