@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Test menu</title>
-	<link rel="stylesheet" href="{% static 'menu.css' %}">
-</head>
-<body>
+{% extends 'ternary_azeotrope/layout.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'menu.css' %}">
+<script src="{% static 'js/menu.js' %}"></script>
+{%endblock%}
+
+
+{% block content %}
+
 	<div id="menu-icon">&#9776;</div>
 	<nav id="menu">
 		<ul>
@@ -16,6 +19,5 @@
 		<h1>Menu Test</h1>
 		<p>click in the screen to hide the menu</p>
 	</div>
-	<script type="text/javascript" src="{% static 'js/menu.js'%}" charset="utf-8"></script>
-</body>
-</html>
+
+{% endblock %}
