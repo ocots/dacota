@@ -12,8 +12,11 @@ from .helpers.ternary_mixture import TernaryMixture
 
 
 # Create your views here.
-def index(request, valid_inputs=True, diagram=None):
-    print(Component.objects.all())
+def index(
+    request,
+    valid_inputs=True,
+    diagram=None,
+):
     return render(
         request,
         "ternary_azeotrope/index.html",
@@ -23,6 +26,7 @@ def index(request, valid_inputs=True, diagram=None):
             "diagram": diagram,
         },
     )
+    # return render(request, "ternary_azeotrope/table.html")
 
 
 def run(request):
