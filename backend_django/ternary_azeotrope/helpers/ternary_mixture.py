@@ -18,20 +18,22 @@ class TernaryMixture:
         diagram(self) : Computes and returns the ternary diagram for the mixture.
     """
 
-    def __init__(self, component1, component2, component3):
+    def __init__(
+        self,
+        component1,
+        component2,
+        component3,
+        binary_relations1,
+        binary_relations2,
+        binary_relations3,
+    ):
         self.component1 = component1
         self.component2 = component2
         self.component3 = component3
         self.binary_relations = [
-            BinaryRelation.objects.get(
-                component1=component1, component2=component2
-            ),
-            BinaryRelation.objects.get(
-                component1=component2, component2=component3
-            ),
-            BinaryRelation.objects.get(
-                component1=component1, component2=component3
-            ),
+            binary_relations1,
+            binary_relations2,
+            binary_relations3,
         ]
 
     def diagram(self):
