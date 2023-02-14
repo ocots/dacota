@@ -1,8 +1,9 @@
 import json
+import sys
 
 import docker
 
-from ...backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
+from backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
 
 
 def start_container(c1, c2, c3, a, alpha):
@@ -13,9 +14,9 @@ def start_container(c1, c2, c3, a, alpha):
     If the language is unknown, an Exception is raised.
     """
     if CONTAINER_LANGUAGE == ContainerLanguage.PYTHON:
-        start_python_container(c1, c2, c3, a, alpha)
+        return start_python_container(c1, c2, c3, a, alpha)
     elif CONTAINER_LANGUAGE == ContainerLanguage.JULIA:
-        start_julia_container(c1, c2, c3, a, alpha)
+        return start_julia_container(c1, c2, c3, a, alpha)
     else:
         raise Exception("Unknown container language")
 
@@ -37,7 +38,6 @@ def start_python_container(c1, c2, c3, a, alpha):
         stdout=True,
     )
     curve_list = json.loads(container.decode("utf-8"))
-
     return curve_list
 
 
@@ -58,7 +58,7 @@ def check_image(image_name="smith_container"):
         client.images.get(image_name)
     except docker.errors.ImageNotFound:
         print(
-            'You have to build this image first. To do it, you have to go to the smith folder present in the repo (You will find a Dockerfile there), then run: \n\t [docker build -t "smith_container" .]'
+            'You have to build this image first. To do it, you have to go to the smith folder present in the repo (You will find a Dockerfile there), then run: \n\t [docker build -t "smith_container" .] \n This takes several minutes'
         )
     except docker.errors.APIError:
         print("Docker API error")

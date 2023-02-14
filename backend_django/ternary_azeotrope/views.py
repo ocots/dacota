@@ -1,16 +1,27 @@
-from django.http import HttpResponse
+import sys
+
+sys.path.append(".helpers")
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from ternary_azeotrope.models import Component
 
+from .helpers.plotter import get_plot
+from .helpers.ternary_mixture import TernaryMixture
+
+
 # Create your views here.
-
-
-def index(request):
-    # return HttpResponse("Home page")
+def index(request, valid_inputs=True, diagram=None):
+    print(Component.objects.all())
     return render(
         request,
         "ternary_azeotrope/index.html",
-        {"componenents": Component.objects.all(), "valid_components": True},
+        {
+            "components": Component.objects.all(),
+            "valid_components": valid_inputs,
+            "diagram": diagram,
+        },
     )
 
 
@@ -31,18 +42,11 @@ def run(request):
             ):
                 raise ValueError
 
-            # line only for test, to comment after generating diagram view is done etc
-            return HttpResponse(
-                f"Chosen components : {component1},  {component2},  {component3}"
-            )
+            mixture = TernaryMixture(component1, component2, component3)
+            curves = mixture.diagram()
+            diag = get_plot(curves, mixture)
+
+            return index(request, diagram=diag)
 
         except ValueError:
-            """return render(
-                request,
-                "ternary_azeotrope/index.html",
-                {"valid_components": False},
-            )"""
-
-            return HttpResponse(
-                "user didn't select 3 components or components are not distinct"
-            )
+            return index(request, valid_inputs=False)

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -49,6 +50,11 @@ class BinaryRelation(models.Model):
                 fields=["component1", "component2"], name="unique_components"
             )
         ]
+
+    def clean(self):
+        if self.component1 == self.component2:
+            raise ValidationError("The components must be different.")
+        super(BinaryRelation, self).clean()
 
     def __str__(self):
         return self.component1.name + " - " + self.component2.name
