@@ -1,20 +1,19 @@
 name: smith-dev
 
 channels:
-  #- defaults
-  #- conda-forge
-  #- control-toolbox
+  - conda-forge
+  - control-toolbox
 
 dependencies:
-  - cmake # = 3.14.*
+  - cmake            # = 3.14.*
   - gfortran_linux-64
-  - gcc_linux-64 # = 7.3.0
+  - gcc_linux-64     # = 7.3.0
   - notebook
   - jupyter
   - jupyterlab
-  - python #= 3.7.*
-  - pytest #= 5.4.*
-  - matplotlib #= 3.2.*
-  - scipy # = 1.4.*
-  #- nutopy # = 0.3.*
+  - python            #= 3.7.*
+  - pytest            #= 5.4.*
+  - matplotlib        #= 3.2.*
+  - scipy            # = 1.4.*
+  - nutopy           # = 0.3.*
   - pandoc

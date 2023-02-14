@@ -150,13 +150,13 @@ class TestModels(TestCase):
             alpha=0.2,
         )
 
-    def testComponent(self):
+    def test_component(self):
         self.assertEqual(self.acetone.name, "acetone")
         self.assertEqual(self.acetone.a, 7.11714)
         self.assertEqual(self.acetone.b, 1210.595)
         self.assertEqual(self.acetone.c, 229.664)
 
-    def testBinaryRelation(self):
+    def test_binary_relation(self):
         self.assertEqual(self.acetone_chloroforme.component1.name, "acetone")
         self.assertEqual(
             self.acetone_chloroforme.component2.name, "chloroforme"
@@ -165,7 +165,7 @@ class TestModels(TestCase):
         self.assertEqual(self.acetone_chloroforme.a21, 228.457)
         self.assertEqual(self.acetone_chloroforme.alpha, 0.3043)
 
-    def testBinaryRelationConstraintUnique(self):
+    def test_binary_relation_constraint_unique(self):
         with self.assertRaises(IntegrityError):
             BinaryRelation.objects.create(
                 component1=self.acetone,
@@ -175,7 +175,7 @@ class TestModels(TestCase):
                 alpha=0.3043,
             )
 
-    def testBinaryRelationPossibleWithInversedComponents(self):
+    def test_binary_relation_possible_with_inversed_components(self):
         BinaryRelation.objects.create(
             component1=self.chloroforme,
             component2=self.acetone,
@@ -184,7 +184,7 @@ class TestModels(TestCase):
             alpha=0.3043,
         )
 
-    def testBinaryRelationWithSameComponent(self):
+    def test_binary_relation_with_same_component(self):
         binary_relation = BinaryRelation(
             component1=self.acetone,
             component2=self.acetone,
@@ -196,7 +196,7 @@ class TestModels(TestCase):
             binary_relation.full_clean()
             binary_relation.save()
 
-    def testBinaryRelationWithSameComponent2(self):
+    def test_binary_relation_with_same_component2(self):
         binary_relation = BinaryRelation(
             component1=self.acetone,
             component2=self.acetone,
@@ -206,23 +206,23 @@ class TestModels(TestCase):
         )
         self.assertRaises(ValidationError, binary_relation.clean)
 
-    def testComponentStr(self):
+    def test_component_str(self):
         self.assertEqual(
             str(self.acetone), "acetone (a=7.11714, b=1210.595, c=229.664)"
         )
 
-    def testBinaryRelationStr(self):
+    def test_binary_relation_str(self):
         self.assertEqual(
             str(self.acetone_chloroforme),
             "acetone - chloroforme",
         )
 
-    def testDeleteComponent(self):
+    def test_delete_component(self):
         self.assertIn(self.acetone, Component.objects.all())
         self.acetone.delete()
         self.assertNotIn(self.acetone, Component.objects.all())
 
-    def testDeleteBinaryRelation(self):
+    def test_delete_binary_relation(self):
         self.assertIn(self.acetone_chloroforme, BinaryRelation.objects.all())
         self.acetone_chloroforme.delete()
         self.assertEqual(
@@ -237,7 +237,7 @@ class TestModels(TestCase):
         self.assertIn(self.acetone, Component.objects.all())
         self.assertIn(self.chloroforme, Component.objects.all())
 
-    def testDeleteComponentWithBinaryRelation(self):
+    def test_delete_component_with_binary_relation(self):
         self.assertIn(self.acetone, Component.objects.all())
         self.assertIn(self.acetone_chloroforme, BinaryRelation.objects.all())
         self.acetone.delete()
@@ -252,10 +252,12 @@ class TestModels(TestCase):
             self.acetone_chloroforme, BinaryRelation.objects.all()
         )
 
-    def testIsComponentCaseSensitive(self):
+    def test_is_component_case_sensitive(self):
         self.assertEqual(Component.objects.filter(name="Acetone").count(), 0)
 
-    def testCreateBinaryRelationPossibleWithDifferentCaseComponent(self):
+    def test_create_binary_relation_possible_with_different_case_component(
+        self,
+    ):
         Acetone = Component.objects.create(
             name="Acetone", a=98.11714, b=1.595, c=2.664
         )
@@ -275,7 +277,7 @@ class TestModels(TestCase):
             alpha=0.3043,
         )
 
-    def testBinaryRelationPossibleWithComponentWithSameNameButDifferentValues(
+    def test_binary_relation_possible_with_component_with_same_name_but_different_values(
         self,
     ):
         acetone = Component.objects.create(
