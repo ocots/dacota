@@ -50,7 +50,13 @@ class User:
         """
 
         self.binaryRelations.append(
-            BinaryRelation(component1, component2, a12, a21, alpha)
+            BinaryRelation(
+                component1=component1,
+                component2=component2,
+                a12=a12,
+                a21=a21,
+                alpha=alpha,
+            )
         )
 
     def edit_component(
