@@ -28,4 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
       menu.classList.remove("show");
     }
   });
+
+  var menuToggleIcon = document.getElementById("menu-icons");
+
+  menuToggleIcon.addEventListener("click", function () {
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
+    }
+  });
 });
