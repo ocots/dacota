@@ -7,8 +7,10 @@ Home {%endblock%} {% block head %}
   src="{% static 'js/index.js'%}"
   charset="utf-8"
 ></script>
+<link rel="stylesheet" type="text/css" href="{% static 'menu.css' %}">
+    <script type="text/javascript" src="{% static 'js/menu.js' %}" charset="utf-8"></script>
 
-{% endblock %} {% block content %}
+{% endblock %} {% block content %} 
 
 <h1>Generate univolatility diagrams of ternary mixtures in Thermodynamic</h1>
 
@@ -49,7 +51,7 @@ Home {%endblock%} {% block head %}
 
     {% if not valid_components%}
     <div class="alert alert-danger col-md-3" role="alert">
-      The three componenents are not valid.
+      The three components are not valid.
     </div>
     {% endif %}
   </div>

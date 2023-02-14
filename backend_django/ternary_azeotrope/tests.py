@@ -11,6 +11,8 @@ class UserTestCase(TestCase):
 
     def test(self):
         user = User()
+
+        # for now I only check on the terminal ,asset will be added later
         user.components = [Component(name="Acetone", a=0, b=0, c=0)]
         print("components", user.components)
         user.edit_component("Acetone", a=4)
