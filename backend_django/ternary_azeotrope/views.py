@@ -17,7 +17,7 @@ def index(
     valid_inputs=True,
     diagram=None,
 ):
-    """return render(
+    return render(
         request,
         "ternary_azeotrope/index.html",
         {
@@ -25,8 +25,8 @@ def index(
             "valid_components": valid_inputs,
             "diagram": diagram,
         },
-    )"""
-    return render(request, "ternary_azeotrope/menu.html")
+    )
+    # return render(request, "ternary_azeotrope/menu.html")
 
 
 def run(request):
@@ -48,9 +48,9 @@ def run(request):
 
             mixture = TernaryMixture(component1, component2, component3)
             curves = mixture.diagram()
-            # diag = get_plot(curves, mixture)
+            diag = get_plot(curves, mixture)
 
-            return index(request, diagram=None)
+            return index(request, diagram=diag)
 
         except ValueError:
             return index(request, valid_inputs=False)
