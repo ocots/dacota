@@ -8,11 +8,11 @@ h1 {
 .component {
     margin-top: 20px;
     margin-bottom: 20px;
+    background-color: antiquewhite;
 }
-
 
 
 #spinner {
     margin-top: 30px;
-
+    display: none;
 }

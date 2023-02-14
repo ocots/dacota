@@ -1,20 +1,6 @@
-/*const comp_form =  document.getElementsByName("form");
-console.log(comp_form);
-
-comp_form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    document.getElementById("spinner").style.display = "block";
-    this.submit();
-});
-
-$('form').on('submit', function(){
-    console.log("submitted");
-});*/
-console.log("DEBUG");
-const submitButton = document.getElementById("submit-btn");
-console.log(submitButton);
-
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* SLIDING bar CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
   const content = document.getElementById("content");
@@ -28,4 +14,20 @@ document.addEventListener("DOMContentLoaded", function () {
       menu.classList.remove("show");
     }
   });
+
+  /* SPINNER CODE */
+  const form = document.getElementById("components-selection");
+  const spinner = document.getElementById("spinner");
+  spinner.style.display = "none";
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    spinner.style.display = "block";
+    this.submit();
+  });
+
+
+
+
+
+
 });

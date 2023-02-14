@@ -5,8 +5,9 @@ sys.path.append(".helpers")
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from ternary_azeotrope.models import Component
+from ternary_azeotrope.models import BinaryRelation, Component
 
+from .helpers import utils
 from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
 
@@ -46,7 +47,13 @@ def run(request):
             ):
                 raise ValueError
 
-            mixture = TernaryMixture(component1, component2, component3)
+            r1, r2, r3 = utils.get_binaryRelations_fromDB(
+                component1, component2, component3
+            )
+
+            mixture = TernaryMixture(
+                component1, component2, component3, r1, r2, r3
+            )
             curves = mixture.diagram()
             diag = get_plot(curves, mixture)
 
