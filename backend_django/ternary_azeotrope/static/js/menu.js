@@ -1,19 +1,15 @@
-console.log("menu");
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
   const content = document.getElementById("content");
 
-  if (menuIcon & menu) {
-    menuIcon.addEventListener("click", function () {
-      menu.classList.toggle("show");
-      console.log("menu2");
-    });
+  menuIcon.addEventListener("click", function () {
+    menu.classList.toggle("show");
+  });
 
-    content.addEventListener("click", function () {
-      if (menu.classList.contains("show")) {
-        menu.classList.remove("show");
-      }
-    });
-  }
-};
+  content.addEventListener("click", function () {
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
+    }
+  });
+});
