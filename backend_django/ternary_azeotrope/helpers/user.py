@@ -70,7 +70,7 @@ class User:
 
                 if c:
                     comp.c = c
-            return
+                return
 
     def edit_Binaryrelation(
         self,
@@ -102,4 +102,33 @@ class User:
 
                 if alpha:
                     relation.alpha = alpha
-            return
+
+                return
+
+    def delete_component(self, name: str):
+        """Delete from user components' list a component of the name given
+
+        Args:
+            name (str): name of the component to delete
+        """
+
+        for comp in self.components:
+            if comp.name == name:
+                self.components.remove(comp)
+                return
+
+    def delete_binaryRelation(self, name1: str, name2: str):
+        """Delete from user binary relations list a component of the name given
+
+        Args:
+            name1 (str): name of the first component of the relation to delete
+            name2 (str): name of the second component of the relation to delete
+        """
+
+        for relation in self.binaryRelations:
+            if (
+                relation.component1.name == name1
+                and relation.component2.name == name2
+            ):
+                self.binaryRelations.remove(relation)
+                return
