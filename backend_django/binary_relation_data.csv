@@ -1,0 +1,11 @@
+component1,component2,a12,a21,alpha
+acetone,chloroforme,-643.277,228.457,0.3043
+acetone,benzene,-193.34,569.931,0.3007
+chloroforme,benzene,176.8791,-288.2136,0.3061
+acetone,methanol,184.701,222.645,0.3084
+chloroforme,methanol,2736.86,-1244.03,0.095
+acetone,ethylacetate,529.7,-360,0.2
+ethylacetate,benzene,-273.017,383.126,0.3194
+methylacetate,methanol,441.452,304.005,0.1174
+methanol,hexane,1619.38,1622.29,0.4365
+methylacetate,hexane,647.05,403.459,0.2
