@@ -1,3 +1,5 @@
+import uuid
+
 from ..models import BinaryRelation, Component
 
 
@@ -17,6 +19,7 @@ class User:
         self.components = list(Component.objects.all())
         self.binaryRelations = list(BinaryRelation.objects.all())
         self.components_selected = None
+        self.id = str(uuid.uuid4())
 
     def add_component(self, name: str, a: float, b: float, c: float):
         """add a component added by the user that is not already present in the database
@@ -27,7 +30,6 @@ class User:
             b (float): value b of the component
             c (float): value c of the component
         """
-
         self.components.append(Component(name=name, a=a, b=b, c=c))
 
     def add_binaryRelation(

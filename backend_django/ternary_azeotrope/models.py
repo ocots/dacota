@@ -13,7 +13,7 @@ class Component(models.Model):
         c (float): The third parameter of the component.
     """
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     a = models.FloatField()
     b = models.FloatField()
     c = models.FloatField()
