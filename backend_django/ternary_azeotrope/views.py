@@ -27,7 +27,7 @@ def index(
             "diagram": diagram,
         },
     )
-    # return render(request, "ternary_azeotrope/typeTriangle.html")
+    # return render(request, "ternary_azeotrope/.html")
 
 
 def run(request):
@@ -47,9 +47,12 @@ def run(request):
             ):
                 raise ValueError
 
-            r1, r2, r3 = utils.get_binaryRelations_fromDB(
-                component1, component2, component3
-            )
+            try:
+                r1, r2, r3 = utils.get_binaryRelations_fromDB(
+                    component1, component2, component3
+                )
+            except:
+                raise ValueError
 
             mixture = TernaryMixture(
                 component1, component2, component3, r1, r2, r3
