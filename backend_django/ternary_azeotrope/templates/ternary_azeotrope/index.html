@@ -28,7 +28,7 @@ Home {%endblock%} {% block head %}
   <div id="componenetsSelection">
     <div class="component">
       <select name="component1" class="form-select">
-        <option selected>Choose component 1</option>
+        <option selected>Choose compound 1</option>
         {% for component in components%}
         <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
@@ -37,7 +37,7 @@ Home {%endblock%} {% block head %}
 
     <div class="component">
       <select name="component2" class="form-select">
-        <option selected>Choose component 2</option>
+        <option selected>Choose compound 2</option>
         {% for component in components%}
         <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
@@ -46,10 +46,26 @@ Home {%endblock%} {% block head %}
 
     <div class="component">
       <select name="component3" class="form-select">
-        <option selected>Choose component 3</option>
+        <option selected>Choose compound 3</option>
         {% for component in components%}
         <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
+      </select>
+    </div>
+
+    <div class="component">
+      <select name="component4" class="form-select">
+        <option selected>
+          Choose Vapor pressure-Temperature equation model
+        </option>
+        <option>ANTOINE</option>
+      </select>
+    </div>
+
+    <div class="component">
+      <select name="component5" class="form-select">
+        <option selected>Choose Thermodynamic model</option>
+        <option>NRTL</option>
       </select>
     </div>
 
