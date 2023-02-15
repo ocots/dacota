@@ -27,7 +27,7 @@ def index(
             "diagram": diagram,
         },
     )
-    # return render(request, "ternary_azeotrope/menu.html")
+    # return render(request, "ternary_azeotrope/typeTriangle.html")
 
 
 def run(request):
