@@ -23,13 +23,7 @@
     font-size: 30px;
     cursor: pointer;
 }
-#menu-icons {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 30px;
-    cursor: pointer;
-}
+
 p{
     color: rgb(174, 123, 27);
 }
@@ -45,5 +39,21 @@ p{
     color: white !important;
   }
 
-  
+  .back-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .back-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  } 
   

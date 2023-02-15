@@ -10,16 +10,22 @@
     margin: 5px;
     position: relative;
     overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .btn-primary {
-    background-color: #747cad;
+    background-color: #C2E7D9;
     color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .btn-secondary {
-    background-color: #747cad;
+    background-color: #C2E7D9;
     color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .btn-primary.clicked {
