@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ternary_azeotrope",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

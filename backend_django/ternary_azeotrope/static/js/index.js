@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* SLIDING bar CODE*/
+  /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
   const content = document.getElementById("content");
@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
       menu.classList.remove("show");
     }
   });
+
+
   /* SPINNER CODE */
   const form = document.getElementById("components-selection");
   const spinner = document.getElementById("spinner");

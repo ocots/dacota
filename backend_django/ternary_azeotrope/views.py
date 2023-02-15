@@ -5,11 +5,14 @@ sys.path.append(".helpers")
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from ternary_azeotrope.models import BinaryRelation, Component
+from ternary_azeotrope.models import Component
 
 from .helpers import utils
 from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
+from .helpers.user import User
+
+user = User()
 
 
 # Create your views here.
@@ -18,6 +21,12 @@ def index(
     valid_inputs=True,
     diagram=None,
 ):
+    if "user_data" not in request.session:
+        new_user = User()
+        request.session["user_data"] = new_user.__dict__
+    else:
+        print(request.session["user_data"])
+
     return render(
         request,
         "ternary_azeotrope/index.html",
@@ -32,6 +41,7 @@ def index(
 
 def run(request):
     if request.method == "POST":
+        print(request.session)
         try:
             id1 = int(request.POST["component1"])
             id2 = int(request.POST["component2"])
@@ -64,3 +74,10 @@ def run(request):
 
         except ValueError:
             return index(request, valid_inputs=False)
+
+
+def add_component(request, name: str, a: str, b: str, c: str):
+    user.add_component(name, float(a), float(b), float(c))
+    print(user.components)
+    return HttpResponse(user.components_as_str())
+    # return HttpResponse(request, "Added")

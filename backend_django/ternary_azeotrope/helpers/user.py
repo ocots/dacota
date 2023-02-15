@@ -2,13 +2,12 @@ from ..models import BinaryRelation, Component
 
 
 class User:
-    """Class User that defines data available to a client using the web app.
+    """Class User that defines data available to a client using the web app on a session.
     data includes what is already in the database plus the elements added by the user on their session
     """
 
     def __init__(
         self,
-        selected=None,
     ):
         """Constructor of the User class
 
@@ -17,7 +16,7 @@ class User:
         """
         self.components = list(Component.objects.all())
         self.binaryRelations = list(BinaryRelation.objects.all())
-        self.components_selected = selected
+        self.components_selected = None
 
     def add_component(self, name: str, a: float, b: float, c: float):
         """add a component added by the user that is not already present in the database
@@ -50,7 +49,13 @@ class User:
         """
 
         self.binaryRelations.append(
-            BinaryRelation(component1, component2, a12, a21, alpha)
+            BinaryRelation(
+                component1=component1,
+                component2=component2,
+                a12=a12,
+                a21=a21,
+                alpha=alpha,
+            )
         )
 
     def edit_component(
@@ -128,3 +133,9 @@ class User:
             ):
                 self.binaryRelations.remove(relation)
                 return
+
+    def components_as_str(self):
+        res = ""
+        for c in self.components:
+            res += str(c)
+        return res
