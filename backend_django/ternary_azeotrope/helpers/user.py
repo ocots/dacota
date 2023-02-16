@@ -1,5 +1,6 @@
 import uuid
 
+from ..helpers.serializers import ComponentSerializer
 from ..models import BinaryRelation, Component
 
 
@@ -17,6 +18,7 @@ class User:
             selected (list[Component], optional): List of three component chosen by the user for diagram generation. Defaults to None.
         """
         self.components = list(Component.objects.all())
+        # self.components = []
         self.binaryRelations = list(BinaryRelation.objects.all())
         self.components_selected = None
 
@@ -29,7 +31,11 @@ class User:
             b (float): value b of the component
             c (float): value c of the component
         """
-        self.components.append(Component(name=name, a=a, b=b, c=c))
+
+        c = Component(name=name, a=a, b=b, c=c)
+        self.components.append(c)
+        # Component.objects._remove_from_cache(c)
+        # return c
 
     def add_binaryRelation(
         self,
@@ -143,8 +149,10 @@ class User:
 
     def get_user_data_json(self):
         user_data = {
-            "components": [c.__dict__ for c in self.components],
-            "binary_relations": [r.__dict__ for r in self.binaryRelations],
+            "components": [
+                ComponentSerializer(instance=c).data for c in self.components
+            ],
+            # "binary_relations": [r.__dict__ for r in self.binaryRelations],
             "components_selected": self.components_selected,
         }
         return user_data
@@ -152,11 +160,14 @@ class User:
     @staticmethod
     def get_user(user_data):
         user = User()
+        serializer = ComponentSerializer()
         user.components = [
-            Component(**c) for c in user_data.get("components", [])
+            serializer.create(validated_data=c)
+            for c in user_data.get("components", [])
         ]
-        user.binaryRelations = [
-            BinaryRelation(**r) for r in user_data.get("binary_relations", [])
-        ]
+        print("SERIALIZER", str(user.components))
+        # user.binaryRelations = [
+        #   BinaryRelation(**r) for r in user_data.get("binary_relations", [])
+        # ]
         user.components_selected = user_data.get("components_selected")
         return user
