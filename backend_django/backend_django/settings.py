@@ -135,4 +135,4 @@ class ContainerLanguage:
 
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
 
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+# SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

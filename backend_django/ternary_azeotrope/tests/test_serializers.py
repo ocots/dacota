@@ -72,3 +72,25 @@ class SerialiserTest(TestCase):
         self.assertEqual(
             str(user_from_json.components), str(self.user.components)
         )
+
+        print(self.user.get_user_data_json())
+
+        data = {
+            "components": [
+                {"id": None, "name": "Acetone", "a": 4.5, "b": 0, "c": 1.8},
+                {
+                    "id": None,
+                    "name": "benzene",
+                    "a": 6.87087,
+                    "b": 1196.76,
+                    "c": 219.161,
+                },
+            ],
+            "binary_relations": [],
+            "components_selected": None,
+        }
+
+        user = User.get_user(data)
+        user.add_component("methanol", 0, 0, 0)
+        print(user.get_user_data_json())
+        # print(user.components)
