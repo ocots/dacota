@@ -19,7 +19,6 @@ class User:
         self.components = list(Component.objects.all())
         self.binaryRelations = list(BinaryRelation.objects.all())
         self.components_selected = None
-        self.id = str(uuid.uuid4())
 
     def add_component(self, name: str, a: float, b: float, c: float):
         """add a component added by the user that is not already present in the database
@@ -141,3 +140,23 @@ class User:
         for c in self.components:
             res += str(c)
         return res
+
+    def get_user_data_json(self):
+        user_data = {
+            "components": [c.__dict__ for c in self.components],
+            "binary_relations": [r.__dict__ for r in self.binaryRelations],
+            "components_selected": self.components_selected,
+        }
+        return user_data
+
+    @staticmethod
+    def get_user(user_data):
+        user = User()
+        user.components = [
+            Component(**c) for c in user_data.get("components", [])
+        ]
+        user.binaryRelations = [
+            BinaryRelation(**r) for r in user_data.get("binary_relations", [])
+        ]
+        user.components_selected = user_data.get("components_selected")
+        return user

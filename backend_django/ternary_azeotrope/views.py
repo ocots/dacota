@@ -20,7 +20,10 @@ lg = Logger(name="Log")
 
 
 def get_sessionId(request):
-    return str(request.session._get_or_create_session_key())
+    # return str(request.session._get_or_create_session_key())
+    # id = str(request.session[""])
+    # print(id)
+    return "user_data"
 
 
 def get_user(request):
@@ -31,7 +34,7 @@ def get_user(request):
         )
     else:
         new_user = User()
-        # print(new_user.components)
+        print("new user created")
         return new_user
 
 
@@ -54,12 +57,16 @@ def index(request, valid_inputs=True, diagram=None, first=True):
 
     if session_id not in request.session:
         request.session[session_id] = get_user_data(request)
-        request.session.save()
+        # request.session.save()
         # context["components"] = (Component.objects.all(),)
+
+    test = request.session[session_id]
+    print(test)
 
     # else:
     # del request.session[str(request.session.session_key)]
     context["components"] = get_user(request).components
+    # context["components"] = Component.objects.all()
     # print("user components : ", request.session[str(request.session.session_key)]["components"])"""
 
     return render(
@@ -72,7 +79,7 @@ def index(request, valid_inputs=True, diagram=None, first=True):
 
 def run(request):
     if request.method == "POST":
-        print(request.session)
+        # print(request.session)
         try:
             id1 = int(request.POST["component1"])
             id2 = int(request.POST["component2"])
@@ -112,6 +119,7 @@ def add_component(request, name: str, a: str, b: str, c: str):
     user = UserSerializer().create(
         validated_data=request.session[get_sessionId(request)]
     )
+    # print(user.components)
     user.add_component(name, float(a), float(b), float(c))
     # request.session[str(request.session.session_key)]["component"].append(Compo)
     # = UserSerializer(user).data
@@ -127,4 +135,13 @@ def list(request):
 
 
 def test(request):
-    return HttpResponse(get_sessionId(request))
+    if not request.session.has_key("user_data"):
+        new_user = User()
+        user_data = UserSerializer(new_user).data
+        request.session["user_data"] = user_data
+
+        return HttpResponse("NEW SESSION" + str(request.session["user_data"]))
+    else:
+        return HttpResponse(
+            "EXISTING SESSION" + str(request.session["user_data"])
+        )
