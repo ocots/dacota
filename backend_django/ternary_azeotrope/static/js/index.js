@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
   compoundForm.addEventListener("submit", (event) => {
     event.preventDefault();
     compoundFormContainer.style.display = "none";
-    this.submit();
+    compoundForm.submit();
   });
 
 
