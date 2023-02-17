@@ -3,6 +3,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
+class Test(models.Model):
+    name = models.CharField(max_length=100)
+
+
 class Component(models.Model):
     """
     Component model : represents a single component in a mixture.
@@ -18,9 +22,9 @@ class Component(models.Model):
     a = models.FloatField()
     b = models.FloatField()
     c = models.FloatField()
-    sessions = models.ManyToManyField(
-        Session, blank=True, related_name="sessions"
-    )
+    # sessions = models.ManyToManyField(
+    #   Session, blank=True, related_name="sessions"
+    # )
 
     def __str__(self):
         return f"{self.name.upper()} (a={self.a}, b={self.b}, c={self.c})"
