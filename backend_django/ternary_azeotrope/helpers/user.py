@@ -165,7 +165,7 @@ class User:
             serializer.create(validated_data=c)
             for c in user_data.get("components", [])
         ]
-        print("SERIALIZER", str(user.components))
+        # print("SERIALIZER", str(user.components))
         # user.binaryRelations = [
         #   BinaryRelation(**r) for r in user_data.get("binary_relations", [])
         # ]

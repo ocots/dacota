@@ -1,3 +1,4 @@
+from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -17,19 +18,12 @@ class Component(models.Model):
     a = models.FloatField()
     b = models.FloatField()
     c = models.FloatField()
-
-    class Meta:
-        # unique_together = (("name", "a", "b", "c"),)
-        pass
+    sessions = models.ManyToManyField(
+        Session, blank=True, related_name="sessions"
+    )
 
     def __str__(self):
-        return f"{self.name} (a={self.a}, b={self.b}, c={self.c})"
-
-    def save(self, *args, **kwargs):
-        # if self._state.adding:
-        super().save(force_insert=False)
-        # else:s
-        # super().save(foce_insert=False)
+        return f"{self.name.upper()} (a={self.a}, b={self.b}, c={self.c})"
 
 
 class BinaryRelation(models.Model):

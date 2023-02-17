@@ -1,4 +1,3 @@
-import ast
 import json
 import sys
 import uuid
@@ -24,9 +23,9 @@ lg = Logger(name="Log")
 def get_user(request):
     if not request.session.has_key("user_data"):
         user = User()
-        print(user.components)
+        # print(user.components)
         request.session["user_data"] = user.get_user_data_json()
-        print(user.get_user_data_json())
+        # print(user.get_user_data_json())
         return user
     else:
         return User.get_user(request.session["user_data"])
@@ -45,10 +44,6 @@ def index(request, valid_inputs=True, diagram=None):
         "diagram": diagram,
         "components": get_user(request).components,
     }
-
-    print(get_user(request).components)
-
-    # context["components"] = get_user(request).components
 
     return render(
         request,
@@ -95,33 +90,36 @@ def run(request):
             return index(request, valid_inputs=False)
 
 
-def add_component(request, name: str, a: str, b: str, c: str):
+def add_component(request):
     """user = UserSerializer().create(
         validated_data=request.session[get_sessionId(request)]
     )"""
+    print("ADD called")
+    if request.method == "POST":
+        name = request.POST["name"]
+        a = request.POST["a"]
+        b = request.POST["b"]
+        c = request.POST["c"]
 
-    # print(user.components)
-    user = User.get_user(request.session.get("user_data", "{}"))
-    user.add_component(name, float(a), float(b), float(c))
-    request.session["user_data"] = user.get_user_data_json()
+        print(name, a, b, c)
 
-    """temp = request.session["user_data"]["components"].append(
-        {"name": name, "a": a, "b": b, "c": c}
-    )
-    request.session["user_data"]["components"] = temp"""
-    # = UserSerializer(user).data
+        user = User.get_user(request.session.get("user_data", "{}"))
+        user.add_component(name, float(a), float(b), float(c))
+        request.session["user_data"] = user.get_user_data_json()
 
-    # return HttpResponseRedirect(reverse("index"))
-    return HttpResponseRedirect(reverse("test"))
+        """temp = request.session["user_data"]["components"].append(
+            {"name": name, "a": a, "b": b, "c": c}
+        )
+        request.session["user_data"]["components"] = temp"""
+        # = UserSerializer(user).data
+
+        return HttpResponseRedirect(reverse("index"))
+        # return HttpResponseRedirect(reverse("test"))
 
 
 def list(request):
     d = request.session.get("user_data")
-    data = json.dumps(ast.literal_eval((str(d))))
-    return HttpResponse(
-        data,
-        headers={"Content-Type": "application/json"},
-    )
+    return HttpResponse(str(d))
 
 
 def test(request):
@@ -142,7 +140,7 @@ def test(request):
     else:
         d = request.session.get("user_data", "{}")
         curr_user = User.get_user(d)
-        print(curr_user.components)
+        # print(curr_user.components)
         msg = (
             "EXISTING SESSION - user data :"
             + str(d)
