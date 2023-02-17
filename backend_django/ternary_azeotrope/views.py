@@ -23,8 +23,6 @@ lg = Logger(name="Log")
 def get_user(request):
     if not request.session.has_key("user_data"):
         user = User()
-        print(user.components[0].id)
-        sys.edit(0)
         # print(user.components)
         request.session["user_data"] = user.get_user_data_json()
         # print(user.get_user_data_json())
