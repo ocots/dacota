@@ -86,7 +86,7 @@ def run(request):
             return index(request, diagram=diag)
 
         except ValueError:
-            # return redirect("index", False, None)
+            # return redirect("index", False, None
             return index(request, valid_inputs=False)
 
 
