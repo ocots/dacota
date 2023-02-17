@@ -43,7 +43,7 @@ Home {%endblock%} {% block head %}
       <select name="component1" class="form-select">
         <option selected>Choose</option>
         {% for component in components%}
-        <option value="{{component.name}}">{{component}}</option>
+        <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
       </select>
     </div>
@@ -53,7 +53,7 @@ Home {%endblock%} {% block head %}
       <select name="component2" class="form-select">
         <option selected>Choose</option>
         {% for component in components%}
-        <option value="{{component.name}}">{{component}}</option>
+        <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
       </select>
     </div>
@@ -63,7 +63,7 @@ Home {%endblock%} {% block head %}
       <select name="component3" class="form-select">
         <option selected>Choose</option>
         {% for component in components%}
-        <option value="{{component.name}}">{{component}}</option>
+        <option value="{{component.id}}">{{component}}</option>
         {% endfor %}
       </select>
     </div>
