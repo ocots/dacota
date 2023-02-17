@@ -1,3 +1,4 @@
+import ast
 import json
 import sys
 import uuid
@@ -23,9 +24,9 @@ lg = Logger(name="Log")
 def get_user(request):
     if not request.session.has_key("user_data"):
         user = User()
-        print(user.components)
+        # print(user.components)
         request.session["user_data"] = user.get_user_data_json()
-        print(user.get_user_data_json())
+        # print(user.get_user_data_json())
         return user
     else:
         return User.get_user(request.session["user_data"])
@@ -45,7 +46,7 @@ def index(request, valid_inputs=True, diagram=None):
         "components": get_user(request).components,
     }
 
-    print(get_user(request).components)
+    # print(get_user(request).components)
 
     # context["components"] = get_user(request).components
 
@@ -59,13 +60,14 @@ def index(request, valid_inputs=True, diagram=None):
 
 def run(request):
     if request.method == "POST":
+        user = get_user(request)
         try:
-            id1 = int(request.POST["component1"])
-            id2 = int(request.POST["component2"])
-            id3 = int(request.POST["component3"])
-            component1 = Component.objects.get(pk=id1)
-            component2 = Component.objects.get(pk=id2)
-            component3 = Component.objects.get(pk=id3)
+            c1_name = request.POST["component1"]
+            c2_name = request.POST["component2"]
+            c3_name = request.POST["component3"]
+            component1 = user.get_component(c1_name)
+            component2 = user.get_component(c2_name)
+            component3 = user.get_component(c3_name)
 
             if (
                 component1 == component2
@@ -75,9 +77,13 @@ def run(request):
                 raise ValueError
 
             try:
-                r1, r2, r3 = utils.get_binaryRelations_fromDB(
-                    component1, component2, component3
-                )
+                # r1, r2, r3 = utils.get_binaryRelations_fromDB(
+                #     component1, component2, component3
+                # )
+                r1 = user.get_binary_relation(component1, component2)
+                r2 = user.get_binary_relation(component2, component3)
+                r3 = user.get_binary_relation(component1, component3)
+
             except:
                 raise ValueError
 
@@ -116,7 +122,11 @@ def add_component(request, name: str, a: str, b: str, c: str):
 
 def list(request):
     d = request.session.get("user_data")
-    return HttpResponse(str(d))
+    data = json.dumps(ast.literal_eval((str(d))))
+    return HttpResponse(
+        data,
+        headers={"Content-Type": "application/json"},
+    )
 
 
 def test(request):

@@ -31,6 +31,8 @@ class TernaryMixture:
         self.component1 = component1
         self.component2 = component2
         self.component3 = component3
+        # Binary relations are stored in a list of 3 elements in the following order:
+        # [component1, component2], [component2, component3], [component1, component3]
         self.binary_relations = [
             binary_relations1,
             binary_relations2,
