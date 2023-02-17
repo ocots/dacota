@@ -3,4 +3,3 @@ matplotlib
 docker
 djangorestframework
 django-environ
-

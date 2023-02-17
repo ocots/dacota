@@ -34,7 +34,7 @@ p{
     right: 0;
     padding: 10px;
   }
-  
+
   #menu-close-icon i {
     color: white !important;
   }
@@ -55,5 +55,4 @@ p{
   .back-icon:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  } 
-  
+  }

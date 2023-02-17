@@ -12,7 +12,7 @@ h1 {
     align-items: center; /* align items vertically */
 
   }
-  
+
   label {
     margin-right: 10px; /* add some spacing between the label and selector */
     width: 400px;
@@ -26,15 +26,15 @@ h1 {
     margin-bottom: 10px;
   }
 
-  
-  
+
+
   select {
     flex: 1; /* set the selector to fill the remaining space */
   }
 
- 
-  
-  
+
+
+
 
 
 #spinner {
@@ -111,9 +111,3 @@ h1 {
       color: #A6CFD5;
     }
   }
-
-
-  
-
-
-
