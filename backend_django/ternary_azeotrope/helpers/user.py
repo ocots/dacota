@@ -1,3 +1,4 @@
+import json
 import uuid
 
 from ..helpers.serializers import ComponentSerializer
@@ -113,6 +114,36 @@ class User:
 
                 return
 
+    def get_component(self, name: str):
+        """Get a component of the name given
+
+        Args:
+            name (str): name of the component to get
+
+        Returns:
+            Component: component of the name given
+        """
+        for comp in self.components:
+            if comp.name == name:
+                return comp
+
+    def get_binary_relation(self, name1: str, name2: str):
+        """Get a binary relation of the name given
+
+        Args:
+            name1 (str): name of the first component of the relation to get
+            name2 (str): name of the second component of the relation to get
+
+        Returns:
+            BinaryRelation: binary relation of the name given
+        """
+        for relation in self.binaryRelations:
+            if (
+                relation.component1.name == name1
+                and relation.component2.name == name2
+            ):
+                return relation
+
     def delete_component(self, name: str):
         """Delete from user components' list a component of the name given
 
@@ -155,7 +186,7 @@ class User:
             # "binary_relations": [r.__dict__ for r in self.binaryRelations],
             "components_selected": self.components_selected,
         }
-        return user_data
+        return json.dumps(user_data)
 
     @staticmethod
     def get_user(user_data):
@@ -165,7 +196,7 @@ class User:
             serializer.create(validated_data=c)
             for c in user_data.get("components", [])
         ]
-        print("SERIALIZER", str(user.components))
+        # print("SERIALIZER", str(user.components))
         # user.binaryRelations = [
         #   BinaryRelation(**r) for r in user_data.get("binary_relations", [])
         # ]
