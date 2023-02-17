@@ -1,5 +1,6 @@
 from ..models import BinaryRelation
 from .container_runner import start_container
+from .diagram_calculalor import calculate_diagram
 
 
 class TernaryMixture:
@@ -41,7 +42,7 @@ class TernaryMixture:
         # sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         # Call start_container method to generate the curves
-        curve_list = start_container(sc1, sc2, sc3, sa, salpha)
+        curve_list = calculate_diagram(sc1, sc2, sc3, sa, salpha)
         return curve_list
 
     def getParameterForDiagram(self):

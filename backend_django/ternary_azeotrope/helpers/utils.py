@@ -1,4 +1,12 @@
+import json
+
 from ..models import BinaryRelation
+
+
+def load_json(path):
+    with open(path, "r") as f:
+        data = json.load(f)
+    return data
 
 
 def get_binaryRelations_fromDB(component1, component2, component3):
