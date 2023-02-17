@@ -2,7 +2,7 @@ from django.core import serializers as django_serializers
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 
-from ..models import Component
+from ..models import BinaryRelation, Component
 
 # from .user import User
 
@@ -13,8 +13,15 @@ class ComponentSerializer(serializers.ModelSerializer):
         fields = ["name", "a", "b", "c"]
 
     def create(self, validated_data):
-        print("VALIDATED_DATA", validated_data)
+        # print("VALIDATED_DATA", validated_data)
+        """id = None
+        if "id" not in validated_data.keys():
+            id = validated_data["name"]
+        else:
+            id = validated_data["id"]"""
+
         component = Component(
+            # id=id,
             name=validated_data["name"],
             a=validated_data["a"],
             b=validated_data["b"],
@@ -31,6 +38,28 @@ class ComponentSerializer(serializers.ModelSerializer):
         return instance
 
 
+class BinaryRelationSerializer(serializers.ModelSerializer):
+    component1 = ComponentSerializer()
+    component2 = ComponentSerializer()
+
+    class Meta:
+        model = BinaryRelation
+        fields = ["component1", "component2", "a12", "a21", "alpha"]
+
+    def create(self, validated_data):
+        # component1 = validated_data.pop("component1")
+        # component2 = validated_data.pop("component2")
+
+        return BinaryRelation(
+            validated_data
+            # component1=self.component1.create(validated_data["component1"]),
+            # component2=self.component1.create(validated_data["component2"]),
+            # a12=validated_data["a12"],
+            # a21=validated_data["a21"],
+            # alpha=validated_data["alpha"],
+        )
+
+
 """class UserSerializer(serializers.Serializer):
     # components = serializers.ListField(child=ComponentSerializer())
     components = ComponentSerializer(many=True)
@@ -42,7 +71,7 @@ class ComponentSerializer(serializers.ModelSerializer):
             validated_data["components"]
         )
 
-        return user
+        return user"""
 
 
 def serialize(objects):
@@ -51,4 +80,4 @@ def serialize(objects):
         objects,
         fields=("name", "a", "b", "c"),
         use_natural_primary_keys=True,
-    )"""
+    )

@@ -6,7 +6,7 @@ from .models import BinaryRelation, Component
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "a", "b", "c")
+    list_display = ("name", "a", "b", "c")
 
 
 class BinaryRelationAdmin(admin.ModelAdmin):

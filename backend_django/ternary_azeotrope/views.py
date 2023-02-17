@@ -23,9 +23,11 @@ lg = Logger(name="Log")
 def get_user(request):
     if not request.session.has_key("user_data"):
         user = User()
-        print(user.components)
+        print(user.components[0].id)
+        sys.edit(0)
+        # print(user.components)
         request.session["user_data"] = user.get_user_data_json()
-        print(user.get_user_data_json())
+        # print(user.get_user_data_json())
         return user
     else:
         return User.get_user(request.session["user_data"])
@@ -45,7 +47,7 @@ def index(request, valid_inputs=True, diagram=None):
         "components": get_user(request).components,
     }
 
-    print(get_user(request).components)
+    # print(get_user(request).components)
 
     # context["components"] = get_user(request).components
 
@@ -58,7 +60,9 @@ def index(request, valid_inputs=True, diagram=None):
 
 
 def run(request):
+    print(Component.objects)
     if request.method == "POST":
+        print(request.POST)
         try:
             id1 = int(request.POST["component1"])
             id2 = int(request.POST["component2"])
@@ -66,6 +70,8 @@ def run(request):
             component1 = Component.objects.get(pk=id1)
             component2 = Component.objects.get(pk=id2)
             component3 = Component.objects.get(pk=id3)
+
+            # print(component2)
 
             if (
                 component1 == component2
@@ -137,7 +143,7 @@ def test(request):
     else:
         d = request.session.get("user_data", "{}")
         curr_user = User.get_user(d)
-        print(curr_user.components)
+        # print(curr_user.components)
         msg = (
             "EXISTING SESSION - user data :"
             + str(d)
