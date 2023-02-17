@@ -6,9 +6,9 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("run", views.run, name="run"),
     path(
-        "add/<str:name>/<str:a>/<str:b>/<str:c>",
+        "add_component",
         views.add_component,
-        name="add",
+        name="add_component",
     ),
     path("list", views.list, name="list"),
     path("test_session", views.test, name="test"),

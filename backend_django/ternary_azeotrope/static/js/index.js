@@ -24,4 +24,31 @@ document.addEventListener("DOMContentLoaded", function () {
     spinner.style.display = "block";
     this.submit();
   });
+
+
+  /* Add a new compound */
+  const addCompoundBtn = document.getElementById("add-compound-btn");
+  const compoundFormContainer = document.getElementById("compound-form-container");
+  const compoundForm = document.getElementById("compound-form");
+
+
+  addCompoundBtn.addEventListener("click", () => {
+    compoundFormContainer.style.display = "block";
+  });
+
+  compoundForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    compoundFormContainer.style.display = "none";
+    this.submit();
+  });
+
+
+
+
+
+
+
+
+
+
 });

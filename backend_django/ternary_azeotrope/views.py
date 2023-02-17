@@ -45,10 +45,6 @@ def index(request, valid_inputs=True, diagram=None):
         "components": get_user(request).components,
     }
 
-    # print(get_user(request).components)
-
-    # context["components"] = get_user(request).components
-
     return render(
         request,
         "ternary_azeotrope/index.html",
@@ -58,9 +54,7 @@ def index(request, valid_inputs=True, diagram=None):
 
 
 def run(request):
-    print(Component.objects)
     if request.method == "POST":
-        print(request.POST)
         try:
             id1 = int(request.POST["component1"])
             id2 = int(request.POST["component2"])
@@ -68,8 +62,6 @@ def run(request):
             component1 = Component.objects.get(pk=id1)
             component2 = Component.objects.get(pk=id2)
             component3 = Component.objects.get(pk=id3)
-
-            # print(component2)
 
             if (
                 component1 == component2
@@ -98,24 +90,31 @@ def run(request):
             return index(request, valid_inputs=False)
 
 
-def add_component(request, name: str, a: str, b: str, c: str):
+def add_component(request):
     """user = UserSerializer().create(
         validated_data=request.session[get_sessionId(request)]
     )"""
+    print("ADD called")
+    if request.method == "POST":
+        name = request.POST["name"]
+        a = request.POST["a"]
+        b = request.POST["b"]
+        c = request.POST["c"]
 
-    # print(user.components)
-    user = User.get_user(request.session.get("user_data", "{}"))
-    user.add_component(name, float(a), float(b), float(c))
-    request.session["user_data"] = user.get_user_data_json()
+        print(name, a, b, c)
 
-    """temp = request.session["user_data"]["components"].append(
-        {"name": name, "a": a, "b": b, "c": c}
-    )
-    request.session["user_data"]["components"] = temp"""
-    # = UserSerializer(user).data
+        user = User.get_user(request.session.get("user_data", "{}"))
+        user.add_component(name, float(a), float(b), float(c))
+        request.session["user_data"] = user.get_user_data_json()
 
-    # return HttpResponseRedirect(reverse("index"))
-    return HttpResponseRedirect(reverse("test"))
+        """temp = request.session["user_data"]["components"].append(
+            {"name": name, "a": a, "b": b, "c": c}
+        )
+        request.session["user_data"]["components"] = temp"""
+        # = UserSerializer(user).data
+
+        return HttpResponseRedirect(reverse("index"))
+        # return HttpResponseRedirect(reverse("test"))
 
 
 def list(request):
