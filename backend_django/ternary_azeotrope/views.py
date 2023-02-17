@@ -6,6 +6,8 @@ sys.path.append(".helpers")
 
 from logging import Logger
 
+from django.contrib.sessions.models import Session
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -42,7 +44,11 @@ def index(request, valid_inputs=True, diagram=None):
     context = {
         "valid_components": valid_inputs,
         "diagram": diagram,
-        "components": get_user(request).components,
+        # "components": get_user(request).components,
+        "components": Component.objects.filter(
+            Q(sessions__pk=request.session.session_key)
+            | Q(sessions__isnull=True)
+        ),
     }
 
     return render(
@@ -55,6 +61,7 @@ def index(request, valid_inputs=True, diagram=None):
 
 def run(request):
     if request.method == "POST":
+        print(request.POST)
         try:
             id1 = int(request.POST["component1"])
             id2 = int(request.POST["component2"])
@@ -148,4 +155,9 @@ def test(request):
             + str(curr_user.components)
         )
 
-    return HttpResponse(msg)
+    # test session attribute
+    # c = Component(name="test", a=0, b=0, c=0)
+    # c.save()
+    # c.sessions.add(Session.objects.get(pk=request.session.session_key))
+
+    return HttpResponse(c.sessions)
