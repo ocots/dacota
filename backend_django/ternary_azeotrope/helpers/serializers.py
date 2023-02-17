@@ -51,12 +51,11 @@ class BinaryRelationSerializer(serializers.ModelSerializer):
         # component2 = validated_data.pop("component2")
 
         return BinaryRelation(
-            validated_data
-            # component1=self.component1.create(validated_data["component1"]),
-            # component2=self.component1.create(validated_data["component2"]),
-            # a12=validated_data["a12"],
-            # a21=validated_data["a21"],
-            # alpha=validated_data["alpha"],
+            component1=self.component1.create(validated_data["component1"]),
+            component2=self.component1.create(validated_data["component2"]),
+            a12=validated_data["a12"],
+            a21=validated_data["a21"],
+            alpha=validated_data["alpha"],
         )
 
 

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.sessions.models import Session
 
 from .models import BinaryRelation, Component
 
@@ -12,9 +13,6 @@ class ComponentAdmin(admin.ModelAdmin):
 class BinaryRelationAdmin(admin.ModelAdmin):
     list_display = ("component1", "component2", "a12", "a21", "alpha")
     # filter_horizontal = ("components",)
-
-
-from django.contrib.sessions.models import Session
 
 
 class SessionAdmin(admin.ModelAdmin):
