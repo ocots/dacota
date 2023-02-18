@@ -8,6 +8,7 @@ from .models import BinaryRelation, Component
 
 class ComponentAdmin(admin.ModelAdmin):
     list_display = ("name", "a", "b", "c")
+    filter_horizontal = ("sessions",)
 
 
 class BinaryRelationAdmin(admin.ModelAdmin):

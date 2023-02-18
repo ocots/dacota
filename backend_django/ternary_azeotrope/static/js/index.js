@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     spinner.style.display = "block";
-    this.submit();
+    form.submit();
   });
 
 
