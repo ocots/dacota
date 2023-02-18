@@ -42,3 +42,19 @@ def load_json(path):
     with open(path, "r") as f:
         data = json.load(f)
     return data
+
+
+def formatParameters(c1, c2, c3, a, alpha):
+    c1Formatted = str(c1)
+    c2Formatted = str(c2)
+    c3Formatted = str(c3)
+    aFormatted = str(a)
+    alphaFormatted = str(alpha)
+
+    return (
+        c1Formatted,
+        c2Formatted,
+        c3Formatted,
+        aFormatted,
+        alphaFormatted,
+    )

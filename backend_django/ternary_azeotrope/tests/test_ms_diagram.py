@@ -376,3 +376,38 @@ class TestMS(TestCase):
         assert response.status_code == 200
         assert response.headers["content-type"] == "application/json"
         assert response.json() == expected_result
+
+    def test_compare_local_and_ms_diagram(self):
+        data = {
+            "c1": [7.11714, 1210.595, 229.664],
+            "c2": [6.95465, 1170.966, 226.232],
+            "c3": [8.08097, 1582.271, 239.726],
+            "a": [
+                [0, -643.277, 184.701],
+                [228.457, 0, 2736.86],
+                [222.645, -1244.03, 0],
+            ],
+            "alpha": [
+                [0, 0.3043, 0.3084],
+                [0.3043, 0, 0.095],
+                [0.3084, 0.095, 0],
+            ],
+        }
+        diagram = self.mix1.diagram()
+
+        # The endpoint is the IP address of the server where the microservice is running
+        endpoint = MS_ENDPOINT
+        # The port is the port where the microservice is listening
+        port = 80
+        # The path is the path of the endpoint
+        path = "/ternary-diagram"
+        # The url is the combination of the endpoint, the port and the path
+        url = "http://" + endpoint + ":" + str(port) + path
+        response = requests.post(
+            url,
+            json=data,
+            headers={"Authorization": f"Ayman {AUTH_TOKEN}"},
+        )
+        assert response.status_code == 200
+        assert response.headers["content-type"] == "application/json"
+        assert response.json() == diagram
