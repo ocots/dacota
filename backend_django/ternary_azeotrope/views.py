@@ -1,3 +1,4 @@
+import ast
 import json
 import sys
 import uuid
@@ -156,7 +157,11 @@ def add_component(request):
 
 def list(request):
     d = request.session.get("user_data")
-    return HttpResponse(str(d))
+    data = json.dumps(ast.literal_eval((str(d))))
+    return HttpResponse(
+        data,
+        headers={"Content-Type": "application/json"},
+    )
 
 
 def test(request):
