@@ -41,10 +41,8 @@ class TernaryMixture:
 
     def diagram(self):
         c1, c2, c3, a, alpha = self.getParameterForDiagram()
-        # sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
-        sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         # Call start_container method to generate the curves
-        curve_list = calculate_diagram(sc1, sc2, sc3, sa, salpha)
+        curve_list = calculate_diagram(c1, c2, c3, a, alpha)
         return curve_list
 
     def getParameterForDiagram(self):
@@ -67,21 +65,6 @@ class TernaryMixture:
         alpha[0][2] = alpha[2][0] = self.binary_relations[2].alpha
 
         return c1, c2, c3, a, alpha
-
-    def formatParameters(self, c1, c2, c3, a, alpha):
-        c1Formatted = str(c1)
-        c2Formatted = str(c2)
-        c3Formatted = str(c3)
-        aFormatted = str(a)
-        alphaFormatted = str(alpha)
-
-        return (
-            c1Formatted,
-            c2Formatted,
-            c3Formatted,
-            aFormatted,
-            alphaFormatted,
-        )
 
     def __str__(self):
         return (

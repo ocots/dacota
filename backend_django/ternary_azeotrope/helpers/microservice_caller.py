@@ -1,4 +1,5 @@
 # This is the endpoint of the microservice, it is the IP address of the server where the microservice is running
+import json
 import os
 
 import requests
