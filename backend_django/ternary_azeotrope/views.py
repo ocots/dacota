@@ -1,3 +1,5 @@
+import ast
+import json
 import sys
 
 sys.path.append(".helpers")
@@ -181,7 +183,11 @@ def add_relation(request):
 
 def list(request):
     d = request.session.get("user_data")
-    return HttpResponse(str(d))
+    data = json.dumps(ast.literal_eval((str(d))))
+    return HttpResponse(
+        data,
+        headers={"Content-Type": "application/json"},
+    )
 
 
 def test(request):

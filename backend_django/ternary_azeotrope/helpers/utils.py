@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Q
 
 from ..models import BinaryRelation
@@ -34,3 +36,9 @@ def get_session_relations(session_id, component1, component2, component3):
     r3 = all_r3.filter(Q(sessions__isnull=True) | Q(sessions__pk=session_id))
 
     return r1, r2, r3
+
+
+def load_json(path):
+    with open(path, "r") as f:
+        data = json.load(f)
+    return data
