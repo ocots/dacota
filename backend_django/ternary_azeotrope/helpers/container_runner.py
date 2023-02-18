@@ -1,6 +1,7 @@
 import json
 
 import docker
+from ternary_azeotrope.helpers.utils import formatParameters
 
 from backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
 
@@ -12,8 +13,10 @@ def start_container(c1, c2, c3, a, alpha):
     If the language is Julia, the `start_julia_container` function is called.
     If the language is unknown, an Exception is raised.
     """
+    sc1, sc2, sc3, sa, salpha = formatParameters(c1, c2, c3, a, alpha)
+
     if CONTAINER_LANGUAGE == ContainerLanguage.PYTHON:
-        return start_python_container(c1, c2, c3, a, alpha)
+        return start_python_container(sc1, sc2, sc3, sa, salpha)
     elif CONTAINER_LANGUAGE == ContainerLanguage.JULIA:
         return start_julia_container(c1, c2, c3, a, alpha)
     else:
