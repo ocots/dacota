@@ -9,9 +9,7 @@ h1 {
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;
-  /* use flexbox to position the elements */
   align-items: center;
-  /* align items vertically */
 
 }
 
@@ -33,7 +31,7 @@ label {
 
 select {
   flex: 1;
-  /* set the selector to fill the remaining space */
+  margin-right: 10px;
 }
 
 
@@ -176,7 +174,10 @@ select {
   left: 0;
 }
 
-#compound-form {
+
+
+#compound-form,
+#relation-form {
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 10px;
@@ -191,7 +192,8 @@ select {
   margin-right: 100px;
 }
 
-#compound-form input[type="text"] {
+#compound-form input[type="text"],
+#relation-form input[type="number"] {
   height: 40px;
   width: 150px;
   margin-right: 10px;

@@ -1,6 +1,4 @@
-import json
 import sys
-import uuid
 
 sys.path.append(".helpers")
 
@@ -11,7 +9,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from ternary_azeotrope.models import Component
+from ternary_azeotrope.models import BinaryRelation, Component
 
 from .helpers import utils
 from .helpers.plotter import get_plot
@@ -152,6 +150,33 @@ def add_component(request):
 
         return HttpResponseRedirect(reverse("index"))
         # return HttpResponseRedirect(reverse("test"))
+
+
+def add_relation(request):
+    if request.method == "POST":
+        component1_id = request.POST.get("component1")
+        component2_id = request.POST.get("component2")
+        a12 = float(request.POST.get("a12"))
+        a21 = float(request.POST.get("a21"))
+        alpha = float(request.POST.get("alpha"))
+
+        curr_session = Session.objects.get_or_create(
+            session_key=request.session.session_key
+        )[0]
+
+        component1 = Component.objects.get(pk=component1_id)
+        component2 = Component.objects.get(pk=component2_id)
+
+        relation = BinaryRelation.objects.create(
+            component1=component1,
+            component2=component2,
+            a12=a12,
+            a21=a21,
+            alpha=alpha,
+        )
+        relation.sessions.add(curr_session)
+
+        return redirect("index")
 
 
 def list(request):

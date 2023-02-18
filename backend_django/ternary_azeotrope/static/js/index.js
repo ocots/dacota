@@ -42,6 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
     compoundForm.submit();
   });
 
+  /* Add new relation */
+  const addRelationBtn = document.getElementById('add-relation-btn');
+  const relationForm = document.getElementById('relation-form-container');
+
+  addRelationBtn.addEventListener('click', () => {
+    relationForm.style.display = relationForm.style.display === 'none' ? 'block' : 'none';
+  });
+
+
 
 
 

@@ -10,6 +10,11 @@ urlpatterns = [
         views.add_component,
         name="add_component",
     ),
+    path(
+        "add_relation",
+        views.add_relation,
+        name="add_relation",
+    ),
     path("list", views.list, name="list"),
     path("test_session", views.test, name="test"),
 ]
