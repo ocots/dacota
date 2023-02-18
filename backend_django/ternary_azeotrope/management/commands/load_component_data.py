@@ -1,7 +1,10 @@
+import os
 from csv import DictReader
 
 from django.core.management import BaseCommand
 from ternary_azeotrope.models import BinaryRelation, Component
+
+from backend_django.settings import BASE_DIR
 
 ALREDY_LOADED_ERROR_MESSAGE = """
 If you need to reload the component data from the CSV file, first delete the db.sqlite3 file to destroy the database.
@@ -22,7 +25,9 @@ class Command(BaseCommand):
             return
 
         print("Loading component data...")
-        for row in DictReader(open("./component_data.csv")):
+        for row in DictReader(
+            open(os.path.join(BASE_DIR, "component_data.csv"))
+        ):
             component = Component()
             component.name = row["name"]
             component.a = row["a"]
@@ -31,7 +36,9 @@ class Command(BaseCommand):
             component.save()
 
         print("Loading binary relation data...")
-        for row in DictReader(open("./binary_relation_data.csv")):
+        for row in DictReader(
+            open(os.path.join(BASE_DIR, "binary_relation_data.csv"))
+        ):
             relation = BinaryRelation()
             relation.component1 = Component.objects.get(name=row["component1"])
             relation.component2 = Component.objects.get(name=row["component2"])
