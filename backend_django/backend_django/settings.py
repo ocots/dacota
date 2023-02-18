@@ -20,8 +20,8 @@ environ.Env.read_env()
 
 # Raises django's ImproperlyConfigured exception if AUTH_TOKEN not in os.environ
 AUTH_TOKEN = env("APP_AUTH_TOKEN")
-
 MS_ENDPOINT = env("ENDPOINT")
+PORT = env("PORT")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,12 +138,17 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Define a class that contains the possible values for the container language
+# This variable is used to determine if we calculate the diagram locally or not
+LOCAL = 0
+
+
+# The following contains the variables used to determine the container language
 class ContainerLanguage:
     PYTHON = "python"
     JULIA = "julia"
 
 
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
+
 
 # SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
