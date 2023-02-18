@@ -19,7 +19,7 @@ class Component(models.Model):
     b = models.FloatField()
     c = models.FloatField()
     sessions = models.ManyToManyField(
-        Session, blank=True, related_name="sessions"
+        Session, blank=True, related_name="components"
     )
 
     def __str__(self):
@@ -47,6 +47,9 @@ class BinaryRelation(models.Model):
     a12 = models.FloatField()
     a21 = models.FloatField()
     alpha = models.FloatField()
+    sessions = models.ManyToManyField(
+        Session, blank=True, related_name="relations"
+    )
 
     class Meta:
         constraints = [
