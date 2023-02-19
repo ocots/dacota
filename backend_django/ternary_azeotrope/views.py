@@ -17,6 +17,13 @@ def index(request, valid_inputs=True):
     )
 
 
+def members(request):
+    components = Component.objects.all()
+    return render(
+        request, "ternary_azeotrope/members.html", {"components": components}
+    )
+
+
 def run(request):
     if request.method == "POST":
         try:
