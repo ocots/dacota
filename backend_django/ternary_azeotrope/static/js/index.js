@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const compoundForm = document.getElementById("compound-form");
 
   addCompoundBtn.addEventListener("click", () => {
-    console.log("add clicked");
     var new_state;
     if (compoundFormContainer.style.display == "block"){
       new_state = "none";
