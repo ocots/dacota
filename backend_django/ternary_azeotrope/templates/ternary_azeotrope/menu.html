@@ -19,4 +19,10 @@
       />
     </svg>
   </div>
+  <div id="content" style="display: none">
+    {%include "ternary_azeotrope/table.html" with title="Components"
+    keys={{component_keys}} elements={{components}} %} {%include
+    "ternary_azeotrope/table.html" with title="Binary relations"
+    keys={{relation_keys}} elements={{relations}} %}
+  </div>
 </nav>

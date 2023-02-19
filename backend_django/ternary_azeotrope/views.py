@@ -51,6 +51,12 @@ def index(request, valid_inputs=True, diagram=None, message=None):
             Q(sessions__pk=request.session.session_key)
             | Q(sessions__isnull=True)
         ),
+        "relations": BinaryRelation.objects.filter(
+            Q(sessions__pk=request.session.session_key)
+            | Q(sessions__isnull=True)
+        ),
+        "component_keys": Component.fields(),
+        "relation_keys": BinaryRelation.fields(),
     }
 
     # print(Session.objects.get(pk=request.session.session_key).components.all())
@@ -60,6 +66,7 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         "ternary_azeotrope/index.html",
         context,
     )
+
     # return render(request, "ternary_azeotrope/.html")
 
 
