@@ -1,29 +1,44 @@
-<h2 id="table">{{title}}</h2>
+<h2 id="table">Compounds</h2>
 <table>
   <thead>
     <tr>
-      {% if keys%} {% for key in keys %}
+      {% for key in component_keys %}
       <th>{{key}}</th>
-      {% endfor %} {% endif%}
+      {% endfor %}
     </tr>
   </thead>
   <tbody>
-    {% if elements%} {% for element in elements%}
+    {% for element in components%}
     <tr>
       <td>{{ element.id }}</td>
-      {% if "name" in keys %}
       <td>{{ element.name }}</td>
       <td>{{ element.a }}</td>
       <td>{{ element.b }}</td>
       <td>{{ element.c }}</td>
-      {% else %}
-      <td>{{ element.component1 }}</td>
-      <td>{{ element.component2 }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2 id="table">Binary relations</h2>
+<table>
+  <thead>
+    <tr>
+      {% for key in relation_keys %}
+      <th>{{key}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for element in relations%}
+    <tr>
+      <td>{{ element.id }}</td>
+      <td>{{ element.component1.name }}</td>
+      <td>{{ element.component2.name }}</td>
       <td>{{ element.a12 }}</td>
       <td>{{ element.a21 }}</td>
       <td>{{ element.alpha }}</td>
-      {% endif %}
     </tr>
-    {% endfor %} {% endif%}
+    {% endfor %}
   </tbody>
 </table>
