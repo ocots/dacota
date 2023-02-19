@@ -27,7 +27,7 @@ class Component(models.Model):
 
     @staticmethod
     def fields():
-        return ["id", "name", "a", "b", "c"]
+        return ["ID", "Name", "A", "B", "C"]
 
 
 class BinaryRelation(models.Model):
@@ -72,4 +72,4 @@ class BinaryRelation(models.Model):
 
     @staticmethod
     def fields():
-        return ["id", "component1", "component2", "a12", "a21", "alpha"]
+        return ["ID", "Compound 1", "Compound 2", "A12", "A21", "Alpha"]
