@@ -13,6 +13,15 @@ h1 {
 
 }
 
+.main {
+  position: relative;
+  z-index: 999;
+}
+
+.title-bar {
+  z-index: 9999;
+}
+
 label {
   margin-right: 10px;
   /* add some spacing between the label and selector */

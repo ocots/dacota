@@ -10,11 +10,10 @@
 
 #menu.show {
   left: 0;
-  width: 60%
+  width: 50%
 }
 
 #content {
-  margin-left: 200px;
   padding: 20px;
 }
 
