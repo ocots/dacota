@@ -132,7 +132,6 @@ def add_component(request):
     """user = UserSerializer().create(
         validated_data=request.session[get_sessionId(request)]
     )"""
-    print("ADD called")
     if request.method == "POST":
         name = request.POST["name"]
         a = request.POST["a"]
@@ -220,5 +219,4 @@ def test(request):
     # c = Component(name="test", a=0, b=0, c=0)
     # c.save()
     # c.sessions.add(Session.objects.get(pk=request.session.session_key))
-    print(Session.objects.get(pk=request.session.session_key).components)
     return HttpResponse(msg)
