@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-
   /* Add a new compound */
   const addCompoundBtn = document.getElementById("add-compound-btn");
   const compoundFormContainer = document.getElementById("compound-form-container");

@@ -21,9 +21,10 @@ nav a:hover {
 /* Style pour les tableaux */
 table {
   border-collapse: collapse;
-  width: 100%;
+  width: 80%;
   max-width: 800px;
   margin: auto;
+
 }
 
 th,
@@ -40,4 +41,9 @@ th {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+.table-container {
+  margin-top: 50px;
+  align-self: center;
 }
