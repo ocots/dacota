@@ -6,6 +6,7 @@
   height: 100%;
   background-color: #ccc;
   transition: left 0.5s;
+  overflow-y: scroll;
 }
 
 #menu.show {
