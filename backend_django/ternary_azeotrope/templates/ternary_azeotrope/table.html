@@ -1,77 +1,44 @@
-
-<h2 id="table">Pure Compound table</h2>
+<h2 id="table">Compounds</h2>
 <table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>A</th>
-            <th>B</th>
-            <th>C</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Acetate</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Methanol</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Hexane</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      {% for key in component_keys %}
+      <th>{{key}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for element in components%}
+    <tr>
+      <td>{{ element.id }}</td>
+      <td>{{ element.name }}</td>
+      <td>{{ element.a }}</td>
+      <td>{{ element.b }}</td>
+      <td>{{ element.c }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
-<h2 id="interaction">Binary interaction Coefficients</h2>
+<h2 id="table">Binary relations</h2>
 <table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Compound i</th>
-            <th>Compound j</th>
-            <th>a(i,j)</th>
-            <th>a(j,i)</th>
-            <th>Alpha(i,j)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Acetate</td>
-            <td>Methanol</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Acetate</td>
-            <td>Hexane</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Methanol</td
-    <td>Hexane</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
+  <thead>
+    <tr>
+      {% for key in relation_keys %}
+      <th>{{key}}</th>
+      {% endfor %}
     </tr>
-
-</tbody>
+  </thead>
+  <tbody>
+    {% for element in relations%}
+    <tr>
+      <td>{{ element.id }}</td>
+      <td>{{ element.component1.name }}</td>
+      <td>{{ element.component2.name }}</td>
+      <td>{{ element.a12 }}</td>
+      <td>{{ element.a21 }}</td>
+      <td>{{ element.alpha }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
