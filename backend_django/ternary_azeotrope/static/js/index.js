@@ -18,12 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
   /* SPINNER CODE */
   const form = document.getElementById("components-selection");
   const spinner = document.getElementById("spinner");
-  spinner.style.display = "none";
   form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  event.preventDefault();
+  if (spinner){
     spinner.style.display = "block";
-    form.submit();
-  });
+  }
+  form.submit();
+});
+
+
 
 
   /* Add a new compound */
@@ -31,9 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const compoundFormContainer = document.getElementById("compound-form-container");
   const compoundForm = document.getElementById("compound-form");
 
-
   addCompoundBtn.addEventListener("click", () => {
-    compoundFormContainer.style.display = "block";
+    console.log("add clicked");
+    var new_state;
+    if (compoundFormContainer.style.display == "block"){
+      new_state = "none";
+    }else{
+      new_state = "block";
+    }
+    compoundFormContainer.style.display = new_state;
   });
 
   compoundForm.addEventListener("submit", (event) => {
