@@ -15,6 +15,4 @@ urlpatterns = [
         views.add_relation,
         name="add_relation",
     ),
-    path("list", views.list, name="list"),
-    path("test_session", views.test, name="test"),
 ]
