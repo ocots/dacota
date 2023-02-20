@@ -25,6 +25,10 @@ class Component(models.Model):
     def __str__(self):
         return f"{self.name.upper()} (a={self.a}, b={self.b}, c={self.c})"
 
+    @staticmethod
+    def fields():
+        return ["ID", "Name", "A", "B", "C"]
+
 
 class BinaryRelation(models.Model):
     """
@@ -65,3 +69,7 @@ class BinaryRelation(models.Model):
 
     def __str__(self):
         return self.component1.name + " - " + self.component2.name
+
+    @staticmethod
+    def fields():
+        return ["ID", "Compound 1 - Compound 2", "A12", "A21", "Alpha"]

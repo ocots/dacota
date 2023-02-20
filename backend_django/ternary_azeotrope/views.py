@@ -51,6 +51,12 @@ def index(request, valid_inputs=True, diagram=None, message=None):
             Q(sessions__pk=request.session.session_key)
             | Q(sessions__isnull=True)
         ),
+        "relations": BinaryRelation.objects.filter(
+            Q(sessions__pk=request.session.session_key)
+            | Q(sessions__isnull=True)
+        ),
+        "component_keys": Component.fields(),
+        "relation_keys": BinaryRelation.fields(),
     }
 
     # print(Session.objects.get(pk=request.session.session_key).components.all())
@@ -60,6 +66,7 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         "ternary_azeotrope/index.html",
         context,
     )
+
     # return render(request, "ternary_azeotrope/.html")
 
 
@@ -132,7 +139,6 @@ def add_component(request):
     """user = UserSerializer().create(
         validated_data=request.session[get_sessionId(request)]
     )"""
-    print("ADD called")
     if request.method == "POST":
         name = request.POST["name"]
         a = request.POST["a"]
@@ -220,5 +226,4 @@ def test(request):
     # c = Component(name="test", a=0, b=0, c=0)
     # c.save()
     # c.sessions.add(Session.objects.get(pk=request.session.session_key))
-    print(Session.objects.get(pk=request.session.session_key).components)
     return HttpResponse(msg)
