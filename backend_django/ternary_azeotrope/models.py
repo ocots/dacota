@@ -23,7 +23,7 @@ class Component(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name.upper()} (a={self.a}, b={self.b}, c={self.c})"
+        return f"{self.name} (a={self.a}, b={self.b}, c={self.c})"
 
     @staticmethod
     def fields():
