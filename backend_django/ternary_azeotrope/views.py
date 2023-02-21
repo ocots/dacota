@@ -23,10 +23,14 @@ day = 60 * 60 * 24
 
 def index(request, valid_inputs=True, diagram=None, message=None):
     if not request.session.has_key("created_in"):
+        # create a new session instance
         request.session["created_in"] = datetime.now().strftime(
             "%d/%m/%Y, %H:%M:%S"
         )
         request.session.set_expiry(7 * day)
+
+        # remove expired session
+        call_command(command_name="clean_expired_sessions")
 
     context = {
         "valid_components": valid_inputs,
@@ -46,7 +50,6 @@ def index(request, valid_inputs=True, diagram=None, message=None):
 
 
 def run(request):
-    call_command(command_name="clean_expired_sessions")
     if request.method == "POST":
         try:
             id1 = request.POST["component1"]
