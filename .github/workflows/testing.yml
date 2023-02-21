@@ -32,6 +32,11 @@ jobs:
         echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/backend_django/.env
         echo ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/backend_django/.env
         echo PORT=${{ secrets.PORT }} >> backend_django/backend_django/.env
+    - name: Coverage report
+      run: |
+        pip install coverage
+        coverage run manage.py test
+        coverage report
     - name: Run Tests
       run: |
         python backend_django/manage.py test
