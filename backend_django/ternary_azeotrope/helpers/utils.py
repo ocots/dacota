@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.sessions.models import Session
 from django.db.models import Q
 
 from ..models import BinaryRelation, Component
@@ -15,6 +16,48 @@ def relations_of_session(session_key):
     return BinaryRelation.objects.filter(
         Q(sessions__pk=session_key) | Q(sessions__isnull=True)
     )
+
+
+def delete_item(item, session_key):
+    """Remove an instance of either component or binary relation models from a session
+
+    Args:
+        item (Component | BinaryRelation): instance to remove
+        session_key (str): session id from which the instance is removed
+    """
+    nb_session = item.sessions.count()
+    print(f"number of sessions that added {item} is {nb_session}")
+    if nb_session == 0:
+        return
+
+    if nb_session == 1:
+        print("deleting ", item)
+        item.delete()
+    else:
+        item.sessions.remove(Session.objects.get(pk=session_key))
+
+
+def clear_session_data(session_key, compounds=None, relations=None):
+    """Remove all compounds and binary relations registered for a session
+    this function takes either the key of the session and look up for the elements to remove or
+    takes directly the elements in arguments
+
+    Args:
+        session_key (str): session id from which the data is removed
+        compounds (List[Component] | None) components to clear if not none
+        relation (List[BinaryRelation] | None) BinaryRelations to clear if not none
+    """
+    (compounds, relations) = compounds, relations
+
+    if not compounds and not relations:
+        compounds = compounds_of_session(session_key)
+        relations = relations_of_session(session_key)
+
+    for c in compounds:
+        delete_item(c, session_key)
+
+    for r in relations:
+        delete_item(r, session_key)
 
 
 def get_binaryRelations_fromDB(component1, component2, component3):

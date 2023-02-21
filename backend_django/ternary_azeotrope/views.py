@@ -4,6 +4,8 @@ import sys
 
 sys.path.append(".helpers")
 
+from datetime import datetime
+
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
@@ -17,8 +19,10 @@ from .helpers.utils import *
 
 
 def index(request, valid_inputs=True, diagram=None, message=None):
-    if not request.session.has_key("user_data"):
-        request.session["user_data"] = {}
+    if not request.session.has_key("created_in"):
+        request.session["created_in"] = datetime.now().strftime(
+            "%d/%m/%Y, %H:%M:%S"
+        )
 
     context = {
         "valid_components": valid_inputs,
