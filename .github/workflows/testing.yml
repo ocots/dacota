@@ -35,7 +35,7 @@ jobs:
     - name: Coverage report
       run: |
         pip install coverage
-        coverage run manage.py test
+        coverage run backend_django/manage.py test
         coverage report
     - name: Run Tests
       run: |
