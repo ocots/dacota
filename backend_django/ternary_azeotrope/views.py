@@ -23,6 +23,7 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         request.session["created_in"] = datetime.now().strftime(
             "%d/%m/%Y, %H:%M:%S"
         )
+        # request.session.set_expiry(3 * 60)
 
     context = {
         "valid_components": valid_inputs,
