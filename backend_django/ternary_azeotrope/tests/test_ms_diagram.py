@@ -44,4 +44,4 @@ class TestMS(TestCase):
             self.c1, self.c2, self.c3, self.a, self.alpha
         )
 
-        assert str(diagramLocal) == str(diagramMS)
+        assert diagramLocal == diagramMS
