@@ -10,5 +10,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.now()
         expired_sessions = Session.objects.filter(expire_date__lt=now)
+        nb = len(expired_sessions)
         expired_sessions.delete()
-        self.stdout.write(self.style.SUCCESS(f"Deleted expired sessions"))
+        self.stdout.write(self.style.SUCCESS(f"Deleted {nb} expired sessions"))
