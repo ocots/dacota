@@ -14,6 +14,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from ternary_azeotrope.models import BinaryRelation, Component
 
+from backend_django import settings
+
 from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
 from .helpers.utils import *
@@ -27,7 +29,8 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         request.session["created_in"] = datetime.now().strftime(
             "%d/%m/%Y, %H:%M:%S"
         )
-        request.session.set_expiry(7 * day)
+        # request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
+        request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
 
         # remove expired session
         call_command(command_name="clean_expired_sessions")
