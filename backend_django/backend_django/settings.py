@@ -22,6 +22,7 @@ environ.Env.read_env()
 AUTH_TOKEN = env("APP_AUTH_TOKEN")
 MS_ENDPOINT = env("ENDPOINT")
 PORT = env("PORT")
+ALLOWED_HOST = env("ALLOWED_HOST")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +39,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ALLOWED_HOST]
 
 
 # Application definition
