@@ -4,3 +4,4 @@ docker
 djangorestframework
 django-environ
 gunicorn
+coverage
