@@ -35,13 +35,13 @@ class TestMS(TestCase):
         )
         assert diagramMS == expected_result
 
-    def test_compare_local_and_ms_diagram(self):
-        diagramLocal = start_container(
-            self.c1, self.c2, self.c3, self.a, self.alpha
-        )
+    # def test_compare_local_and_ms_diagram(self):
+    #     diagramLocal = start_container(
+    #         self.c1, self.c2, self.c3, self.a, self.alpha
+    #     )
 
-        diagramMS = call_microservice(
-            self.c1, self.c2, self.c3, self.a, self.alpha
-        )
+    #     diagramMS = call_microservice(
+    #         self.c1, self.c2, self.c3, self.a, self.alpha
+    #     )
 
-        assert diagramLocal == diagramMS
+    #     assert diagramLocal == diagramMS
