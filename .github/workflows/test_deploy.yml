@@ -1,4 +1,4 @@
-name: testing
+name: Django CI CD
 
 on:
   push:
