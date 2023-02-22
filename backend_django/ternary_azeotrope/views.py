@@ -1,6 +1,7 @@
 import ast
 import json
 import sys
+from urllib.parse import urlencode
 
 sys.path.append(".helpers")
 
@@ -21,7 +22,16 @@ from .helpers.ternary_mixture import TernaryMixture
 from .helpers.utils import *
 
 
-def index(request, valid_inputs=True, diagram=None, message=None):
+def get_context(request):
+    if "context" in request.session:
+        data = request.session.get("context", {})
+        request.session.pop("context")
+        return data
+    return {}
+
+
+def index(request):
+    # check if the request comes from a new client
     if not request.session.has_key("created_in"):
         # create a new session instance
         request.session["created_in"] = datetime.now().strftime(
@@ -32,21 +42,8 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         # remove expired session
         call_command(command_name="clean_expired_sessions")
 
-    context = {
-        "valid_components": valid_inputs,
-        "diagram": diagram,
-        "message": message,
-        "components": compounds_of_session(request.session.session_key),
-        "relations": relations_of_session(request.session.session_key),
-        "component_keys": Component.fields(),
-        "relation_keys": BinaryRelation.fields(),
-    }
-
-    return render(
-        request,
-        "ternary_azeotrope/index.html",
-        context,
-    )
+    extra_context = get_context(request)
+    return render(request, "ternary_azeotrope/index.html", extra_context)
 
 
 def run(request):
@@ -78,7 +75,8 @@ def run(request):
                 alert_msg = relations_missings_msg(
                     r1, r2, r3, component1, component2, component3
                 )
-                return index(request, message=alert_msg)
+
+                request.session["context"] = {"alert_message": alert_msg}
 
             else:
                 mixture = TernaryMixture(
@@ -87,10 +85,14 @@ def run(request):
                 curves = mixture.diagram()
                 diag = get_plot(curves, mixture)
 
-                return index(request, diagram=diag)
+                request.session["context"] = {"diagram": diag}
 
         except ValueError:
-            return index(request, valid_inputs=False)
+            request.session["context"] = {
+                "alert_message": "The mixture compounds should be distinct !"
+            }
+
+        return redirect("index")
 
 
 def add_component(request):
@@ -101,19 +103,24 @@ def add_component(request):
         c = request.POST["c"]
 
         curr_session = Session.objects.get(pk=request.session.session_key)
+        msg = None
 
         if Component.objects.filter(name=name, a=a, b=b, c=c).exists():
             c = Component.objects.get(name=name, a=a, b=b, c=c)
             if not c.sessions.contains(curr_session):
                 c.sessions.add(curr_session)
                 c.save()
+                msg = f"Compound {c} added successfuly."
             else:
                 # component already available for the session
-                pass
+                msg = f"{c} already exists !"
         else:
             new_compound = Component.objects.create(name=name, a=a, b=b, c=c)
             new_compound.sessions.add(curr_session)
 
+            msg = f"Compound {new_compound} added successfuly."
+
+        request.session["context"] = {"info_message": msg}
         return HttpResponseRedirect(reverse("index"))
 
 
@@ -132,26 +139,32 @@ def add_relation(request):
         component1 = Component.objects.get(pk=component1_id)
         component2 = Component.objects.get(pk=component2_id)
 
+        msg = None
+
         if BinaryRelation.objects.filter(
             component1=component1,
             component2=component2,
-            a12=a12,
-            a21=a21,
-            alpha=alpha,
         ).exists():
             relation = BinaryRelation.objects.get(
                 component1=component1,
                 component2=component2,
-                a12=a12,
-                a21=a21,
-                alpha=alpha,
             )
-            if not relation.sessions.contains(curr_session):
-                relation.sessions.add(curr_session)
-                relation.save()
+
+            if (
+                relation.a12 == a12
+                and relation.a21 == a21
+                and relation.alpha == alpha
+            ):
+                if not relation.sessions.contains(curr_session):
+                    relation.sessions.add(curr_session)
+                    relation.save()
+                    msg = f"Binary relation {relation} added successfuly."
+                else:
+                    # relation already available for the session, a message to the user will be added later
+                    msg = f"Binary relation {relation} with the same parameters already exists !"
             else:
-                # relation already available for the session, a message to the user will be added later
-                pass
+                # unique constraint
+                msg = f"New binary relation {relation} cannot be added. please edit their parameters instead."
         else:
             relation = BinaryRelation.objects.create(
                 component1=component1,
@@ -161,5 +174,7 @@ def add_relation(request):
                 alpha=alpha,
             )
             relation.sessions.add(curr_session)
+            msg = f"Binary relation {relation} added successfuly."
 
+        request.session["context"] = {"info_message": msg}
         return redirect("index")

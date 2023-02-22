@@ -76,12 +76,11 @@ Home {%endblock%} {% block head %}
         </select>
       </div>
 
-      {% if not valid_components%}
-      <div class="alert alert-danger col-md-3" role="alert">
-        The three components are not valid.
-      </div>
-      {% elif message %}
-      <div class="alert alert-danger" role="alert">{{ message }}</div>
+
+      {% if alert_message %}
+      <div class="alert alert-danger" role="alert">{{ alert_message }}</div>
+      {% elif info_message %}
+      <div class="alert alert-info" role="alert">{{ info_message }}</div>
       {% endif %}
     </div>
 
