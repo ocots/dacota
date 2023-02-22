@@ -7,7 +7,7 @@ from .helpers import utils
 
 @receiver(pre_delete, sender=Session)
 def pre_delete_session(sender, instance, **kwargs):
-    print(f"deleting session {instance.pk} and clearing its data ...")
+    print(f"Deleting session {instance.pk} and clearing its data ...")
 
     instance = Session.objects.prefetch_related("components", "relations").get(
         pk=instance.pk
@@ -21,4 +21,4 @@ def pre_delete_session(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Session)
 def post_delete_session(sender, **kwargs):
-    print("You have just deleted a Session!!!")
+    print("A Session was deleted")
