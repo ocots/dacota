@@ -7,22 +7,32 @@ sys.path.append(".helpers")
 from datetime import datetime
 
 from django.contrib.sessions.models import Session
+from django.core.management import call_command
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from ternary_azeotrope.models import BinaryRelation, Component
 
+from backend_django import settings
+
 from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
 from .helpers.utils import *
 
+day = 60 * 60 * 24
+
 
 def index(request, valid_inputs=True, diagram=None, message=None):
     if not request.session.has_key("created_in"):
+        # create a new session instance
         request.session["created_in"] = datetime.now().strftime(
             "%d/%m/%Y, %H:%M:%S"
         )
+        request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
+
+        # remove expired session
+        call_command(command_name="clean_expired_sessions")
 
     context = {
         "valid_components": valid_inputs,

@@ -26,15 +26,14 @@ def delete_item(item, session_key):
         session_key (str): session id from which the instance is removed
     """
     nb_session = item.sessions.count()
-    print(f"number of sessions that added {item} is {nb_session}")
-    if nb_session == 0:
-        return
+    if nb_session != 0:
+        print(f"number of sessions that added {item} is {nb_session}")
 
-    if nb_session == 1:
-        print("deleting ", item)
-        item.delete()
-    else:
-        item.sessions.remove(Session.objects.get(pk=session_key))
+        if nb_session == 1:
+            print("deleting ", item)
+            item.delete()
+        else:
+            item.sessions.remove(Session.objects.get(pk=session_key))
 
 
 def clear_session_data(session_key, compounds=None, relations=None):
@@ -50,8 +49,8 @@ def clear_session_data(session_key, compounds=None, relations=None):
     (compounds, relations) = compounds, relations
 
     if not compounds and not relations:
-        compounds = compounds_of_session(session_key)
-        relations = relations_of_session(session_key)
+        compounds = Component.objects.filter(Q(sessions__pk=session_key))
+        relations = BinaryRelation.objects.filter(Q(sessions__pk=session_key))
 
     for c in compounds:
         delete_item(c, session_key)
