@@ -39,6 +39,7 @@ jobs:
         echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/backend_django/.env
         echo ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/backend_django/.env
         echo PORT=${{ secrets.PORT }} >> backend_django/backend_django/.env
+        echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/backend_django/.env
     - name: Coverage report
       run: |
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
