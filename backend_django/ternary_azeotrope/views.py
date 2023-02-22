@@ -20,8 +20,6 @@ from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
 from .helpers.utils import *
 
-day = 60 * 60 * 24
-
 
 def index(request, valid_inputs=True, diagram=None, message=None):
     if not request.session.has_key("created_in"):
@@ -102,10 +100,19 @@ def add_component(request):
         b = request.POST["b"]
         c = request.POST["c"]
 
-        new_compound = Component.objects.create(name=name, a=a, b=b, c=c)
-        new_compound.sessions.add(
-            Session.objects.get(pk=request.session.session_key)
-        )
+        curr_session = Session.objects.get(pk=request.session.session_key)
+
+        if Component.objects.filter(name=name, a=a, b=b, c=c).exists():
+            c = Component.objects.get(name=name, a=a, b=b, c=c)
+            if not c.sessions.contains(curr_session):
+                c.sessions.add(curr_session)
+                c.save()
+            else:
+                # component already available for the session
+                pass
+        else:
+            new_compound = Component.objects.create(name=name, a=a, b=b, c=c)
+            new_compound.sessions.add(curr_session)
 
         return HttpResponseRedirect(reverse("index"))
 
@@ -125,13 +132,34 @@ def add_relation(request):
         component1 = Component.objects.get(pk=component1_id)
         component2 = Component.objects.get(pk=component2_id)
 
-        relation = BinaryRelation.objects.create(
+        if BinaryRelation.objects.filter(
             component1=component1,
             component2=component2,
             a12=a12,
             a21=a21,
             alpha=alpha,
-        )
-        relation.sessions.add(curr_session)
+        ).exists():
+            relation = BinaryRelation.objects.get(
+                component1=component1,
+                component2=component2,
+                a12=a12,
+                a21=a21,
+                alpha=alpha,
+            )
+            if not relation.sessions.contains(curr_session):
+                relation.sessions.add(curr_session)
+                relation.save()
+            else:
+                # relation already available for the session, a message to the user will be added later
+                pass
+        else:
+            relation = BinaryRelation.objects.create(
+                component1=component1,
+                component2=component2,
+                a12=a12,
+                a21=a21,
+                alpha=alpha,
+            )
+            relation.sessions.add(curr_session)
 
         return redirect("index")
