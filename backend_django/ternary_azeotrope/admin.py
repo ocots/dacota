@@ -7,13 +7,13 @@ from .models import BinaryRelation, Component
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    list_display = ("name", "a", "b", "c")
+    list_display = ("id", "name", "a", "b", "c")
     filter_horizontal = ("sessions",)
 
 
 class BinaryRelationAdmin(admin.ModelAdmin):
-    list_display = ("component1", "component2", "a12", "a21", "alpha")
-    # filter_horizontal = ("components",)
+    list_display = ("id", "component1", "component2", "a12", "a21", "alpha")
+    filter_horizontal = ("sessions",)
 
 
 class SessionAdmin(admin.ModelAdmin):
