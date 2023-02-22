@@ -49,8 +49,8 @@ def clear_session_data(session_key, compounds=None, relations=None):
     (compounds, relations) = compounds, relations
 
     if not compounds and not relations:
-        compounds = compounds_of_session(session_key)
-        relations = relations_of_session(session_key)
+        compounds = Component.objects.filter(Q(sessions__pk=session_key))
+        relations = BinaryRelation.objects.filter(Q(sessions__pk=session_key))
 
     for c in compounds:
         delete_item(c, session_key)
