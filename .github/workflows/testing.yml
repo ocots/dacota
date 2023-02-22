@@ -41,6 +41,7 @@ jobs:
         echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/backend_django/.env
     - name: Coverage report
       run: |
+        ls db.sqlite3
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
         source venv/bin/activate
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
@@ -50,6 +51,7 @@ jobs:
         coverage report
     - name: Run Tests
       run: |
+        ls db.sqlite3
         source venv/bin/activate
         pwd
         cd backend_django
