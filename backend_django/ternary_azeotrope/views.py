@@ -29,7 +29,6 @@ def index(request, valid_inputs=True, diagram=None, message=None):
         request.session["created_in"] = datetime.now().strftime(
             "%d/%m/%Y, %H:%M:%S"
         )
-        # request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
         request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
 
         # remove expired session
