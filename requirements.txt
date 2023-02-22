@@ -3,3 +3,4 @@ matplotlib
 docker
 djangorestframework
 django-environ
+gunicorn
