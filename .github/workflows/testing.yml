@@ -26,7 +26,6 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
-        echo "VIRTUAL ENV:" $VIRTUAL_ENV
 
     - name: Format code with black
       run: |
@@ -41,19 +40,12 @@ jobs:
         echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/backend_django/.env
     - name: Coverage report
       run: |
-        ls db.sqlite3
-        echo "VIRTUAL ENV:" $VIRTUAL_ENV
         source venv/bin/activate
-        echo "VIRTUAL ENV:" $VIRTUAL_ENV
-        pwd
         cd backend_django
         coverage run manage.py test
         coverage report
     - name: Run Tests
       run: |
-        ls db.sqlite3
         source venv/bin/activate
-        pwd
         cd backend_django
-        pwd
         python manage.py test
