@@ -44,9 +44,11 @@ jobs:
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
         source venv/bin/activate
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
+        pwd
         coverage run backend_django/manage.py test
         coverage report
     - name: Run Tests
       run: |
         source venv/bin/activate
+        pwd
         python backend_django/manage.py test
