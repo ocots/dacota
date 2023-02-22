@@ -31,6 +31,7 @@ jobs:
 
     - name: Format code with black
       run: |
+        source venv/bin/activate
         black .
     - name: 'Create env file'
       run: |
@@ -41,8 +42,11 @@ jobs:
     - name: Coverage report
       run: |
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
+        source venv/bin/activate
+        echo "VIRTUAL ENV:" $VIRTUAL_ENV
         coverage run backend_django/manage.py test
         coverage report
     - name: Run Tests
       run: |
+        source venv/bin/activate
         python backend_django/manage.py test
