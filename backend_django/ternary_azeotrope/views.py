@@ -43,6 +43,8 @@ def index(request):
         call_command(command_name="clean_expired_sessions")
 
     extra_context = get_context(request)
+    # graph = json.dumps(load_json("graph.json"))
+    # return render(request, "ternary_azeotrope/chart.html", {"graph": graph})
     return render(request, "ternary_azeotrope/index.html", extra_context)
 
 
