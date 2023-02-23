@@ -179,3 +179,38 @@ def add_relation(request):
 
         request.session["context"] = {"info_message": msg}
         return redirect("index")
+
+
+def edit_relation(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        a12 = float(request.POST.get("a12"))
+        a21 = float(request.POST.get("a21"))
+        alpha = float(request.POST.get("alpha"))
+
+        relation = BinaryRelation.objects.get(pk=id)
+        new_vals = {
+            "component1": request.POST.get("component1"),
+            "component2": request.POST.get("component2"),
+            "a12": a12,
+            "a21": a21,
+            "alpha": alpha,
+        }
+        edit_element(request.session.session_key, relation, new_vals)
+
+        return redirect("index")
+
+
+def edit_component(request):
+    if request.method == "POST":
+        id = request.POST["id"]
+        name = request.POST["name"]
+        a = request.POST["a"]
+        b = request.POST["b"]
+        c = request.POST["c"]
+
+        component = Component.objects.get(pk=id)
+        new_vals = {"name": name, "a": a, "b": b, "c": c}
+        edit_element(request.session.session_key, component, new_vals)
+
+        return redirect("index")
