@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<div class="table-container">
+		<h2 id="table">Compounds</h2>
+		<input type="text" id="compound-filter" placeholder="Search for a compound..."><br><br>
+		<table id="compound-table">
+			<thead>
+				<tr>
+					{% for key in component_keys %}
+					<th>{{key}}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for element in components %}
+				<tr>
+					<td>{{ element.id }}</td>
+					<td>{{ element.name }}</td>
+					<td>{{ element.a }}</td>
+					<td>{{ element.b }}</td>
+					<td>{{ element.c }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="table-container">
+		<h2 id="table">Binary relations</h2>
+    <input type="text" id="search" onkeyup="perform_search()" placeholder="Search for compounds...">
+    <table id="binary-relations-table">
+			<thead>
+				<tr>
+					{% for key in relation_keys %}
+					<th>{{key}}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for element in relations %}
+				<tr>
+					<td>{{ element.id }}</td>
+					<td>{{ element.component1.name }}</td>
+					<td>{{ element.component2.name }}</td>
+					<td>{{ element.a12 }}</td>
+					<td>{{ element.a21 }}</td>
+					<td>{{ element.alpha }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<script type="text/javascript">
+		// Get the input field and table
+		let filterInput = document.getElementById("compound-filter");
+		let table = document.getElementById("compound-table");
+
+		// Add event listener for input
+		filterInput.addEventListener("keyup", function() {
+			let filterValue = filterInput.value.toLowerCase();
+
+			// Loop through table rows
+			for (let i = 1; i < table.rows.length; i++) {
+				let row = table.rows[i];
+				let name = row.cells[1].innerText.toLowerCase();
+
+				if (name.indexOf(filterValue) > -1) {
+					row.style.display = "";
+				} else {
+					row.style.display = "none";
+				}
+			}
+		});
+	</script>
+    <script>
+      function perform_search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("binary-relations-table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td1 = tr[i].getElementsByTagName("td")[1];
+          td2 = tr[i].getElementsByTagName("td")[2];
+          if (td1 || td2) {
+            txtValue1 = td1.textContent || td1.innerText;
+            txtValue2 = td2.textContent || td2.innerText;
+            if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+
+</body>
+</html>
+=======
+<div class="table-container">
+  <h2 id="table">Antoine model compounds</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for key in component_keys %}
+        <th>{{key}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for element in components%}
+      <tr>
+        <td>{{ element.id }}</td>
+        <td>{{ element.name }}</td>
+        <td>{{ element.a }}</td>
+        <td>{{ element.b }}</td>
+        <td>{{ element.c }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="table-container">
+  <h2 id="table">NRTL Binary relations</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for key in relation_keys %}
+        <th>{{key}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for element in relations%}
+      <tr>
+        <td>{{ element.id }}</td>
+        <td>{{ element.component1.name}} - {{element.component2.name }}</td>
+        <td>{{ element.a12 }}</td>
+        <td>{{ element.a21 }}</td>
+        <td>{{ element.alpha }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

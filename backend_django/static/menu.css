@@ -1,0 +1,60 @@
+#menu {
+  position: fixed;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background-color: #ccc;
+  transition: left 0.5s;
+  overflow-y: scroll;
+}
+
+#menu.show {
+  left: 0;
+  width: 50%
+}
+
+#content {
+  padding: 20px;
+}
+
+#menu-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+p {
+  color: rgb(174, 123, 27);
+}
+
+#menu-close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+#menu-close-icon i {
+  color: white !important;
+}
+
+.back-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.back-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

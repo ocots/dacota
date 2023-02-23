@@ -1,3 +1,4 @@
+from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -17,9 +18,16 @@ class Component(models.Model):
     a = models.FloatField()
     b = models.FloatField()
     c = models.FloatField()
+    sessions = models.ManyToManyField(
+        Session, blank=True, related_name="components"
+    )
 
     def __str__(self):
         return f"{self.name} (a={self.a}, b={self.b}, c={self.c})"
+
+    @staticmethod
+    def fields():
+        return ["ID", "Name", "A", "B", "C"]
 
 
 class BinaryRelation(models.Model):
@@ -43,6 +51,9 @@ class BinaryRelation(models.Model):
     a12 = models.FloatField()
     a21 = models.FloatField()
     alpha = models.FloatField()
+    sessions = models.ManyToManyField(
+        Session, blank=True, related_name="relations"
+    )
 
     class Meta:
         constraints = [
@@ -58,3 +69,7 @@ class BinaryRelation(models.Model):
 
     def __str__(self):
         return self.component1.name + " - " + self.component2.name
+
+    @staticmethod
+    def fields():
+        return ["ID", "Compound 1", "Compound 2", "A12", "A21", "Alpha"]

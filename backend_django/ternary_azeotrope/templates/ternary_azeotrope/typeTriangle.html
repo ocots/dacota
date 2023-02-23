@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'typeTriangle.css' %}" />
+<script
+  type="text/javascript"
+  src="{% static 'js/typeTriangle.js'%}"
+  charset="utf-8"
+></script>
+
+<button class="btn btn-primary" onclick="toggleButton(this)">
+  <span>Cartesian</span>
+</button>
+<button class="btn btn-secondary" onclick="toggleButton(this)">
+  <span>Orthogonal</span>
+</button>

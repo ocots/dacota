@@ -2,46 +2,167 @@
 Home {%endblock%} {% block head %}
 
 <link rel="stylesheet" href="{% static 'index.css' %}" />
+<script
+  type="text/javascript"
+  src="{% static 'js/index.js'%}"
+  charset="utf-8"
+></script>
+<link rel="stylesheet" type="text/css" href="{% static 'menu.css' %}" />
+<script
+  type="text/javascript"
+  src="{% static 'js/menu.js' %}"
+  charset="utf-8"
+></script>
 
 {% endblock %} {% block content %}
+<div class="title-bar">
+  {% include "ternary_azeotrope/menu.html" %}
+  <div class="bar"></div>
+  <h1 class="title">
+    Ternary univolatility diagram generator
+  </h1>
+  <div class="bar"></div>
+</div>
 
-<form action="{% url 'run' %}" method="post" class="container text-center">
-  {% csrf_token %}
-  <div id="componenetsSelection">
-    <div class="component">
-      <select name="component1" class="form-select">
-        <option selected>Choose component 1</option>
-        {% for component in components%}
-        <option value="{{component.id}}">{{component}}</option>
-        {% endfor %}
-      </select>
+<div id="main">
+  <form
+    action="{% url 'run' %}"
+    method="post"
+    class="container text-center"
+    id="components-selection"
+  >
+    {% csrf_token %}
+    <div id="componenetsSelection">
+      <div class="component">
+        <label for="my-select">Compound 1:</label>
+        <select name="component1" class="form-select">
+          {% for component in components%}
+          <option value="{{component.id}}">{{component}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="component">
+        <label for="my-select">Compound 2:</label>
+        <select name="component2" class="form-select">
+          {% for component in components%}
+          <option value="{{component.id}}">{{component}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="component">
+        <label for="my-select">Compound 3:</label>
+        <select name="component3" class="form-select">
+          {% for component in components%}
+          <option value="{{component.id}}">{{component}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="component">
+        <label for="my-select"
+          >Vapor pressure-Temperature equation</label>
+        <select name="component4" class="form-select blocked" disabled>
+
+          <option selected>ANTOINE</option>
+        </select>
+      </div>
+
+      <div class="component">
+
+        <label for="my-select">Thermodynamic model</label>
+        <select name="component5" class="form-select blocked" disabled>
+          <option selected>NRTL</option>
+        </select>
+      </div>
+
+
+      {% if alert_message %}
+      <div class="alert alert-danger" role="alert">{{ alert_message }}</div>
+      {% elif info_message %}
+      <div class="alert alert-info" role="alert">{{ info_message }}</div>
+      {% endif %}
     </div>
 
-    <div class="component">
-      <select name="component2" class="form-select">
-        <option selected>Choose component 2</option>
-        {% for component in components%}
-        <option value="{{component.id}}">{{component}}</option>
-        {% endfor %}
-      </select>
-    </div>
+    <input id="submit-btn" type="submit" value="Run" class="btn btn-primary" />
+    <input
+      id="add-compound-btn"
+      type="button"
+      value="Add new compound"
+      class="btn btn-primary"
+    />
 
-    <div class="component">
-      <select name="component3" class="form-select">
-        <option selected>Choose component 3</option>
-        {% for component in components%}
-        <option value="{{component.id}}">{{component}}</option>
-        {% endfor %}
-      </select>
-    </div>
+    <input
+      id="add-relation-btn"
+      type="button"
+      value="Add new binary relation"
+      class="btn btn-primary"
+    />
+  </form>
 
-    {% if not valid_components%}
-    <div class="alert alert-danger col-md-3" role="alert">
-      The three components are not valid.
+  <div class="d-flex justify-content-center">
+    <div id="compound-form-container" style="display: none">
+      <form id="compound-form" action="{% url 'add_component' %}" method="post">
+        {% csrf_token %}
+        <input
+          type="text"
+          id="name-input"
+          placeholder="Compound Name"
+          name="name"
+          required
+        />
+
+        <input type="text" id="a-input" placeholder="A" name="a" required />
+        <input type="text" id="b-input" name="b" placeholder="B" required />
+        <input type="text" id="c-input" name="c" placeholder="C" required />
+        <input type="submit" value="Save" class="btn btn-primary" />
+      </form>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <div id="relation-form-container" style="display: none">
+      <form id="relation-form" action="{% url 'add_relation' %}" method="post">
+        {% csrf_token %}
+        <select name="component1" class="form-select" required>
+          {% for component in components %}
+          <option value="{{ component.pk }}">{{ component.name }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="component2" class="form-select" required>
+          {% for component in components %}
+          <option value="{{ component.pk }}">{{ component.name }}</option>
+          {% endfor %}
+        </select>
+
+        <input type="number" step="any" name="a12" placeholder="A12" required />
+        <input type="number" step="any" name="a21" placeholder="A21" required />
+        <input
+          type="number"
+          step="any"
+          name="alpha"
+          placeholder="Alpha"
+          required
+        />
+        <input type="submit" value="Save" class="btn btn-primary" />
+      </form>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center" id="diagram-container">
+    {% if curves %}
+    {% include "ternary_azeotrope/chart.html"%}
+    {% else %}
+    <div
+      id="spinner"
+      class="spinner-border text-primary"
+      role="status"
+      style="none"
+    ></div>
     {% endif %}
   </div>
 
-  <input type="submit" value="Run" class="btn btn-primary" />
-</form>
-{% endblock%}
+</div>
+</div>
+{%endblock%}

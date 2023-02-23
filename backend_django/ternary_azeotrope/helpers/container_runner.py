@@ -1,8 +1,9 @@
 import json
 
 import docker
+from ternary_azeotrope.helpers.utils import formatParameters
 
-from ...backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
+from backend_django.settings import CONTAINER_LANGUAGE, ContainerLanguage
 
 
 def start_container(c1, c2, c3, a, alpha):
@@ -12,10 +13,12 @@ def start_container(c1, c2, c3, a, alpha):
     If the language is Julia, the `start_julia_container` function is called.
     If the language is unknown, an Exception is raised.
     """
+    sc1, sc2, sc3, sa, salpha = formatParameters(c1, c2, c3, a, alpha)
+
     if CONTAINER_LANGUAGE == ContainerLanguage.PYTHON:
-        start_python_container(c1, c2, c3, a, alpha)
+        return start_python_container(sc1, sc2, sc3, sa, salpha)
     elif CONTAINER_LANGUAGE == ContainerLanguage.JULIA:
-        start_julia_container(c1, c2, c3, a, alpha)
+        return start_julia_container(c1, c2, c3, a, alpha)
     else:
         raise Exception("Unknown container language")
 
@@ -37,7 +40,6 @@ def start_python_container(c1, c2, c3, a, alpha):
         stdout=True,
     )
     curve_list = json.loads(container.decode("utf-8"))
-
     return curve_list
 
 

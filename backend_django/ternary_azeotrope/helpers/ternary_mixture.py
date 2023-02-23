@@ -1,6 +1,6 @@
-from container_runner import start_container
-
 from ..models import BinaryRelation
+from .container_runner import start_container
+from .diagram_calculator import calculate_diagram
 
 
 class TernaryMixture:
@@ -19,27 +19,30 @@ class TernaryMixture:
         diagram(self) : Computes and returns the ternary diagram for the mixture.
     """
 
-    def __init__(self, component1, component2, component3):
+    def __init__(
+        self,
+        component1,
+        component2,
+        component3,
+        binary_relations1,
+        binary_relations2,
+        binary_relations3,
+    ):
         self.component1 = component1
         self.component2 = component2
         self.component3 = component3
+        # Binary relations are stored in a list of 3 elements in the following order:
+        # [component1, component2], [component2, component3], [component1, component3]
         self.binary_relations = [
-            BinaryRelation.objects.get(
-                component1=component1, component2=component2
-            ),
-            BinaryRelation.objects.get(
-                component2=component2, component1=component3
-            ),
-            BinaryRelation.objects.get(
-                component1=component1, component3=component3
-            ),
+            binary_relations1,
+            binary_relations2,
+            binary_relations3,
         ]
 
     def diagram(self):
         c1, c2, c3, a, alpha = self.getParameterForDiagram()
-        sc1, sc2, sc3, sa, salpha = self.formatParameters(c1, c2, c3, a, alpha)
         # Call start_container method to generate the curves
-        curve_list = start_container(sc1, sc2, sc3, sa, salpha)
+        curve_list = calculate_diagram(c1, c2, c3, a, alpha)
         return curve_list
 
     def getParameterForDiagram(self):
@@ -62,21 +65,6 @@ class TernaryMixture:
         alpha[0][2] = alpha[2][0] = self.binary_relations[2].alpha
 
         return c1, c2, c3, a, alpha
-
-    def formatParameters(self, c1, c2, c3, a, alpha):
-        c1Formatted = f"'{c1}'"
-        c2Formatted = f"'{c2}'"
-        c3Formatted = f"'{c3}'"
-        aFormatted = f"'{a}'"
-        alphaFormatted = f"'{alpha}'"
-
-        return (
-            c1Formatted,
-            c2Formatted,
-            c3Formatted,
-            aFormatted,
-            alphaFormatted,
-        )
 
     def __str__(self):
         return (

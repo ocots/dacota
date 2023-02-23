@@ -10,7 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
+# Raises django's ImproperlyConfigured exception if AUTH_TOKEN not in os.environ
+AUTH_TOKEN = env("APP_AUTH_TOKEN")
+MS_ENDPOINT = env("ENDPOINT")
+PORT = env("PORT")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ternary_azeotrope",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -65,6 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "ternary_azeotrope.context_processor.common_context",
             ],
         },
     },
@@ -118,18 +132,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "ternary_azeotrope/static/"
+STATIC_URL = "/static/"
+if not DEBUG:
+    STATIC_ROOT = BASE_DIR / "static"
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Define a class that contains the possible values for the container language
+# This variable is used to determine if we calculate the diagram locally or not
+LOCAL = 0
+
+
+# The following contains the variables used to determine the container language
 class ContainerLanguage:
     PYTHON = "python"
     JULIA = "julia"
 
 
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
+
+
+SESSION_EXPIRY_DURATION = 7 * (60 * 60 * 24)

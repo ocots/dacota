@@ -1,0 +1,72 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  #myChart {
+    width: 800px;
+    /* height: 00px; */
+  }
+</style>
+
+<canvas id="myChart"></canvas>
+<script>
+  const ctx = document.getElementById("myChart");
+
+  // The following data is used to create the triangle that contains the curves
+  x = [0, 1, 0, 0];
+  y = [0, 0, 1, 0];
+  baseTriangle = [
+    { x: 0, y: 0 },
+    { x: 1, y: 0 },
+    { x: 0, y: 1 },
+    { x: 0, y: 0 },
+  ];
+  datasets = [
+    {
+      data: baseTriangle,
+      showLine: true,
+      borderColor: "black",
+    },
+  ];
+
+  function createXYValues(x, y) {
+    xyValues = [];
+    for (var i = 0; i < x.length; i++) {
+      xyValues.push({ x: x[i], y: y[i] });
+    }
+    return xyValues;
+  }
+
+  function draw() {
+    const graph = "{{curves}}";
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(graph, "text/html");
+    const jsonEncodedString = doc.documentElement.textContent;
+
+    //console.log(jsonEncodedString);
+    curve_list = JSON.parse(jsonEncodedString);
+
+    for (var i = 0; i < curve_list.length; i++) {
+      x = curve_list[i]["x1"];
+      y = curve_list[i]["x2"];
+      xyValues = createXYValues(x, y);
+
+      datasets.push({
+        data: xyValues,
+        showLine: true,
+        borderColor: "black",
+      });
+    }
+    new Chart(ctx, {
+      type: "scatter",
+      data: {
+        datasets: datasets,
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+      },
+    });
+  }
+
+  draw();
+</script>
