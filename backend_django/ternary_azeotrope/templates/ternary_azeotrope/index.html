@@ -19,7 +19,7 @@ Home {%endblock%} {% block head %}
   {% include "ternary_azeotrope/menu.html" %}
   <div class="bar"></div>
   <h1 class="title">
-    Ternary  univolatility diagram generator
+    Ternary univolatility diagram generator
   </h1>
   <div class="bar"></div>
 </div>
@@ -62,16 +62,17 @@ Home {%endblock%} {% block head %}
 
       <div class="component">
         <label for="my-select"
-          >Vapor pressure-Temperature equation</label
-        >
-        <select name="component4" class="form-select">
+          >Vapor pressure-Temperature equation</label>
+        <select name="component4" class="form-select blocked" disabled>
+
           <option selected>ANTOINE</option>
         </select>
       </div>
 
       <div class="component">
+
         <label for="my-select">Thermodynamic model</label>
-        <select name="component5" class="form-select">
+        <select name="component5" class="form-select blocked" disabled>
           <option selected>NRTL</option>
         </select>
       </div>
