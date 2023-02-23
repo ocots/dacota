@@ -3,6 +3,7 @@ h1 {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 50px;
+
 }
 
 .component {
@@ -13,10 +14,15 @@ h1 {
 
 }
 
+
+
 .main {
   position: relative;
   z-index: 999;
 }
+
+
+
 
 .title-bar {
   z-index: 9999;
@@ -41,6 +47,9 @@ label {
 select {
   flex: 1;
   margin-right: 10px;
+}
+.blocked {
+  opacity: 0.6;
 }
 
 
@@ -143,20 +152,11 @@ select {
   margin-bottom: 20px;
 }
 
-.btn-secondary {
-  background-color: #182520;
-  color: white;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
 
 .btn-primary.clicked {
   background-color: #05125a;
 }
 
-.btn-secondary.clicked {
-  background-color: #05125a;
-}
 
 .btn span {
   position: relative;
