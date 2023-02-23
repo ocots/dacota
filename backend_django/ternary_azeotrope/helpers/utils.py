@@ -15,7 +15,7 @@ def compounds_of_session(session_key):
 def relations_of_session(session_key):
     return BinaryRelation.objects.filter(
         Q(sessions__pk=session_key) | Q(sessions__isnull=True)
-    )
+    ).order_by("component1")
 
 
 def delete_item(item, session_key):
