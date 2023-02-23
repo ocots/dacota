@@ -72,4 +72,4 @@ class BinaryRelation(models.Model):
 
     @staticmethod
     def fields():
-        return ["ID", "Compound 1 - Compound 2", "A12", "A21", "Alpha"]
+        return ["ID", "Compound 1", "Compound 2", "A12", "A21", "Alpha"]
