@@ -1,34 +1,36 @@
-<!DOCTYPE html>
 <html>
-<body>
+  <body>
+    <div class="table-container">
+      <h2 id="table">Compounds for Antoine model</h2>
+      <input
+        type="text"
+        id="compound-filter"
+        placeholder="Search for a compound..."
+      /><br /><br />
+      <table id="compound-table">
+        <thead>
+          <tr>
+            {% for key in component_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in components %}
+          <tr>
+            <td>{{ element.id }}</td>
+            <td>{{ element.name }}</td>
+            <td>{{ element.a }}</td>
+            <td>{{ element.b }}</td>
+            <td>{{ element.c }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
 	<div class="table-container">
-		<h2 id="table">Antoine model compounds</h2>
-		<input type="text" id="compound-filter" placeholder="Search for a compound..."><br><br>
-		<table id="compound-table">
-			<thead>
-				<tr>
-					{% for key in component_keys %}
-					<th>{{key}}</th>
-					{% endfor %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for element in components %}
-				<tr>
-					<td>{{ element.id }}</td>
-					<td>{{ element.name }}</td>
-					<td>{{ element.a }}</td>
-					<td>{{ element.b }}</td>
-					<td>{{ element.c }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-
-	<div class="table-container">
-		<h2 id="table">NRTL Binary relations</h2>
+		<h2 id="table">Binary relations</h2>
     <input type="text" id="search" onkeyup="perform_search()" placeholder="Search for compounds...">
     <table id="binary-relations-table">
 			<thead>
@@ -53,29 +55,28 @@
 		</table>
 	</div>
 
-	<script type="text/javascript">
-		// Get the input field and table
-		let filterInput = document.getElementById("compound-filter");
-		let table = document.getElementById("compound-table");
+    <script type="text/javascript">
+      // Get the input field and table
+      let filterInput = document.getElementById("compound-filter");
+      let table = document.getElementById("compound-table");
 
-		// Add event listener for input
-		filterInput.addEventListener("keyup", function() {
-			let filterValue = filterInput.value.toLowerCase();
+      // Add event listener for input
+      filterInput.addEventListener("keyup", function () {
+        let filterValue = filterInput.value.toLowerCase();
 
-			// Loop through table rows
-			for (let i = 1; i < table.rows.length; i++) {
-				let row = table.rows[i];
-				let name = row.cells[1].innerText.toLowerCase();
+        // Loop through table rows
+        for (let i = 1; i < table.rows.length; i++) {
+          let row = table.rows[i];
+          let name = row.cells[1].innerText.toLowerCase();
 
-				if (name.indexOf(filterValue) > -1) {
-					row.style.display = "";
-				} else {
-					row.style.display = "none";
-				}
-			}
-		});
-	</script>
-    <script>
+          if (name.indexOf(filterValue) > -1) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        }
+      });
+
       function perform_search() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search");
@@ -88,7 +89,10 @@
           if (td1 || td2) {
             txtValue1 = td1.textContent || td1.innerText;
             txtValue2 = td2.textContent || td2.innerText;
-            if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+            if (
+              txtValue1.toUpperCase().indexOf(filter) > -1 ||
+              txtValue2.toUpperCase().indexOf(filter) > -1
+            ) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
@@ -97,6 +101,5 @@
         }
       }
     </script>
-
-</body>
+  </body>
 </html>
