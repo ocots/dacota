@@ -73,7 +73,7 @@ class TestSessions(TestCase):
         # test that predifined elements in database are available to client
         self.assertEqual(
             list(utils.compounds_of_session(client_id)),
-            [self.acetone, self.chloroforme, self.benzene],
+            [self.acetone, self.benzene, self.chloroforme],
         )
 
         self.assertEqual(
@@ -123,12 +123,12 @@ class TestSessions(TestCase):
         added_c1 = Component.objects.get(name="compound1", a=0, b=0, c=0)
         self.assertEqual(
             list(utils.compounds_of_session(client1_id)),
-            [self.acetone, self.chloroforme, self.benzene, added_c1],
+            [self.acetone, self.benzene, self.chloroforme, added_c1],
         )
 
         self.assertEqual(
             list(utils.compounds_of_session(client2_id)),
-            [self.acetone, self.chloroforme, self.benzene],
+            [self.acetone, self.benzene, self.chloroforme],
         )
 
         session1 = Session.objects.get(pk=client1_id)
@@ -180,7 +180,7 @@ class TestSessions(TestCase):
         c2 = Component.objects.get(name="compound2")
         self.assertEqual(
             list(utils.compounds_of_session(client1_id)),
-            [self.acetone, self.chloroforme, self.benzene, c1, c2],
+            [self.acetone, self.benzene, self.chloroforme, c1, c2],
         )
 
         client2 = Client()
