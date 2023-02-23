@@ -24,6 +24,13 @@ Home {%endblock%} {% block head %}
 
 <div id="index-content">
   <div id="main">
+    <div class="model">
+      <label>Pessure-Temperature equation</label>
+      <span class="value">ANTOINE</span>
+      <label>Thermodynamic model</label>
+      <span class="value">NRTL</span>
+    </div>
+
     <form
       action="{% url 'run' %}"
       method="post"
@@ -56,20 +63,6 @@ Home {%endblock%} {% block head %}
             {% for component in components%}
             <option value="{{component.id}}">{{component}}</option>
             {% endfor %}
-          </select>
-        </div>
-
-        <div class="component">
-          <label for="my-select">Vapor pressure-Temperature equation</label>
-          <select name="component4" class="form-select blocked" disabled>
-            <option selected>ANTOINE</option>
-          </select>
-        </div>
-
-        <div class="component">
-          <label for="my-select">Thermodynamic model</label>
-          <select name="component5" class="form-select blocked" disabled>
-            <option selected>NRTL</option>
           </select>
         </div>
 
@@ -117,9 +110,9 @@ Home {%endblock%} {% block head %}
             required
           />
 
-          <input type="text" id="a-input" placeholder="A" name="a" required />
-          <input type="text" id="b-input" name="b" placeholder="B" required />
-          <input type="text" id="c-input" name="c" placeholder="C" required />
+          <input type="number" id="a-input" placeholder="A" name="a" required />
+          <input type="number" id="b-input" name="b" placeholder="B" required />
+          <input type="number" id="c-input" name="c" placeholder="C" required />
           <input type="submit" value="Save" class="btn btn-primary" />
         </form>
       </div>

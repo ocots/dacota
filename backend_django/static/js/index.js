@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   menuIcon.addEventListener("click", function () {
     menu.classList.toggle("show");
+
   });
 
   var menuToggleIcon = document.getElementById("menu-icons");
