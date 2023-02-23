@@ -43,8 +43,6 @@ def index(request):
         call_command(command_name="clean_expired_sessions")
 
     extra_context = get_context(request)
-    # graph = json.dumps(load_json("graph.json"))
-    # return render(request, "ternary_azeotrope/chart.html", {"graph": graph})
     return render(request, "ternary_azeotrope/index.html", extra_context)
 
 
@@ -85,9 +83,10 @@ def run(request):
                     component1, component2, component3, r1[0], r2[0], r3[0]
                 )
                 curves = mixture.diagram()
-                diag = get_plot(curves, mixture)
+                curves = json.dumps(curves)
+                # diag = get_plot(curves, mixture)
 
-                request.session["context"] = {"diagram": diag}
+                request.session["context"] = {"curves": curves}
 
         except ValueError:
             request.session["context"] = {
