@@ -61,18 +61,33 @@ def clear_session_data(session_key, compounds=None, relations=None):
         delete_item(r, session_key)
 
 
-def get_binaryRelations_fromDB(component1, component2, component3):
-    r1 = BinaryRelation.objects.get(
-        component1=component1, component2=component2
-    )
-    r2 = BinaryRelation.objects.get(
-        component1=component2, component2=component3
-    )
-    r3 = BinaryRelation.objects.get(
-        component1=component1, component2=component3
-    )
+def edit_element(session_id, instance, new_data):
+    nb_session = instance.sessions.count()
 
-    return r1, r2, r3
+    # component added only in current session
+    if nb_session == 1:
+        for attr, val in new_data.items():
+            setattr(instance, attr, val)
+            instance.save()
+
+    # same component was added in different sessions
+    elif nb_session > 1:
+        curr_session = Session.objects.get(pk=session_id)
+        instance.sessions.remove(curr_session)
+        new_instance = (
+            Component()
+            if isinstance(instance, Component)
+            else BinaryRelation()
+        )
+        for attr, val in new_data.items():
+            setattr(new_instance, attr, val)
+
+        new_instance.save()
+        new_instance.sessions.add(curr_session)
+
+    else:
+        # cannot edit predefined elements
+        pass
 
 
 def get_relations(session_id, component1, component2, component3):
@@ -128,3 +143,17 @@ def formatParameters(c1, c2, c3, a, alpha):
         aFormatted,
         alphaFormatted,
     )
+
+
+def get_binaryRelations_fromDB(component1, component2, component3):
+    r1 = BinaryRelation.objects.get(
+        component1=component1, component2=component2
+    )
+    r2 = BinaryRelation.objects.get(
+        component1=component2, component2=component3
+    )
+    r3 = BinaryRelation.objects.get(
+        component1=component1, component2=component3
+    )
+
+    return r1, r2, r3
