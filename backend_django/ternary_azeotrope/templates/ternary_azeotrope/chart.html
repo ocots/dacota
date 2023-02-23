@@ -36,12 +36,12 @@
   }
 
   function draw() {
-    const graph = "{{graph}}";
+    const graph = "{{curves}}";
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
     const jsonEncodedString = doc.documentElement.textContent;
 
-    console.log(jsonEncodedString);
+    //console.log(jsonEncodedString);
     curve_list = JSON.parse(jsonEncodedString);
 
     for (var i = 0; i < curve_list.length; i++) {

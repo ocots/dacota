@@ -100,3 +100,51 @@
 
 </body>
 </html>
+=======
+<div class="table-container">
+  <h2 id="table">Antoine model compounds</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for key in component_keys %}
+        <th>{{key}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for element in components%}
+      <tr>
+        <td>{{ element.id }}</td>
+        <td>{{ element.name }}</td>
+        <td>{{ element.a }}</td>
+        <td>{{ element.b }}</td>
+        <td>{{ element.c }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="table-container">
+  <h2 id="table">NRTL Binary relations</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for key in relation_keys %}
+        <th>{{key}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for element in relations%}
+      <tr>
+        <td>{{ element.id }}</td>
+        <td>{{ element.component1.name}} - {{element.component2.name }}</td>
+        <td>{{ element.a12 }}</td>
+        <td>{{ element.a21 }}</td>
+        <td>{{ element.alpha }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

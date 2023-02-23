@@ -19,7 +19,7 @@ Home {%endblock%} {% block head %}
   {% include "ternary_azeotrope/menu.html" %}
   <div class="bar"></div>
   <h1 class="title">
-    Generate univolatility diagrams of ternary mixtures in Thermodynamic
+    Ternary univolatility diagram generator
   </h1>
   <div class="bar"></div>
 </div>
@@ -34,7 +34,7 @@ Home {%endblock%} {% block head %}
     {% csrf_token %}
     <div id="componenetsSelection">
       <div class="component">
-        <label for="my-select">Select compound 1:</label>
+        <label for="my-select">Compound 1:</label>
         <select name="component1" class="form-select">
           {% for component in components%}
           <option value="{{component.id}}">{{component}}</option>
@@ -43,7 +43,7 @@ Home {%endblock%} {% block head %}
       </div>
 
       <div class="component">
-        <label for="my-select">Select compound 2:</label>
+        <label for="my-select">Compound 2:</label>
         <select name="component2" class="form-select">
           {% for component in components%}
           <option value="{{component.id}}">{{component}}</option>
@@ -52,7 +52,7 @@ Home {%endblock%} {% block head %}
       </div>
 
       <div class="component">
-        <label for="my-select">Select compound 3:</label>
+        <label for="my-select">Compound 3:</label>
         <select name="component3" class="form-select">
           {% for component in components%}
           <option value="{{component.id}}">{{component}}</option>
@@ -62,16 +62,17 @@ Home {%endblock%} {% block head %}
 
       <div class="component">
         <label for="my-select"
-          >Choose Vapor pressure-Temperature equation model:</label
-        >
-        <select name="component4" class="form-select">
+          >Vapor pressure-Temperature equation</label>
+        <select name="component4" class="form-select blocked" disabled>
+
           <option selected>ANTOINE</option>
         </select>
       </div>
 
       <div class="component">
-        <label for="my-select">Choose Thermodynamic model:</label>
-        <select name="component5" class="form-select">
+
+        <label for="my-select">Thermodynamic model</label>
+        <select name="component5" class="form-select blocked" disabled>
           <option selected>NRTL</option>
         </select>
       </div>
@@ -150,12 +151,8 @@ Home {%endblock%} {% block head %}
     </div>
   </div>
   <div class="d-flex justify-content-center" id="diagram-container">
-    {% if diagram %}
-    <img
-      src="data:image/png;base64, {{diagram|safe}}"
-      class="img-fluid"
-      alt="Responsive image"
-    />
+    {% if curves %}
+    {% include "ternary_azeotrope/chart.html"%}
     {% else %}
     <div
       id="spinner"
