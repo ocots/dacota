@@ -252,3 +252,24 @@ select {
 #compound-form input[type="text"] {
   width: 180px;
 }
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background-color: #cae5db;
+
+}
+
+.radio-group input[type="radio"]:checked + label {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
