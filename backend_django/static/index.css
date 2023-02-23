@@ -3,7 +3,6 @@ h1 {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 50px;
-
 }
 
 .component {
@@ -14,23 +13,26 @@ h1 {
 
 }
 
+#index-content {
+  display: flex;
+  flex-direction: row;
+}
 
-
-.main {
+#main {
   position: relative;
   z-index: 999;
+  width: 50%;
+  padding: 20px;
 }
 
-
-
-
-.title-bar {
-  z-index: 9999;
+#diagram-container {
+  width: 50%;
+  padding: 20px;
 }
+
 
 label {
   margin-right: 10px;
-  /* add some spacing between the label and selector */
   width: 200px;
   background-color: #cae5db;
   padding: 10px;
@@ -43,19 +45,20 @@ label {
 }
 
 
-
 select {
   flex: 1;
   margin-right: 10px;
 }
+
 .blocked {
   opacity: 0.6;
 }
 
-
 #spinner {
   margin-top: 30px;
   display: none;
+  position: absolute;
+  left: 50%;
 }
 
 .title-bar {
@@ -66,6 +69,7 @@ select {
   align-items: center;
   position: relative;
   overflow: hidden;
+
 }
 
 .bar {
