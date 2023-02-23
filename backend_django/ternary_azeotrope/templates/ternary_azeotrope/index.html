@@ -72,6 +72,13 @@ Home {%endblock%} {% block head %}
         <div class="alert alert-info" role="alert">{{ info_message }}</div>
         {% endif %}
       </div>
+      <div class="radio-group">
+        <input type="radio" name="option" id="option1" value="1" />
+        <label for="option1">Rectangle</label>
+
+        <input type="radio" name="option" id="option2" value="2" />
+        <label for="option2">Equilateral</label>
+      </div>
 
       <input
         id="submit-btn"
