@@ -3,7 +3,6 @@ h1 {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 50px;
-
 }
 
 .component {
@@ -14,23 +13,60 @@ h1 {
 
 }
 
+#index-content {
+  display: flex;
+  flex-direction: row;
+}
 
-
-.main {
+#main {
   position: relative;
-  z-index: 999;
+  width: 50%;
+  padding: 20px;
+  flex-grow: 1;
+  z-index: 1;
+
 }
 
+#diagram-container {
+  width: 50%;
+  padding: 20px;
 
-
-
-.title-bar {
-  z-index: 9999;
 }
 
-label {
+.hidden {
+  display: none;
+}
+
+.model {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  height: 100px;
+  margin-bottom: 50px;
+}
+
+.model>label {
+  font-weight: bold;
+  color: #1d352c;
+  padding: 10px 0;
+}
+
+.model>.value {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  flex-basis: 15%;
+  text-align: center;
+  margin-left: 10px;
   margin-right: 10px;
-  /* add some spacing between the label and selector */
+  padding: 10px 0;
+}
+
+
+.component>label {
+  margin-right: 10px;
   width: 200px;
   background-color: #cae5db;
   padding: 10px;
@@ -43,19 +79,20 @@ label {
 }
 
 
-
 select {
   flex: 1;
   margin-right: 10px;
 }
+
 .blocked {
   opacity: 0.6;
 }
 
-
 #spinner {
   margin-top: 30px;
   display: none;
+  position: absolute;
+  left: 50%;
 }
 
 .title-bar {
@@ -66,6 +103,7 @@ select {
   align-items: center;
   position: relative;
   overflow: hidden;
+
 }
 
 .bar {
@@ -74,7 +112,7 @@ select {
   background-color: #A6CFD5;
   margin: 0 10px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .bar:before,
@@ -108,7 +146,7 @@ select {
   font-size: 30px;
   letter-spacing: 2px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .title span {
@@ -184,7 +222,6 @@ select {
 }
 
 
-
 #compound-form,
 #relation-form {
   padding-right: 30px;
@@ -195,19 +232,23 @@ select {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 20px 0;
   background-color: #ccc;
   border-radius: 10px;
-  margin-right: 100px;
+  margin-bottom: 20px;
+
 }
 
-#compound-form input[type="text"],
-#relation-form input[type="number"] {
+#compound-form input,
+#relation-form input {
   height: 40px;
-  width: 150px;
+  width: 100px;
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
+}
+
+#compound-form input[type="text"] {
+  width: 180px;
 }

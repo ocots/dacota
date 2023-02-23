@@ -7,12 +7,14 @@ from ..models import BinaryRelation, Component
 
 
 def compounds_of_session(session_key):
+    """Returns compounds of the current client"""
     return Component.objects.filter(
         Q(sessions__pk=session_key) | Q(sessions__isnull=True)
     ).order_by("name")
 
 
 def relations_of_session(session_key):
+    """Returns binary relations of the current client"""
     return BinaryRelation.objects.filter(
         Q(sessions__pk=session_key) | Q(sessions__isnull=True)
     ).order_by("component1")

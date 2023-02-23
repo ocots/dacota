@@ -1,7 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   #myChart {
-    width: 800px;
+    width: 700px;
     /* height: 00px; */
   }
 </style>
@@ -24,6 +24,7 @@
       data: baseTriangle,
       showLine: true,
       borderColor: "black",
+      backgroundColor: "black", // Set a blue fill color for the curve
     },
   ];
 
@@ -43,6 +44,7 @@
 
     //console.log(jsonEncodedString);
     curve_list = JSON.parse(jsonEncodedString);
+    const colors = ["red", "blue", "green"]; // Define an array of colors
 
     for (var i = 0; i < curve_list.length; i++) {
       x = curve_list[i]["x1"];
@@ -52,7 +54,8 @@
       datasets.push({
         data: xyValues,
         showLine: true,
-        borderColor: "black",
+        borderColor: colors[i],
+        backgroundColor: colors[i],
       });
     }
     new Chart(ctx, {
