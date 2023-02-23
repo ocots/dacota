@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   menuIcon.addEventListener("click", function () {
     menu.classList.toggle("show");
+
   });
 
   var menuToggleIcon = document.getElementById("menu-icons");
@@ -19,24 +20,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("components-selection");
   const spinner = document.getElementById("spinner");
   form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  if (spinner){
-    spinner.style.display = "block";
-  }
-  form.submit();
-});
-
+    event.preventDefault();
+    if (spinner) {
+      spinner.style.display = "block";
+    }
+    form.submit();
+  });
 
   /* Add a new compound */
   const addCompoundBtn = document.getElementById("add-compound-btn");
-  const compoundFormContainer = document.getElementById("compound-form-container");
+  const compoundFormContainer = document.getElementById(
+    "compound-form-container"
+  );
   const compoundForm = document.getElementById("compound-form");
 
   addCompoundBtn.addEventListener("click", () => {
     var new_state;
-    if (compoundFormContainer.style.display == "block"){
+    if (compoundFormContainer.style.display == "block") {
       new_state = "none";
-    }else{
+    } else {
       new_state = "block";
     }
     compoundFormContainer.style.display = new_state;
@@ -49,21 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* Add new relation */
-  const addRelationBtn = document.getElementById('add-relation-btn');
-  const relationForm = document.getElementById('relation-form-container');
+  const addRelationBtn = document.getElementById("add-relation-btn");
+  const relationForm = document.getElementById("relation-form-container");
 
-  addRelationBtn.addEventListener('click', () => {
-    relationForm.style.display = relationForm.style.display === 'none' ? 'block' : 'none';
+  addRelationBtn.addEventListener("click", () => {
+    relationForm.style.display =
+      relationForm.style.display === "none" ? "block" : "none";
   });
-
-
-
-
-
-
-
-
-
 
 
 });
