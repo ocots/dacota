@@ -40,7 +40,7 @@ Home {%endblock%} {% block head %}
       {% csrf_token %}
       <div id="componenetsSelection">
         <div class="component">
-          <label for="my-select">Compound 1:</label>
+          <label for="my-select">Compound 1</label>
           <select name="component1" class="form-select">
             {% for component in components%}
             <option value="{{component.id}}">{{component}}</option>
@@ -49,7 +49,7 @@ Home {%endblock%} {% block head %}
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 2:</label>
+          <label for="my-select">Compound 2</label>
           <select name="component2" class="form-select">
             {% for component in components%}
             <option value="{{component.id}}">{{component}}</option>
@@ -58,7 +58,7 @@ Home {%endblock%} {% block head %}
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 3:</label>
+          <label for="my-select">Compound 3</label>
           <select name="component3" class="form-select">
             {% for component in components%}
             <option value="{{component.id}}">{{component}}</option>
