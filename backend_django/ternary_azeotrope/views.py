@@ -105,6 +105,39 @@ def run(request):
         return redirect("index")
 
 
+def tables(request):
+    # Get all components
+    components = Component.objects.all().order_by("name")
+    component_keys = ["ID", "Name", "A", "B", "C"]
+
+    # Get all binary relations
+    relations = BinaryRelation.objects.all().order_by("id")
+    relation_keys = ["ID", "Component 1", "Component 2", "A12", "A21", "Alpha"]
+
+    # Handle search filter
+    component_query = request.GET.get("component_query")
+    relation_query = request.GET.get("relation_query")
+
+    if component_query:
+        components = components.filter(name__icontains=component_query)
+    if relation_query:
+        relations = relations.filter(
+            Q(component1__name__icontains=relation_query)
+            | Q(component2__name__icontains=relation_query)
+        )
+
+    context = {
+        "components": components,
+        "component_keys": component_keys,
+        "relations": relations,
+        "relation_keys": relation_keys,
+        "component_query": component_query,
+        "relation_query": relation_query,
+    }
+
+    return render(request, "ternary_azeotrope/index.html", context)
+
+
 def add_component(request):
     if request.method == "POST":
         name = request.POST["name"]
