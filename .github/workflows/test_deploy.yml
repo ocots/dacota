@@ -51,4 +51,6 @@ jobs:
         python manage.py test
     - name: Restart services
       run: |
-        sudo ls
+        sudo systemctl restart nginx
+        sudo systemctl restart gunicorn
+        sudo systemctl restart gunicorn.socket
