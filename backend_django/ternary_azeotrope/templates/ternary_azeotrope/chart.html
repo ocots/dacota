@@ -71,11 +71,6 @@
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
     const jsonEncodedString = doc.documentElement.textContent;
-
-    const c1 = "{{c1}}";
-    const c2 = "{{c2}}";
-    const c3 = "{{c3}}";
-    console.log(c1);
     curve_list = JSON.parse(jsonEncodedString);
     const colors = ["red", "blue", "green"]; // Define an array of colors
 
