@@ -77,7 +77,10 @@
             <td>{{ element.a21 }}</td>
             <td>{{ element.alpha }}</td>
             <td>
-              <i class="fa-solid fa-trash"></i>
+              <i
+                class="fa-solid fa-trash"
+                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}','{{element.component2.name}}' )"
+              ></i>
             </td>
           </tr>
           {% endfor %}
@@ -133,6 +136,19 @@
       function Delete(id, name) {
         if (window.confirm("Are you sure you want to delete " + name)) {
           var path = "delete_tables/" + id;
+          document.location.href = path;
+        }
+      }
+      function Delete_relation(id, name1, name2) {
+        if (
+          window.confirm(
+            "Are you sure you want to delete the relation " +
+              name1 +
+              "-" +
+              name2
+          )
+        ) {
+          var path = "delete_relation/" + id;
           document.location.href = path;
         }
       }
