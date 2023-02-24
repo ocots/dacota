@@ -49,3 +49,6 @@ jobs:
         source venv/bin/activate
         cd backend_django
         python manage.py test
+    - name: Restart services
+      run: |
+        sudo ls
