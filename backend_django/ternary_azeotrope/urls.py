@@ -26,7 +26,7 @@ urlpatterns = [
         name="edit_relation",
     ),
     path(
-        "delete_tables/<str:id>",
+        "delete_tables/<str:compound_id>",
         views.delete_tables,
         name="delete_tables",
     ),
