@@ -91,9 +91,9 @@ def run(request):
 
                 request.session["context"] = {
                     "curves": curves,
-                    "c1": str(component1),
-                    "c2": str(component2),
-                    "c3": str(component3),
+                    "c1": component1.name,
+                    "c2": component2.name,
+                    "c3": component3.name,
                 }
 
         except ValueError:
@@ -246,5 +246,13 @@ def edit_component(request):
         component = Component.objects.get(pk=id)
         new_vals = {"name": name, "a": a, "b": b, "c": c}
         edit_element(request.session.session_key, component, new_vals)
+
+        return redirect("index")
+
+
+def delete_tables(request, id):
+    if request.method == "POST":
+        component = Component.objects.get(pk=id)
+        delete_item(request.session.session_key, component)
 
         return redirect("index")

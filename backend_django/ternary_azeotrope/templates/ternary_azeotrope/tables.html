@@ -61,6 +61,7 @@
             {% for key in relation_keys %}
             <th>{{key}}</th>
             {% endfor %}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -72,6 +73,9 @@
             <td>{{ element.a12 }}</td>
             <td>{{ element.a21 }}</td>
             <td>{{ element.alpha }}</td>
+            <td>
+              <i class="fa-solid fa-trash" onclick="confirmDelete()"></i>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
