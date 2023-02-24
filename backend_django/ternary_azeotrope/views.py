@@ -252,7 +252,7 @@ def edit_component(request):
 
 def delete_tables(request, id):
     if request.method == "POST":
-        component = Component.objects.get(pk=id)
-        delete_item(request.session.session_key, component)
+        component = Component.objects.get(pk=int(id))
+        delete_item(component, request.session.session_key)
 
         return redirect("index")
