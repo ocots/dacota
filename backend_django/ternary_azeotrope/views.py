@@ -86,7 +86,12 @@ def run(request):
                 curves = json.dumps(curves)
                 # diag = get_plot(curves, mixture)
 
-                request.session["context"] = {"curves": curves}
+                request.session["context"] = {
+                    "curves": curves,
+                    "c1": component1.name,
+                    "c2": component2.name,
+                    "c3": component3.name,
+                }
 
         except ValueError:
             request.session["context"] = {
