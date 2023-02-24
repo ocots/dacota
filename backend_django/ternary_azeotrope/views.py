@@ -76,7 +76,10 @@ def run(request):
                     r1, r2, r3, component1, component2, component3
                 )
 
-                request.session["context"] = {"alert_message": alert_msg}
+                request.session["context"] = {
+                    "message": alert_msg,
+                    "type": "danger",
+                }
 
             else:
                 mixture = TernaryMixture(
@@ -95,7 +98,8 @@ def run(request):
 
         except ValueError:
             request.session["context"] = {
-                "alert_message": "The mixture compounds should be distinct !"
+                "message": "The mixture compounds should be distinct !",
+                "type": "danger",
             }
 
         return redirect("index")
@@ -117,16 +121,21 @@ def add_component(request):
                 c.sessions.add(curr_session)
                 c.save()
                 msg = f"Compound {c} added successfuly."
+                request.session["context"] = {"message": msg, "type": "info"}
             else:
                 # component already available for the session
                 msg = f"{c} already exists !"
+                request.session["context"] = {
+                    "message": msg,
+                    "type": "warning",
+                }
         else:
             new_compound = Component.objects.create(name=name, a=a, b=b, c=c)
             new_compound.sessions.add(curr_session)
 
             msg = f"Compound {new_compound} added successfuly."
+            request.session["context"] = {"message": msg, "type": "info"}
 
-        request.session["context"] = {"info_message": msg}
         return HttpResponseRedirect(reverse("index"))
 
 
@@ -165,12 +174,24 @@ def add_relation(request):
                     relation.sessions.add(curr_session)
                     relation.save()
                     msg = f"Binary relation {relation} added successfuly."
+                    request.session["context"] = {
+                        "message": msg,
+                        "type": "info",
+                    }
                 else:
                     # relation already available for the session, a message to the user will be added later
                     msg = f"Binary relation {relation} with the same parameters already exists !"
+                    request.session["context"] = {
+                        "message": msg,
+                        "type": "warning",
+                    }
             else:
                 # unique constraint
-                msg = f"New binary relation {relation} cannot be added. please edit their parameters instead."
+                msg = f"Binary relation {relation} already exists. You can edit their parameters."
+                request.session["context"] = {
+                    "message": msg,
+                    "type": "danger",
+                }
         else:
             relation = BinaryRelation.objects.create(
                 component1=component1,
@@ -181,8 +202,7 @@ def add_relation(request):
             )
             relation.sessions.add(curr_session)
             msg = f"Binary relation {relation} added successfuly."
-
-        request.session["context"] = {"info_message": msg}
+            request.session["context"] = {"message": msg, "type": "info"}
         return redirect("index")
 
 
