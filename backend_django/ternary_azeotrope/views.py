@@ -226,10 +226,6 @@ def edit_relation(request):
             if new_vals[key] is None:
                 new_vals[key] = getattr(relation, key)
 
-        # a12 = float()
-        # a21 = float(request.POST.get("a21"))
-        # alpha = float(request.POST.get("alpha"))
-
         edit_element(request.session.session_key, relation, new_vals)
 
         return redirect("index")
@@ -250,15 +246,15 @@ def edit_component(request):
         return redirect("index")
 
 
-def delete_relation(request, compound_id: str):
+def delete_relation(request, relation_id: str):
     if request.method == "GET":
-        component = BinaryRelation.objects.get(pk=int(compound_id))
-        delete_item(component, request.session.session_key)
+        relation = BinaryRelation.objects.get(pk=int(relation_id))
+        delete_item(relation, request.session.session_key)
 
         return redirect("index")
 
 
-def delete_tables(request, compound_id: str):
+def delete_compound(request, compound_id: str):
     if request.method == "GET":
         component = Component.objects.get(pk=int(compound_id))
         delete_item(component, request.session.session_key)
