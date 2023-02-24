@@ -67,16 +67,10 @@ Home {%endblock%} {% block head %}
         </div>
 
         {% if message and type %}
-        <div
-          class="alert alert-{{type}}"
-          role="alert"
-          style="margin-bottom: 20px"
-        >
-          {{ message }}
-        </div>
+        <div class="alert alert-{{type}}" role="alert">{{ message }}</div>
         {% endif %}
       </div>
-      <div class="radio-group">
+      <div class="radio-group" style="margin-bottom: 20px">
         <input type="radio" name="option" id="option1" value="1" />
         <label for="option1">Rectangle</label>
 
