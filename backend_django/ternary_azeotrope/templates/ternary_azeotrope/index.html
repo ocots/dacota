@@ -66,10 +66,14 @@ Home {%endblock%} {% block head %}
           </select>
         </div>
 
-        {% if alert_message %}
-        <div class="alert alert-danger" role="alert">{{ alert_message }}</div>
-        {% elif info_message %}
-        <div class="alert alert-info" role="alert">{{ info_message }}</div>
+        {% if message and type %}
+        <div
+          class="alert alert-{{type}}"
+          role="alert"
+          style="margin-bottom: 20px"
+        >
+          {{ message }}
+        </div>
         {% endif %}
       </div>
       <div class="radio-group">
