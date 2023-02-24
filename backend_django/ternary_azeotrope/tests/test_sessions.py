@@ -228,16 +228,19 @@ class TestSessions(TestCase):
         session1.components.add(c)
 
         # set expiry of 10 seconds for test
-        session1.expire_date = timezone.now() + timezone.timedelta(seconds=10)
+        exp_duration = 1
+        session1.expire_date = timezone.now() + timezone.timedelta(
+            seconds=exp_duration
+        )
         session1.save()
 
         self.assertEqual(Session.objects.all().count(), 1)
         self.assertEqual(Component.objects.all().count(), 4)
 
-        print(
-            "wait 10 seconds for session to expire in order to test its deletion"
-        )
-        sleep(11)
+        # print(
+        #    "wait 5 seconds for session to expire in order to test its deletion"
+        # )
+        sleep(exp_duration)
 
         # session should be expired by now let's create a new session
         # and see if the expired session was cleared

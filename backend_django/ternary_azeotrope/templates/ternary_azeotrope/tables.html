@@ -1,4 +1,18 @@
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .icon {
+        color: rgb(55, 70, 55);
+        cursor: pointer;
+        font-size: 24px;
+      }
+    </style>
+  </head>
   <body>
     <div class="table-container">
       <h2 id="table">Compounds for Antoine model</h2>
@@ -13,6 +27,7 @@
             {% for key in component_keys %}
             <th>{{key}}</th>
             {% endfor %}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -23,37 +38,52 @@
             <td>{{ element.a }}</td>
             <td>{{ element.b }}</td>
             <td>{{ element.c }}</td>
+            <td>
+              <i
+                class="fa-solid fa-trash"
+                onclick="Delete('{{element.id}}', '{{element.name}}')"
+              ></i>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
 
-	<div class="table-container">
-		<h2 id="table">Binary relations</h2>
-    <input type="text" id="search" onkeyup="perform_search()" placeholder="Search for compounds...">
-    <table id="binary-relations-table">
-			<thead>
-				<tr>
-					{% for key in relation_keys %}
-					<th>{{key}}</th>
-					{% endfor %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for element in relations %}
-				<tr>
-					<td>{{ element.id }}</td>
-					<td>{{ element.component1.name }}</td>
-					<td>{{ element.component2.name }}</td>
-					<td>{{ element.a12 }}</td>
-					<td>{{ element.a21 }}</td>
-					<td>{{ element.alpha }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+    <div class="table-container">
+      <h2 id="table">Binary relations for NRTL model</h2>
+      <input
+        type="text"
+        id="search"
+        onkeyup="perform_search()"
+        placeholder="Search for compounds..."
+      />
+      <table id="binary-relations-table">
+        <thead>
+          <tr>
+            {% for key in relation_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in relations %}
+          <tr>
+            <td>{{ element.id }}</td>
+            <td>{{ element.component1.name }}</td>
+            <td>{{ element.component2.name }}</td>
+            <td>{{ element.a12 }}</td>
+            <td>{{ element.a21 }}</td>
+            <td>{{ element.alpha }}</td>
+            <td>
+              <i class="fa-solid fa-trash"></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
     <script type="text/javascript">
       // Get the input field and table
@@ -98,6 +128,12 @@
               tr[i].style.display = "none";
             }
           }
+        }
+      }
+      function Delete(id, name) {
+        if (window.confirm("Are you sure you want to delete " + name)) {
+          var path = "delete_tables/" + id;
+          document.location.href = path;
         }
       }
     </script>

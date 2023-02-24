@@ -66,11 +66,16 @@ Home {%endblock%} {% block head %}
           </select>
         </div>
 
-        {% if alert_message %}
-        <div class="alert alert-danger" role="alert">{{ alert_message }}</div>
-        {% elif info_message %}
-        <div class="alert alert-info" role="alert">{{ info_message }}</div>
+        {% if message and type %}
+        <div class="alert alert-{{type}}" role="alert">{{ message }}</div>
         {% endif %}
+      </div>
+      <div class="radio-group" style="margin-bottom: 20px">
+        <input type="radio" name="option" id="option1" value="1" />
+        <label for="option1">Rectangle</label>
+
+        <input type="radio" name="option" id="option2" value="2" />
+        <label for="option2">Equilateral</label>
       </div>
 
       <input
@@ -96,6 +101,10 @@ Home {%endblock%} {% block head %}
 
     <div class="d-flex justify-content-center">
       <div id="compound-form-container" style="display: none">
+        <i
+          class="fa-sharp fa-regular fa-circle-xmark fa-lg"
+          id="close-compound"
+        ></i>
         <form
           id="compound-form"
           action="{% url 'add_component' %}"
@@ -120,6 +129,10 @@ Home {%endblock%} {% block head %}
 
     <div class="d-flex justify-content-center">
       <div id="relation-form-container" style="display: none">
+        <i
+          class="fa-sharp fa-regular fa-circle-xmark fa-lg"
+          id="close-relation"
+        ></i>
         <form
           id="relation-form"
           action="{% url 'add_relation' %}"

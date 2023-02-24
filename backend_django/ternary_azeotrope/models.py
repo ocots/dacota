@@ -55,7 +55,7 @@ class BinaryRelation(models.Model):
         Session, blank=True, related_name="relations"
     )
 
-    class Meta:
+    """class Meta:
         constraints = [
             models.UniqueConstraint(
                 fields=["component1", "component2"], name="unique_components"
@@ -65,11 +65,11 @@ class BinaryRelation(models.Model):
     def clean(self):
         if self.component1 == self.component2:
             raise ValidationError("The components must be different.")
-        super(BinaryRelation, self).clean()
+        super(BinaryRelation, self).clean()"""
 
     def __str__(self):
-        return self.component1.name + " - " + self.component2.name
+        return f"{self.component1.name} - {self.component2.name} (a12={self.a12}, a21={self.a21}, alpha={self.alpha})"
 
     @staticmethod
     def fields():
-        return ["ID", "Compound 1", "Compound 2", "A12", "A21", "Alpha"]
+        return ["ID", "Component 1", "Component 2", "A12", "A21", "Alpha"]

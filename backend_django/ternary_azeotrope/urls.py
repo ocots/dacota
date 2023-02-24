@@ -15,4 +15,19 @@ urlpatterns = [
         views.add_relation,
         name="add_relation",
     ),
+    path(
+        "edit_component",
+        views.edit_component,
+        name="edit_component",
+    ),
+    path(
+        "edit_relation",
+        views.edit_relation,
+        name="edit_relation",
+    ),
+    path(
+        "delete_tables/<str:compound_id>",
+        views.delete_tables,
+        name="delete_tables",
+    ),
 ]
