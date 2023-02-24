@@ -283,6 +283,14 @@ def edit_component(request):
         return redirect("index")
 
 
+def delete_relation(request, compound_id: str):
+    if request.method == "GET":
+        component = BinaryRelation.objects.get(pk=int(compound_id))
+        delete_item(component, request.session.session_key)
+
+        return redirect("index")
+
+
 def delete_tables(request, compound_id: str):
     if request.method == "GET":
         component = Component.objects.get(pk=int(compound_id))
