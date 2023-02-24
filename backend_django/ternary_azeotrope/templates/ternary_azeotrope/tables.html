@@ -12,13 +12,12 @@
       />
     </head>
     <body>
-      <div class="table-container">
-        <h2 id="table">Compounds for Antoine model</h2>
+      <h2 id="table">Compounds for Antoine model</h2>
         <input
           type="text"
           id="compound-filter"
-          placeholder="Search for a compound..."
-        /><br /><br />
+          placeholder="Search for a compound..."/><br /><br />
+      <div class="table-container">
         <table id="compound-table">
           <thead>
             <tr>
@@ -48,14 +47,14 @@
         </table>
       </div>
 
-      <div class="table-container">
-        <h2 id="table">Binary relations</h2>
+      <h2 id="table">Binary relations for NRTL model</h2>
         <input
           type="text"
           id="search"
           onkeyup="perform_search()"
           placeholder="Search for compounds..."
         />
+      <div class="table-container">
         <table id="binary-relations-table">
           <thead>
             <tr>
