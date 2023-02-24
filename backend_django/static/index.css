@@ -33,6 +33,17 @@ h1 {
 
 }
 
+.fa-circle-xmark {
+  color: red;
+  float: right;
+}
+
+i:hover {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
 }
