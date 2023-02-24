@@ -62,6 +62,13 @@ def clear_session_data(session_key, compounds=None, relations=None):
 
 
 def edit_element(session_id, instance, new_data):
+    """Edit an element of either compound or binary relation for a client
+
+    Args:
+        session_id (str): session id for the session of the client requesting to edit an element
+        instance (Component | BinaryRelation): The element to edit.
+        new_data (Dict): a dictionnary where the keys are the attributes of the element to edit and values the new value for these attributes.
+    """
     nb_session = instance.sessions.count()
     # component added only in current session
     if nb_session == 1:

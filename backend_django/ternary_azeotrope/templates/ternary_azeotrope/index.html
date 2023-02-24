@@ -101,6 +101,7 @@ Home {%endblock%} {% block head %}
 
     <div class="d-flex justify-content-center">
       <div id="compound-form-container" style="display: none">
+        <i class="fa-sharp fa-regular fa-circle-xmark"></i>
         <form
           id="compound-form"
           action="{% url 'add_component' %}"
@@ -125,6 +126,7 @@ Home {%endblock%} {% block head %}
 
     <div class="d-flex justify-content-center">
       <div id="relation-form-container" style="display: none">
+        <i class="fa-sharp fa-regular fa-circle-xmark"></i>
         <form
           id="relation-form"
           action="{% url 'add_relation' %}"
