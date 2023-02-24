@@ -1,4 +1,18 @@
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .icon {
+        color: rgb(55, 70, 55);
+        cursor: pointer;
+        position: relative;
+      }
+    </style>
+  </head>
   <body>
     <div class="table-container">
       <h2 id="table">Compounds for Antoine model</h2>
@@ -23,6 +37,9 @@
             <td>{{ element.a }}</td>
             <td>{{ element.b }}</td>
             <td>{{ element.c }}</td>
+            <td>
+              <p><i class="icon fa fa-trash" onclick="confirmDelete()"></i></p>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -103,6 +120,12 @@
               tr[i].style.display = "none";
             }
           }
+        }
+      }
+      function confirmDelete() {
+        if (window.confirm("Are you sure you want to delete?")) {
+          alert("Item deleted!");
+        } else {
         }
       }
     </script>
