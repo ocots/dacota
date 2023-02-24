@@ -183,19 +183,28 @@ def add_relation(request):
 
 def edit_relation(request):
     if request.method == "POST":
-        id = request.POST.get("id")
-        a12 = float(request.POST.get("a12"))
-        a21 = float(request.POST.get("a21"))
-        alpha = float(request.POST.get("alpha"))
-
-        relation = BinaryRelation.objects.get(pk=id)
         new_vals = {
-            "component1": request.POST.get("component1"),
-            "component2": request.POST.get("component2"),
-            "a12": a12,
-            "a21": a21,
-            "alpha": alpha,
+            field.lower().replace(" ", ""): None
+            for field in BinaryRelation.fields()
         }
+
+        id = request.POST.get("id")
+        relation = BinaryRelation.objects.get(pk=id)
+
+        for key in new_vals.keys():
+            try:
+                if key != "id":
+                    new_vals[key] = float(request.POST.get(key))
+            except:
+                new_vals[key] = request.POST.get(key)
+
+            if new_vals[key] is None:
+                new_vals[key] = getattr(relation, key)
+
+        # a12 = float()
+        # a21 = float(request.POST.get("a21"))
+        # alpha = float(request.POST.get("alpha"))
+
         edit_element(request.session.session_key, relation, new_vals)
 
         return redirect("index")
