@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  //diagram container:
-
-
 
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
@@ -62,6 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
     relationForm.style.display =
       relationForm.style.display === "none" ? "block" : "none";
   });
+
+  /* close icon */
+  const close_icons = document.getElementsByClassName("fa-sharp fa-regular fa-circle-xmark");
+  for (let i=0; i<close_icons.length; i++){
+    (close_icons[i]).addEventListener("click", (event) => {
+      close_icons[i].parentElement.style.display = "none";
+    });
+  }
 
 
 
