@@ -41,7 +41,7 @@
             <td>
               <i
                 class="fa-solid fa-trash"
-                onclick="confirmDelete('{{element.id}}')"
+                onclick="Delete('{{element.id}}', '{{element.name}}')"
               ></i>
             </td>
           </tr>
@@ -77,10 +77,7 @@
             <td>{{ element.a21 }}</td>
             <td>{{ element.alpha }}</td>
             <td>
-              <i
-                class="fa-solid fa-trash"
-                onclick="confirmDelete('{{element.id}}')"
-              ></i>
+              <i class="fa-solid fa-trash"></i>
             </td>
           </tr>
           {% endfor %}
@@ -133,10 +130,10 @@
           }
         }
       }
-      function confirmDelete(id) {
-        if (window.confirm("Are you sure you want to delete?")) {
-          location.href = "{% url 'delete_tables' id %}";
-          alert("Item deleted!");
+      function Delete(id, name) {
+        if (window.confirm("Are you sure you want to delete " + name)) {
+          var path = "delete_tables/" + id;
+          document.location.href = path;
         }
       }
     </script>
