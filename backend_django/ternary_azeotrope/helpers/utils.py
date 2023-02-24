@@ -29,17 +29,17 @@ def delete_item(item, session_key):
     """
     nb_session = item.sessions.count()
     if nb_session != 0:
-        print(f"number of sessions that added {item} is {nb_session}")
+        # print(f"number of sessions that added {item} is {nb_session}")
 
         if nb_session == 1:
-            print("deleting ", item)
+            # print("deleting ", item)
             item.delete()
         else:
             item.sessions.remove(Session.objects.get(pk=session_key))
 
 
 def clear_session_data(session_key, compounds=None, relations=None):
-    """Remove all compounds and binary relations registered for a session
+    """Remove all compounds and binary relations registered for a session.
     this function takes either the key of the session and look up for the elements to remove or
     takes directly the elements in arguments
 
@@ -63,24 +63,29 @@ def clear_session_data(session_key, compounds=None, relations=None):
 
 def edit_element(session_id, instance, new_data):
     nb_session = instance.sessions.count()
-
     # component added only in current session
     if nb_session == 1:
         for attr, val in new_data.items():
             setattr(instance, attr, val)
-            instance.save()
+
+        instance.save()
 
     # same component was added in different sessions
     elif nb_session > 1:
         curr_session = Session.objects.get(pk=session_id)
+
         instance.sessions.remove(curr_session)
+        instance.save()
+
         new_instance = (
             Component()
             if isinstance(instance, Component)
             else BinaryRelation()
         )
+
         for attr, val in new_data.items():
-            setattr(new_instance, attr, val)
+            if attr != "id":
+                setattr(new_instance, attr, val)
 
         new_instance.save()
         new_instance.sessions.add(curr_session)

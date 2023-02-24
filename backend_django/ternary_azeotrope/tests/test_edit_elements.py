@@ -56,7 +56,7 @@ class TestSessions(TestCase):
         self.session2 = Session.objects.get(pk=self.session_id2)
 
     def test_edit_component(self):
-        # two client adding the same components
+        # two client adding the same component
         self.client1.post(
             reverse("add_component"),
             {
@@ -118,5 +118,108 @@ class TestSessions(TestCase):
             self.compounds + [c2],
         )
 
+    def test_edit_component2(self):
+        # two client adding the same component
+        self.client1.post(
+            reverse("add_component"),
+            {
+                "name": "compound1",
+                "a": 0,
+                "b": 0,
+                "c": 0,
+            },
+        )
+
+        self.client2.post(
+            reverse("add_component"),
+            {
+                "name": "compound1",
+                "a": 0,
+                "b": 0,
+                "c": 0,
+            },
+        )
+
+        self.assertEqual(
+            Component.objects.all().count(), len(self.compounds) + 1
+        )
+
+        c1 = Component.objects.get(name="compound1")
+        self.assertEqual(
+            list(utils.compounds_of_session(self.session_id2)),
+            self.compounds + [c1],
+        )
+
+        self.assertEqual(c1.sessions.count(), 2)
+
+        # client 2 will edit compound 1 that was also added by client 2 so a new instance will be created for the edited compound
+        self.client2.post(
+            reverse("edit_component"),
+            {
+                "id": c1.id,
+                "name": "compound1",
+                "a": 1,
+                "b": 0,
+                "c": 0,
+            },
+        )
+
+        self.assertEqual(
+            Component.objects.all().count(), len(self.compounds) + 2
+        )
+
+        self.assertEqual(Component.objects.filter(name="compound1").count(), 2)
+
     def test_edit_relation(self):
-        pass
+        # acetone benzene added by session 1
+        self.acetone_benzene.sessions.add(self.session1)
+        self.acetone_benzene.save()
+
+        self.assertEqual(self.acetone_benzene.alpha, 0.3007)
+
+        self.client1.post(
+            reverse("edit_relation"),
+            {
+                "id": self.acetone_benzene.id,
+                "alpha": 0,
+            },
+        )
+
+        self.assertEqual(
+            BinaryRelation.objects.filter(
+                component1=self.acetone, component2=self.benzene
+            ).count(),
+            1,
+        )
+        self.assertEqual(
+            BinaryRelation.objects.get(pk=self.acetone_benzene.id).alpha, 0
+        )
+
+        # editing a common relation
+        r = BinaryRelation.objects.get(
+            component1=self.acetone, component2=self.benzene
+        )
+        r.sessions.add(self.session2)
+
+        self.assertEqual(r.sessions.count(), 2)
+        self.client2.post(
+            reverse("edit_relation"),
+            {
+                "id": r.id,
+                "alpha": 5,
+            },
+        )
+
+        self.assertEqual(
+            r.sessions.all().count(),
+            1,
+        )
+
+        self.assertEqual(Session.objects.all().count(), 2)
+        self.assertEqual(BinaryRelation.objects.all().count(), 3)
+        self.assertEqual(
+            BinaryRelation.objects.filter(
+                component1=self.acetone, component2=self.benzene
+            ).count(),
+            2,
+        )
