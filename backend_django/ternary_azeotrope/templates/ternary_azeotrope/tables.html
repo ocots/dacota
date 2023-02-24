@@ -27,6 +27,7 @@
             {% for key in component_keys %}
             <th>{{key}}</th>
             {% endfor %}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +39,7 @@
             <td>{{ element.b }}</td>
             <td>{{ element.c }}</td>
             <td>
-              <p><i class="icon fa fa-trash" onclick="confirmDelete()"></i></p>
+              <i class="fa-solid fa-trash" onclick="confirmDelete()"></i>
             </td>
           </tr>
           {% endfor %}
@@ -125,7 +126,6 @@
       function confirmDelete() {
         if (window.confirm("Are you sure you want to delete?")) {
           alert("Item deleted!");
-        } else {
         }
       }
     </script>
