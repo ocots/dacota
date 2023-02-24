@@ -39,7 +39,10 @@
             <td>{{ element.b }}</td>
             <td>{{ element.c }}</td>
             <td>
-              <i class="fa-solid fa-trash" onclick="confirmDelete()"></i>
+              <i
+                class="fa-solid fa-trash"
+                onclick="confirmDelete('{{element.id}}')"
+              ></i>
             </td>
           </tr>
           {% endfor %}
@@ -74,7 +77,10 @@
             <td>{{ element.a21 }}</td>
             <td>{{ element.alpha }}</td>
             <td>
-              <i class="fa-solid fa-trash" onclick="confirmDelete()"></i>
+              <i
+                class="fa-solid fa-trash"
+                onclick="confirmDelete('{{element.id}}')"
+              ></i>
             </td>
           </tr>
           {% endfor %}
@@ -127,8 +133,9 @@
           }
         }
       }
-      function confirmDelete() {
+      function confirmDelete(id) {
         if (window.confirm("Are you sure you want to delete?")) {
+          location.href = "{% url 'delete_tables' id %}";
           alert("Item deleted!");
         }
       }
