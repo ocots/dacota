@@ -1,14 +1,43 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   #myChart {
-    width: 700px;
-    /* height: 00px; */
+    position: relative;
+    width: 800px;
+  }
+
+  .chart-text {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(40, 38, 38);
+  }
+  #c1 {
+    top: 0;
+    left: 0;
+  }
+  #c2 {
+    bottom: 0;
+    right: 0;
+  }
+  #c3 {
+    bottom: 0;
+    left: 0;
+  }
+  .chartCanvas {
+    position: relative;
+    width: 800px;
   }
 </style>
 
-<canvas id="myChart"></canvas>
+<div id="myChart">
+  <canvas class="chartCanvas"></canvas>
+  <div id="c1" class="chart-text">{{c2}}</div>
+  <div id="c2" class="chart-text">{{c1}}</div>
+  <div id="c3" class="chart-text">{{c3}}</div>
+</div>
+
 <script>
-  const ctx = document.getElementById("myChart");
+  const ctx = document.querySelector(".chartCanvas");
 
   // The following data is used to create the triangle that contains the curves
   x = [0, 1, 0, 0];
@@ -25,15 +54,24 @@
       showLine: true,
       borderColor: "black",
       backgroundColor: "black", // Set a blue fill color for the curve
+      legend: false,
     },
   ];
 
-  function createXYValues(x, y) {
+  function createXYValues(x, y, t) {
     xyValues = [];
+    pos = "inside";
     for (var i = 0; i < x.length; i++) {
-      xyValues.push({ x: x[i], y: y[i] });
+      xyValues.push({ x: x[i], y: y[i], t: t[i] });
     }
     return xyValues;
+  }
+
+  function addPrefixToCurves(curves) {
+    for (let i = 0; i < curves.length; i++) {
+      curves[i] = "T : " + curves[i] + "°C";
+    }
+    return curves;
   }
 
   function draw() {
@@ -41,15 +79,15 @@
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
     const jsonEncodedString = doc.documentElement.textContent;
-
-    //console.log(jsonEncodedString);
     curve_list = JSON.parse(jsonEncodedString);
     const colors = ["red", "blue", "green"]; // Define an array of colors
 
     for (var i = 0; i < curve_list.length; i++) {
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
-      xyValues = createXYValues(x, y);
+      t = addPrefixToCurves(curve_list[i]["T"]);
+      xyValues = createXYValues(x, y, t);
+      console.log(xyValues);
 
       datasets.push({
         data: xyValues,
@@ -61,15 +99,39 @@
     new Chart(ctx, {
       type: "scatter",
       data: {
+        labels: t,
         datasets: datasets,
       },
       options: {
         responsive: false,
         maintainAspectRatio: false,
         aspectRatio: 1,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50,
+          },
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true,
+        },
       },
     });
   }
 
+  const diagram = document.getElementById("diagram-container");
+  diagram.style.width = "50%";
   draw();
 </script>

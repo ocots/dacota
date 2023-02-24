@@ -76,7 +76,10 @@ def run(request):
                     r1, r2, r3, component1, component2, component3
                 )
 
-                request.session["context"] = {"alert_message": alert_msg}
+                request.session["context"] = {
+                    "message": alert_msg,
+                    "type": "danger",
+                }
 
             else:
                 mixture = TernaryMixture(
@@ -86,14 +89,53 @@ def run(request):
                 curves = json.dumps(curves)
                 # diag = get_plot(curves, mixture)
 
-                request.session["context"] = {"curves": curves}
+                request.session["context"] = {
+                    "curves": curves,
+                    "c1": component1.name,
+                    "c2": component2.name,
+                    "c3": component3.name,
+                }
 
         except ValueError:
             request.session["context"] = {
-                "alert_message": "The mixture compounds should be distinct !"
+                "message": "The mixture compounds should be distinct !",
+                "type": "danger",
             }
 
         return redirect("index")
+
+
+def tables(request):
+    # Get all components
+    components = Component.objects.all().order_by("name")
+    component_keys = ["ID", "Name", "A", "B", "C"]
+
+    # Get all binary relations
+    relations = BinaryRelation.objects.all().order_by("id")
+    relation_keys = ["ID", "Component 1", "Component 2", "A12", "A21", "Alpha"]
+
+    # Handle search filter
+    component_query = request.GET.get("component_query")
+    relation_query = request.GET.get("relation_query")
+
+    if component_query:
+        components = components.filter(name__icontains=component_query)
+    if relation_query:
+        relations = relations.filter(
+            Q(component1__name__icontains=relation_query)
+            | Q(component2__name__icontains=relation_query)
+        )
+
+    context = {
+        "components": components,
+        "component_keys": component_keys,
+        "relations": relations,
+        "relation_keys": relation_keys,
+        "component_query": component_query,
+        "relation_query": relation_query,
+    }
+
+    return render(request, "ternary_azeotrope/index.html", context)
 
 
 def add_component(request):
@@ -112,16 +154,21 @@ def add_component(request):
                 c.sessions.add(curr_session)
                 c.save()
                 msg = f"Compound {c} added successfuly."
+                request.session["context"] = {"message": msg, "type": "info"}
             else:
                 # component already available for the session
                 msg = f"{c} already exists !"
+                request.session["context"] = {
+                    "message": msg,
+                    "type": "warning",
+                }
         else:
             new_compound = Component.objects.create(name=name, a=a, b=b, c=c)
             new_compound.sessions.add(curr_session)
 
             msg = f"Compound {new_compound} added successfuly."
+            request.session["context"] = {"message": msg, "type": "info"}
 
-        request.session["context"] = {"info_message": msg}
         return HttpResponseRedirect(reverse("index"))
 
 
@@ -160,12 +207,24 @@ def add_relation(request):
                     relation.sessions.add(curr_session)
                     relation.save()
                     msg = f"Binary relation {relation} added successfuly."
+                    request.session["context"] = {
+                        "message": msg,
+                        "type": "info",
+                    }
                 else:
                     # relation already available for the session, a message to the user will be added later
                     msg = f"Binary relation {relation} with the same parameters already exists !"
+                    request.session["context"] = {
+                        "message": msg,
+                        "type": "warning",
+                    }
             else:
                 # unique constraint
-                msg = f"New binary relation {relation} cannot be added. please edit their parameters instead."
+                msg = f"Binary relation {relation} already exists. You can edit their parameters."
+                request.session["context"] = {
+                    "message": msg,
+                    "type": "danger",
+                }
         else:
             relation = BinaryRelation.objects.create(
                 component1=component1,
@@ -176,6 +235,61 @@ def add_relation(request):
             )
             relation.sessions.add(curr_session)
             msg = f"Binary relation {relation} added successfuly."
+            request.session["context"] = {"message": msg, "type": "info"}
+        return redirect("index")
 
-        request.session["context"] = {"info_message": msg}
+
+def edit_relation(request):
+    if request.method == "POST":
+        new_vals = {
+            field.lower().replace(" ", ""): None
+            for field in BinaryRelation.fields()
+        }
+
+        id = request.POST.get("id")
+        relation = BinaryRelation.objects.get(pk=id)
+
+        for key in new_vals.keys():
+            try:
+                if key != "id":
+                    new_vals[key] = float(request.POST.get(key))
+            except:
+                new_vals[key] = request.POST.get(key)
+
+            if new_vals[key] is None:
+                new_vals[key] = getattr(relation, key)
+
+        edit_element(request.session.session_key, relation, new_vals)
+
+        return redirect("index")
+
+
+def edit_component(request):
+    if request.method == "POST":
+        id = request.POST["id"]
+        name = request.POST["name"]
+        a = request.POST["a"]
+        b = request.POST["b"]
+        c = request.POST["c"]
+
+        component = Component.objects.get(pk=id)
+        new_vals = {"name": name, "a": a, "b": b, "c": c}
+        edit_element(request.session.session_key, component, new_vals)
+
+        return redirect("index")
+
+
+def delete_relation(request, relation_id: str):
+    if request.method == "GET":
+        relation = BinaryRelation.objects.get(pk=int(relation_id))
+        delete_item(relation, request.session.session_key)
+
+        return redirect("index")
+
+
+def delete_compound(request, compound_id: str):
+    if request.method == "GET":
+        component = Component.objects.get(pk=int(compound_id))
+        delete_item(component, request.session.session_key)
+
         return redirect("index")
