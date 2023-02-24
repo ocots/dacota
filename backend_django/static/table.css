@@ -43,9 +43,47 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+
+.icon {
+  color: rgb(55, 70, 55);
+  cursor: pointer;
+  font-size: 24px;
+}
+
 .table-container {
   margin-top: 50px;
   align-self: center;
+  height: 300px;
+  overflow-y: scroll;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  font-weight: bold;
+}
+
+.compound-table-header,
+.binary-relations-table-header {
+  position: sticky;
+  top: 0;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.table-container h2 {
+  position: sticky;
+  font-weight: bold;
+  z-index: 1;
+}
