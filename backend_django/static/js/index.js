@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //diagram container:
+
+
+
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
@@ -58,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     relationForm.style.display =
       relationForm.style.display === "none" ? "block" : "none";
   });
+
 
 
 });
