@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.shortcuts import redirect
+from ternary_azeotrope.views import (
+    tables,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("ternary_azeotrope.urls")),
+    path("tables/", tables, name="tables"),
+    path(
+        "redirect-home/",
+        lambda request: redirect("index"),
+        name="redirect_home",
+    ),
 ]
