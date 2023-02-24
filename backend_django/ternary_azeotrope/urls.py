@@ -21,7 +21,7 @@ urlpatterns = [
         name="edit_component",
     ),
     path(
-        "edt_relation",
+        "edit_relation",
         views.edit_relation,
         name="edit_relation",
     ),
