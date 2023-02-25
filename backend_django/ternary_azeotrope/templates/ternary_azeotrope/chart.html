@@ -96,6 +96,33 @@
         backgroundColor: colors[i],
       });
     }
+
+    // Add azeotrope points
+    for (var i = 0; i < curve_list.length; i++) {
+      point_azeotrope = [];
+      intersection = curve_list[i]["azeo"];
+      if (intersection[0] == true) {
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][0],
+          y: curve_list[i]["x2"][0],
+        });
+      }
+
+      if (intersection[-1] == true) {
+        length = curve_list[i]["x1"].length;
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][length - 1],
+          y: curve_list[i]["x2"][length - 1],
+        });
+      }
+      datasets.push({
+        data: point_azeotrope,
+        showLine: false,
+        pointRadius: 10,
+        pointBackgroundColor: colors[i],
+      });
+    }
+
     new Chart(ctx, {
       type: "scatter",
       data: {
