@@ -105,39 +105,6 @@ def run(request):
         return redirect("index")
 
 
-def tables(request):
-    # Get all components
-    components = Component.objects.all().order_by("name")
-    component_keys = ["ID", "Name", "A", "B", "C"]
-
-    # Get all binary relations
-    relations = BinaryRelation.objects.all().order_by("id")
-    relation_keys = ["ID", "Component 1", "Component 2", "A12", "A21", "Alpha"]
-
-    # Handle search filter
-    component_query = request.GET.get("component_query")
-    relation_query = request.GET.get("relation_query")
-
-    if component_query:
-        components = components.filter(name__icontains=component_query)
-    if relation_query:
-        relations = relations.filter(
-            Q(component1__name__icontains=relation_query)
-            | Q(component2__name__icontains=relation_query)
-        )
-
-    context = {
-        "components": components,
-        "component_keys": component_keys,
-        "relations": relations,
-        "relation_keys": relation_keys,
-        "component_query": component_query,
-        "relation_query": relation_query,
-    }
-
-    return render(request, "ternary_azeotrope/index.html", context)
-
-
 def add_component(request):
     if request.method == "POST":
         name = request.POST["name"]
@@ -146,7 +113,6 @@ def add_component(request):
         c = request.POST["c"]
 
         curr_session = Session.objects.get(pk=request.session.session_key)
-        msg = None
 
         if Component.objects.filter(name=name, a=a, b=b, c=c).exists():
             c = Component.objects.get(name=name, a=a, b=b, c=c)
@@ -259,10 +225,6 @@ def edit_relation(request):
             if new_vals[key] is None:
                 new_vals[key] = getattr(relation, key)
 
-        # a12 = float()
-        # a21 = float(request.POST.get("a21"))
-        # alpha = float(request.POST.get("alpha"))
-
         edit_element(request.session.session_key, relation, new_vals)
 
         return redirect("index")
@@ -283,15 +245,15 @@ def edit_component(request):
         return redirect("index")
 
 
-def delete_relation(request, compound_id: str):
+def delete_relation(request, relation_id: str):
     if request.method == "GET":
-        component = BinaryRelation.objects.get(pk=int(compound_id))
-        delete_item(component, request.session.session_key)
+        relation = BinaryRelation.objects.get(pk=int(relation_id))
+        delete_item(relation, request.session.session_key)
 
         return redirect("index")
 
 
-def delete_tables(request, compound_id: str):
+def delete_compound(request, compound_id: str):
     if request.method == "GET":
         component = Component.objects.get(pk=int(compound_id))
         delete_item(component, request.session.session_key)

@@ -58,12 +58,20 @@
     },
   ];
 
-  function createXYValues(x, y) {
+  function createXYValues(x, y, t) {
     xyValues = [];
+    pos = "inside";
     for (var i = 0; i < x.length; i++) {
-      xyValues.push({ x: x[i], y: y[i] });
+      xyValues.push({ x: x[i], y: y[i], t: t[i] });
     }
     return xyValues;
+  }
+
+  function addPrefixToCurves(curves) {
+    for (let i = 0; i < curves.length; i++) {
+      curves[i] = "T : " + curves[i] + "°C";
+    }
+    return curves;
   }
 
   function draw() {
@@ -77,7 +85,9 @@
     for (var i = 0; i < curve_list.length; i++) {
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
-      xyValues = createXYValues(x, y);
+      t = addPrefixToCurves(curve_list[i]["T"]);
+      xyValues = createXYValues(x, y, t);
+      console.log(xyValues);
 
       datasets.push({
         data: xyValues,
@@ -86,9 +96,37 @@
         backgroundColor: colors[i],
       });
     }
+
+    // Add azeotrope points
+    for (var i = 0; i < curve_list.length; i++) {
+      point_azeotrope = [];
+      intersection = curve_list[i]["azeo"];
+      if (intersection[0] == true) {
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][0],
+          y: curve_list[i]["x2"][0],
+        });
+      }
+
+      if (intersection[-1] == true) {
+        length = curve_list[i]["x1"].length;
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][length - 1],
+          y: curve_list[i]["x2"][length - 1],
+        });
+      }
+      datasets.push({
+        data: point_azeotrope,
+        showLine: false,
+        pointRadius: 10,
+        pointBackgroundColor: colors[i],
+      });
+    }
+
     new Chart(ctx, {
       type: "scatter",
       data: {
+        labels: t,
         datasets: datasets,
       },
       options: {
@@ -107,6 +145,14 @@
             top: 50,
             bottom: 50,
           },
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true,
         },
       },
     });

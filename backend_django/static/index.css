@@ -5,6 +5,10 @@ h1 {
   margin-bottom: 50px;
 }
 
+body {
+  background-color: hsl(0, 0%, 98%);
+}
+
 .component {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -17,6 +21,7 @@ h1 {
   display: flex;
   flex-direction: row;
 }
+
 
 #main {
   position: relative;
@@ -36,6 +41,10 @@ h1 {
 .fa-circle-xmark {
   color: red;
   float: right;
+}
+
+.fa-circle-info {
+  color: rgba(48, 150, 227, 0.767);
 }
 
 i:hover {
@@ -153,7 +162,6 @@ select {
 
 .title {
   color: #26408B;
-  text-transform: uppercase;
   font-size: 30px;
   letter-spacing: 2px;
   position: relative;
@@ -283,4 +291,9 @@ select {
   background-color: #007bff;
   color: #fff;
   border-color: #007bff;
+}
+
+
+.fa-square-question {
+  color: rgba(154, 197, 230, 0.767);
 }

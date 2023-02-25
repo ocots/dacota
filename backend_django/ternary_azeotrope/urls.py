@@ -26,12 +26,12 @@ urlpatterns = [
         name="edit_relation",
     ),
     path(
-        "delete_tables/<str:compound_id>",
-        views.delete_tables,
-        name="delete_tables",
+        "delete_compound/<str:compound_id>",
+        views.delete_compound,
+        name="delete_compound",
     ),
     path(
-        "delete_relation/<str:compound_id>",
+        "delete_relation/<str:relation_id>",
         views.delete_relation,
         name="delete_relation",
     ),

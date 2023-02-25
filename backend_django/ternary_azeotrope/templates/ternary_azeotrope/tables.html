@@ -1,65 +1,23 @@
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <style>
-      .icon {
-        color: rgb(55, 70, 55);
-        cursor: pointer;
-        font-size: 24px;
-      }
-      .table-container {
-        height: 300px;
-        overflow-y: scroll;
-      }
 
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th,
-      td {
-        text-align: left;
-        padding: 8px;
-      }
-      th {
-        position: sticky;
-        top: 0;
-        font-weight: bold;
-      }
-      .compound-table-header,
-      .binary-relations-table-header {
-        position: sticky;
-        top: 0;
-        font-weight: bold;
-        z-index: 1;
-      }
-      .table-container h2 {
-        position: sticky;
-        font-weight: bold;
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <html>
+ <html>
     <head>
       <meta charset="UTF-8" />
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
       />
     </head>
     <body>
-      <div class="table-container">
-        <h2 id="table">Compounds for Antoine model</h2>
+      <h2 id="table">Compounds for Antoine model</h2>
         <input
           type="text"
           id="compound-filter"
-          placeholder="Search for a compound..."
-        /><br /><br />
+          placeholder="Search for a compound..."/><br /><br />
+      <div class="table-container">
         <table id="compound-table">
           <thead>
             <tr>
@@ -88,15 +46,15 @@
           </tbody>
         </table>
       </div>
-  
-      <div class="table-container">
-        <h2 id="table">Binary relations</h2>
+
+      <h2 id="table">Binary relations for NRTL model</h2>
         <input
           type="text"
           id="search"
           onkeyup="perform_search()"
           placeholder="Search for compounds..."
         />
+      <div class="table-container">
         <table id="binary-relations-table">
           <thead>
             <tr>
@@ -118,7 +76,7 @@
               <td>
                 <i
                   class="fa-solid fa-trash"
-                  onclick="Delete('{{element.id}}', '{{element.name}}')"
+                  onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"
                 ></i>
               </td>
             </tr>
@@ -126,61 +84,72 @@
           </tbody>
         </table>
       </div>
-  
 
-    <script type="text/javascript">
-      // Get the input field and table
-      let filterInput = document.getElementById("compound-filter");
-      let table = document.getElementById("compound-table");
+      <script type="text/javascript">
+        // Get the input field and table
+        let filterInput = document.getElementById("compound-filter");
+        let table = document.getElementById("compound-table");
 
-      // Add event listener for input
-      filterInput.addEventListener("keyup", function () {
-        let filterValue = filterInput.value.toLowerCase();
+        // Add event listener for input
+        filterInput.addEventListener("keyup", function () {
+          let filterValue = filterInput.value.toLowerCase();
 
-        // Loop through table rows
-        for (let i = 1; i < table.rows.length; i++) {
-          let row = table.rows[i];
-          let name = row.cells[1].innerText.toLowerCase();
+          // Loop through table rows
+          for (let i = 1; i < table.rows.length; i++) {
+            let row = table.rows[i];
+            let name = row.cells[1].innerText.toLowerCase();
 
-          if (name.indexOf(filterValue) > -1) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        }
-      });
-
-      function perform_search() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("binary-relations-table");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-          td1 = tr[i].getElementsByTagName("td")[1];
-          td2 = tr[i].getElementsByTagName("td")[2];
-          if (td1 || td2) {
-            txtValue1 = td1.textContent || td1.innerText;
-            txtValue2 = td2.textContent || td2.innerText;
-            if (
-              txtValue1.toUpperCase().indexOf(filter) > -1 ||
-              txtValue2.toUpperCase().indexOf(filter) > -1
-            ) {
-              tr[i].style.display = "";
+            if (name.indexOf(filterValue) > -1) {
+              row.style.display = "";
             } else {
-              tr[i].style.display = "none";
+              row.style.display = "none";
             }
           }
-        }
-      }
-      function Delete(id, name) {
-              if (window.confirm("Are you sure you want to delete " + name)) {
-                var path = "delete_tables/" + id;
-                document.location.href = path;
+        });
+
+        function perform_search() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("search");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("binary-relations-table");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+            td1 = tr[i].getElementsByTagName("td")[1];
+            td2 = tr[i].getElementsByTagName("td")[2];
+            if (td1 || td2) {
+              txtValue1 = td1.textContent || td1.innerText;
+              txtValue2 = td2.textContent || td2.innerText;
+              if (
+                txtValue1.toUpperCase().indexOf(filter) > -1 ||
+                txtValue2.toUpperCase().indexOf(filter) > -1
+              ) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
               }
             }
-      
-    </script>
+          }
+        }
+        function Delete(id, name) {
+          if (window.confirm("Are you sure you want to delete " + name)) {
+            var path = "delete_compound/" + id;
+            document.location.href = path;
+          }
+        }
+        function Delete_relation(id, name1, name2) {
+          if (
+            window.confirm(
+              "Are you sure you want to delete the relation " +
+                name1 +
+                "-" +
+                name2
+            )
+          ) {
+            var path = "delete_relation/" + id;
+            document.location.href = path;
+          }
+        }
+      </script>
     </body>
+  </html>
 </html>
-  
