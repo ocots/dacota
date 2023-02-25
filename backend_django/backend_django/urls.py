@@ -14,19 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
 from django.shortcuts import redirect
-from ternary_azeotrope.views import (
-    tables,
-)
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("ternary_azeotrope.urls")),
-    path("tables/", tables, name="tables"),
-    path(
-        "redirect-home/",
-        lambda request: redirect("index"),
-        name="redirect_home",
-    ),
 ]
