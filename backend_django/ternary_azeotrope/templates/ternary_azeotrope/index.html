@@ -162,13 +162,13 @@ Home {%endblock%} {% block head %}
           {% csrf_token %}
           <select name="component1" class="form-select" required>
             {% for component in components %}
-            <option value="{{ component.pk }}">{{ component.name }}</option>
+            <option value="{{ component.pk }}">{{ component }}</option>
             {% endfor %}
           </select>
 
           <select name="component2" class="form-select" required>
             {% for component in components %}
-            <option value="{{ component.pk }}">{{ component.name }}</option>
+            <option value="{{ component.pk }}">{{ component }}</option>
             {% endfor %}
           </select>
 
