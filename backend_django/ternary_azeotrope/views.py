@@ -1,10 +1,7 @@
-import ast
 import json
 import sys
-from urllib.parse import urlencode
 
 sys.path.append(".helpers")
-
 from datetime import datetime
 
 from django.contrib.sessions.models import Session
@@ -17,7 +14,6 @@ from ternary_azeotrope.models import BinaryRelation, Component
 
 from backend_django import settings
 
-from .helpers.plotter import get_plot
 from .helpers.ternary_mixture import TernaryMixture
 from .helpers.utils import *
 
@@ -87,7 +83,6 @@ def run(request):
                 )
                 curves = mixture.diagram()
                 curves = json.dumps(curves)
-                # diag = get_plot(curves, mixture)
 
                 request.session["context"] = {
                     "curves": curves,
