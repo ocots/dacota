@@ -1,3 +1,13 @@
+.tooltip-container {
+  text-align: center;
+}
+
+.tooltip-container img {
+  width: 35%;
+  margin: auto;
+  display: block;
+}
+
 h1 {
   color: rgb(16, 65, 114);
   text-align: center;
