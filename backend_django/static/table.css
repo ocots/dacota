@@ -17,7 +17,6 @@ nav a:hover {
   color: black;
 }
 
-
 th,
 td {
   padding: 8px;
@@ -49,17 +48,6 @@ tr:nth-child(even) {
 
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 10px;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
 
 th {
   position: sticky;
@@ -79,4 +67,46 @@ th {
   position: sticky;
   font-weight: bold;
   z-index: 1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.search-container {
+  text-align: center;
+}
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+
+.container input[type="text"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: width 0.3s ease-in-out;
+  height: 35px;
+}
+
+.container input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(81, 203, 238, 0.8);
+  width: 50%;
 }
