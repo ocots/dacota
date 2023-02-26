@@ -36,9 +36,11 @@
             <td>{{ element.a }}</td>
             <td>{{ element.b }}</td>
             <td>{{ element.c }}</td>
-            <td>
-              <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
-            </td>
+            {% if element.sessions.all|length > 0  %}
+              <td>
+                <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
+              </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
@@ -67,10 +69,12 @@
             <td>{{ element.a12 }}</td>
             <td>{{ element.a21 }}</td>
             <td>{{ element.alpha }}</td>
+            {% if element.sessions.all|length > 0  %}
             <td>
               <i class="fa-solid fa-trash"
                 onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>

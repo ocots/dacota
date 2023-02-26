@@ -1,13 +1,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
 <style>
   #myChart {
     position: relative;
-    width: 800px;
+    width: 750px;
   }
 
   .chart-text {
     position: absolute;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: rgb(40, 38, 38);
   }
@@ -26,7 +27,7 @@
   }
   .chartCanvas {
     position: relative;
-    width: 800px;
+    width: 750px;
   }
 </style>
 
@@ -38,14 +39,41 @@
 </div>
 
 <script>
+  function download_as_html() {
+    var html_content = "data:text/html," + diagram.innerHTML;
+    html_content.remove(
+      'const diagram = document.getElementById("diagram-container");'
+    );
+    html_content = html_content.remove('diagram.style.width = "50%";');
+
+    const downloadBtn = document.createElement("i");
+    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
+    downloadBtn.style.color = "blue";
+    downloadBtn.style.fontSize = "35px";
+    downloadBtn.addEventListener("click", () => {
+      const downloadLink = document.createElement("a");
+      downloadLink.href = html_content;
+      downloadLink.download =
+        "{{c1}}".split("(")[0] +
+        "_" +
+        "{{c2}}".split("(")[0] +
+        "_" +
+        "{{c3}}".split("(")[0] +
+        ".html";
+      downloadLink.click();
+    });
+
+    diagram.appendChild(downloadBtn);
+  }
+
   function enable_download() {
-    //console.log(img_uri);
     const downloadBtn = document.createElement("i");
     downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
     downloadBtn.style.color = "green";
     downloadBtn.style.fontSize = "35px";
     downloadBtn.addEventListener("click", () => {
       let img_uri = chart.toBase64Image();
+
       const downloadLink = document.createElement("a");
       downloadLink.href = img_uri;
       downloadLink.download =
@@ -54,7 +82,7 @@
         "{{c2}}".split("(")[0] +
         "_" +
         "{{c3}}".split("(")[0] +
-        ".jpg";
+        ".png";
       downloadLink.click();
     });
 
@@ -63,7 +91,6 @@
 
   const ctx = document.querySelector(".chartCanvas");
 
-  // The following data is used to create the triangle that contains the curves
   x = [0, 1, 0, 0];
   y = [0, 0, 1, 0];
   baseTriangle = [
@@ -77,7 +104,7 @@
       data: baseTriangle,
       showLine: true,
       borderColor: "black",
-      backgroundColor: "black", // Set a blue fill color for the curve
+      backgroundColor: "black",
       legend: false,
     },
   ];
@@ -104,14 +131,13 @@
     const doc = parser.parseFromString(graph, "text/html");
     const jsonEncodedString = doc.documentElement.textContent;
     curve_list = JSON.parse(jsonEncodedString);
-    const colors = ["red", "blue", "green"]; // Define an array of colors
+    const colors = ["red", "blue", "green"];
 
     for (var i = 0; i < curve_list.length; i++) {
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
       t = addPrefixToCurves(curve_list[i]["T"]);
       xyValues = createXYValues(x, y, t);
-      //console.log(xyValues);
 
       datasets.push({
         data: xyValues,
@@ -121,7 +147,6 @@
       });
     }
 
-    // Add azeotrope points
     for (var i = 0; i < curve_list.length; i++) {
       point_azeotrope = [];
       intersection = curve_list[i]["azeo"];
@@ -161,7 +186,19 @@
           legend: {
             display: false,
           },
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: "xy",
+            },
+          },
         },
+
         layout: {
           padding: {
             left: 50,
@@ -188,5 +225,6 @@
   chart.render();
   setTimeout(() => {
     enable_download();
+    download_as_html();
   }, 200);
 </script>
