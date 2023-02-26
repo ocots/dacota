@@ -1,13 +1,13 @@
 {% extends 'ternary_azeotrope/layout.html' %} {% load static %} {% block title%}
 Home {%endblock%} {% block head %}
 
-<link rel="stylesheet" href="{% static 'index.css' %}" />
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
 <script
   type="text/javascript"
   src="{% static 'js/index.js'%}"
   charset="utf-8"
 ></script>
-<link rel="stylesheet" type="text/css" href="{% static 'menu.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}" />
 <script
   type="text/javascript"
   src="{% static 'js/menu.js' %}"
@@ -118,11 +118,32 @@ Home {%endblock%} {% block head %}
             required
           />
 
-          <input type="number" step="any" id="a-input" name="a" placeholder="A" required />
-          <input type="number" step="any" id="b-input" name="b" placeholder="B" required />
-          <input type="number" step="any" id="c-input" name="c" placeholder="C" required />
+          <input
+            type="number"
+            step="any"
+            id="a-input"
+            name="a"
+            placeholder="A"
+            required
+          />
+          <input
+            type="number"
+            step="any"
+            id="b-input"
+            name="b"
+            placeholder="B"
+            required
+          />
+          <input
+            type="number"
+            step="any"
+            id="c-input"
+            name="c"
+            placeholder="C"
+            required
+          />
           <input type="submit" value="Save" class="btn btn-primary" />
-          <i class="fa-solid fa-circle-info fa-2xl"></i>
+          <i class="fa-solid fa-circle-info fa-2xl" id="tooltip-antoine"></i>
         </form>
       </div>
     </div>
@@ -141,13 +162,13 @@ Home {%endblock%} {% block head %}
           {% csrf_token %}
           <select name="component1" class="form-select" required>
             {% for component in components %}
-            <option value="{{ component.pk }}">{{ component.name }}</option>
+            <option value="{{ component.pk }}">{{ component }}</option>
             {% endfor %}
           </select>
 
           <select name="component2" class="form-select" required>
             {% for component in components %}
-            <option value="{{ component.pk }}">{{ component.name }}</option>
+            <option value="{{ component.pk }}">{{ component }}</option>
             {% endfor %}
           </select>
 
@@ -173,24 +194,37 @@ Home {%endblock%} {% block head %}
             required
           />
           <input type="submit" value="Save" class="btn btn-primary" />
-          <i class="fa-solid fa-circle-info fa-2xl"></i>
+          <i class="fa-solid fa-circle-info fa-2xl" id="tooltip-nrtl"></i>
         </form>
       </div>
     </div>
 
-    {% if not curves %}
-    <div
-      id="spinner"
-      class="spinner-border text-primary"
-      role="status"
-      style="display: none"
-    ></div>
-    {% endif %}
+    <div class="tooltip-container" style="display: none" id="nrtl">
+      PS: A is propotional to gamma :
+      <br>
+      <img src={% static "img/nrtl_equation.png" %}/>
+    </div>
+
+    <div class="tooltip-container" style="display: none" id="antoine">
+      The pressure of a compound i :
+      <br>
+      <img src={% static "img/antoine_equation.png" %}/>
+    </div>
+
+      {% if not curves %}
+      <div
+        id="spinner"
+        class="spinner-border text-primary"
+        role="status"
+        style="display: none"
+      ></div>
+      {% endif %}
+    </div>
+
+    <div class="d-flex justify-content-center" id="diagram-container">
+      {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
+    </div>
   </div>
 
-  <div class="d-flex justify-content-center" id="diagram-container">
-    {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
-  </div>
+  {%endblock%}
 </div>
-
-{%endblock%}
