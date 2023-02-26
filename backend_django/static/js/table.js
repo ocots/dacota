@@ -1,4 +1,4 @@
-function perform_compound_search(){
+function perform_compound_search() {
   // Get the input field and table
   let filterInput = document.getElementById("compound-filter");
   let table = document.getElementById("compound-table");
@@ -138,39 +138,75 @@ function toggleEdit(rowId) {
 }
 
 async function saveChanges(rowId) {
-row = document.getElementById(rowId);
-const keys = ['id', 'name', 'a', 'b', 'c']
-data = {}
-var cells = row.getElementsByTagName("td");
-for (var j = 0; j < cells.length - 3; j++) {
-  var input = cells[j].querySelector("input");
-  if (input) {
-    data[keys[j]] = input.value;
-    this.toggleEdit(rowId);
+  row = document.getElementById(rowId);
+  const keys = ['id', 'name', 'a', 'b', 'c']
+  data = {}
+  var cells = row.getElementsByTagName("td");
+  for (var j = 0; j < cells.length - 3; j++) {
+    var input = cells[j].querySelector("input");
+    if (input) {
+      data[keys[j]] = input.value;
+      this.toggleEdit(rowId);
+    }
+    else {
+      data[keys[j]] = cells[j].innerHTML;
+    }
   }
-  else {
-    data[keys[j]] = cells[j].innerHTML;
-  }
-}
-console.log("data", data) // FORM OF THE DATA
-await fetch(`http://localhost:8000/update_component/${data.id}`, {
-  method: 'PUT',
-  headers: { "Content-Type": "application/json" }, body: data
-});
+  console.log("data", data) // FORM OF THE DATA
+  await fetch(`http://localhost:8000/update_component/${data.id}`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" }, body: data
+  });
 }
 
 function cancelChanges(rowId) {
-var row = document.getElementById(rowId);
-const keys = ["id", "name", "a", "b", "c"]
-// Get the original values of the row
-// Set the input values to the original values
-let cells = row.getElementsByTagName("td");
-let editable = cells[1].getAttribute("editable");
-for (let i = 0; i < cells.length - 3; i++) {
-  if (editable === "true") {
-    let input = cells[i].querySelector("input");
-    if (input) input.value = originalValues.get(rowId)[keys[i]];
+  var row = document.getElementById(rowId);
+  const keys = ["id", "name", "a", "b", "c"]
+  // Get the original values of the row
+  // Set the input values to the original values
+  let cells = row.getElementsByTagName("td");
+  let editable = cells[1].getAttribute("editable");
+  for (let i = 0; i < cells.length - 3; i++) {
+    if (editable === "true") {
+      let input = cells[i].querySelector("input");
+      if (input) input.value = originalValues.get(rowId)[keys[i]];
+    }
   }
+  if (editable === "true") toggleEdit(rowId);
 }
-if (editable === "true") toggleEdit(rowId);
+
+
+var originalValuesBinaryRelations = new Map();
+function toggleEditBinaryRelations(rowId) {
+  let table = document.getElementById('binary-relations-table');
+  let trs = table.getElementsByTagName("tr");
+  let row = trs.getElementById(rowId);
+  const data = {};
+  const keys = ["id", "component1", "component2", "a12", "a21", "alpha"]
+  let cells = row.getElementsByTagName("td");
+  for (let i = 0; i < cells.length - 1; i++) {
+    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
+      if (cells[i].getAttribute("noneditable") === "true") {
+        data[keys[i]] = cells[i].innerHTML;
+        continue;
+      }
+      data[keys[i]] = cells[i].innerHTML;
+      let input = document.createElement("input");
+      input.type = "text";
+      input.value = cells[i].innerHTML;
+      input.style.width = cells[i].offsetWidth + "px";
+      cells[i].innerHTML = "";
+      cells[i].appendChild(input);
+      cells[i].setAttribute("editable", "true");
+      data[keys[i]]
+    }
+    else {
+      if (cells[i].getAttribute("noneditable") === "true") continue;
+      cells[i].setAttribute("editable", "false");
+      let input = cells[i].querySelector("input");
+      cells[i].innerHTML = `${input.value}`;
+      data[keys[i]] = input.value;
+    }
+  }
+  originalValuesBinaryRelationsss.set(rowId, data)
 }

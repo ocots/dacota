@@ -73,22 +73,33 @@
       <tbody>
         {% for element in relations %}
         <tr>
-          <td>{{ element.id }}</td>
-          <td>{{ element.component1.name }}</td>
-          <td>{{ element.component2.name }}</td>
-          <td>{{ element.a12 }}</td>
-          <td>{{ element.a21 }}</td>
-          <td>{{ element.alpha }}</td>
+          <td noneditable="true">{{ element.id }}</td>
+          <td editable="false">{{ element.component1.name }}</td>
+          <td editable="false">{{ element.component2.name }}</td>
+          <td editable="false">{{ element.a12 }}</td>
+          <td editable="false">{{ element.a21 }}</td>
+          <td editable="false">{{ element.alpha }}</td>
           {% if element.sessions.all|length > 0 %}
-            <td>
-              <i class="fa-solid fa-trash"
-                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
-            </td>
-            {% endif %}
+
+
+          <td editable="false">
+            <i class="fa-solid fa-trash"
+              onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
+            <button onclick="cancelChangesBinaryRelations('row{{ forloop.counter }}')" class="cancel-button">
+              <i class="fas fa-times-circle"></i>
+            </button>
+            <button onclick="saveChangesBinaryRelations('row{{ forloop.counter }}')" class="save-row">
+              <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+            <button onclick="toggleEditBinaryRelations('row{{ forloop.counter }}')">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+          </td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 
-  </html>
+</html>
