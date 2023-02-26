@@ -9,23 +9,29 @@
   <title>Compounds and Binary Relations</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/table.css' %}"
 
 </head>
 
 
 <body>
-  <div class="table-container">
-    <h2 id="table">Compounds for Antoine model</h2>
-    <input type="text" id="compound-filter" placeholder="Search for a compound..." /><br /><br />
-    <table id="compound-table">
-      <thead>
-        <tr>
-          {% for key in component_keys %}
-          <th>{{key}}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
+  <div class="container">
+    <div class="search-container">
+      <input type="text" id="search" onkeyup="perform_search()" placeholder="Search ...">
+    </div>
+    <h2>Compounds for Antoine model</h2>
+    <input type="text" id="compound-filter" placeholder="Search for a compound..." onkeyup="perform_compound_search()" >
+    <div class="table-container">
+      <table id="compound-table">
+        <thead>
+          <tr>
+            {% for key in component_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
         {% for element in components %}
         <tr id="row{{ forloop.counter }}">
           <td noneditable="true">{{ element.id }}</td>
@@ -37,21 +43,15 @@
             <button onclick="toggleEdit('row{{ forloop.counter }}')">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
-          </td>
-
-          <td editable="false">
             <button onclick="saveChanges('row{{ forloop.counter }}')" class="save-row">
               <i class="fa-solid fa-floppy-disk"></i>
             </button>
-          </td>
-
-
-          <td editable="false">
             <button onclick="cancelChanges('row{{ forloop.counter }}')" class="cancel-button">
               <i class="fas fa-times-circle"></i>
             </button>
+            <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
           </td>
+
         </tr>
 
         {% endfor %}
@@ -59,11 +59,12 @@
     </table>
   </div>
 
-  <div class="table-container">
-    <h2 id="table">Binary relations for NRTL model</h2>
-    <input type="text" id="search" onkeyup="perform_search()" placeholder="Search for compounds..." />
-    <table id="binary-relations-table">
-      <thead>
+  <h2>Binary relations for NRTL model</h2>
+    <input type="text" id="binary-relations-search" onkeyup="perform_binary_relations_search()"
+      placeholder="Search in binary relations...">
+    <div class="table-container">
+      <table id="binary-relations-table">
+        <thead>
         <tr>
           {% for key in relation_keys %}
           <th>{{key}}</th>
