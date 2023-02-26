@@ -21,4 +21,5 @@ def pre_delete_session(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Session)
 def post_delete_session(sender, **kwargs):
-    print("A Session was deleted")
+    # print("A Session was deleted")
+    pass

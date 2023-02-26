@@ -76,53 +76,6 @@
   <script type="text/javascript">
     let fic 
   </script>
-  <script type="text/javascript">
-    // Get the input field and table
-    let filterInput = document.getElementById("compound-filter");
-    let table = document.getElementById("compound-table");
-    // Add event listener for input
-    filterInput.addEventListener("keyup", function () {
-      let filterValue = filterInput.value.toLowerCase();
-      // Loop through table rows
-      for (let i = 1; i < table.rows.length; i++) {
-        let row = table.rows[i];
-        let name = row.cells[1].innerText.toLowerCase();
-
-        if (name.indexOf(filterValue) > -1) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      }
-    });
-
-
-
-    function perform_search() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("binary-relations-table");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td1 = tr[i].getElementsByTagName("td")[1];
-        td2 = tr[i].getElementsByTagName("td")[2];
-        if (td1 || td2) {
-          txtValue1 = td1.textContent || td1.innerText;
-          txtValue2 = td2.textContent || td2.innerText;
-          if (
-            txtValue1.toUpperCase().indexOf(filter) > -1 ||
-            txtValue2.toUpperCase().indexOf(filter) > -1
-          ) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-  </script>
-
 
   <script>
     var originalValues = new Map();
@@ -208,6 +161,92 @@
 
 
 
+</body>
+
+</html>
+{% load static %}
+
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compounds and Binary Relations</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="search-container">
+      <input type="text" id="search" onkeyup="perform_search()" placeholder="Search ...">
+    </div>
+    <h2>Compounds for Antoine model</h2>
+    <input type="text" id="compound-filter" placeholder="Search for a compound..." onkeyup="perform_compound_search()">
+    <div class="table-container">
+      <table id="compound-table">
+        <thead>
+          <tr>
+            {% for key in component_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in components %}
+          <tr>
+            <td>{{ element.id }}</td>
+            <td>{{ element.name }}</td>
+            <td>{{ element.a }}</td>
+            <td>{{ element.b }}</td>
+            <td>{{ element.c }}</td>
+            {% if element.sessions.all|length > 0 %}
+            <td>
+              <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Binary relations for NRTL model</h2>
+    <input type="text" id="binary-relations-search" onkeyup="perform_binary_relations_search()"
+      placeholder="Search in binary relations...">
+    <div class="table-container">
+      <table id="binary-relations-table">
+        <thead>
+          <tr>
+            {% for key in relation_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in relations %}
+          <tr>
+            <td>{{ element.id }}</td>
+            <td>{{ element.component1.name }}</td>
+            <td>{{ element.component2.name }}</td>
+            <td>{{ element.a12 }}</td>
+            <td>{{ element.a21 }}</td>
+            <td>{{ element.alpha }}</td>
+            {% if element.sessions.all|length > 0 %}
+            <td>
+              <i class="fa-solid fa-trash"
+                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </body>
 
 </html>

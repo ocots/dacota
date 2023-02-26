@@ -1,16 +1,96 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
 <style>
   #myChart {
-    width: 700px;
-    /* height: 00px; */
+    position: relative;
+    width: 750px;
+  }
+
+  .chart-text {
+    position: absolute;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(40, 38, 38);
+  }
+  #c1 {
+    bottom: 0;
+    right: 0;
+  }
+  #c2 {
+    top: 0;
+    left: 0;
+  }
+
+  #c3 {
+    bottom: 0;
+    left: 0;
+  }
+  .chartCanvas {
+    position: relative;
+    width: 750px;
   }
 </style>
 
-<canvas id="myChart"></canvas>
-<script>
-  const ctx = document.getElementById("myChart");
+<div id="myChart">
+  <canvas class="chartCanvas"></canvas>
+  <div id="c1" class="chart-text">{{c1}}</div>
+  <div id="c2" class="chart-text">{{c2}}</div>
+  <div id="c3" class="chart-text">{{c3}}</div>
+</div>
 
-  // The following data is used to create the triangle that contains the curves
+<script>
+  function download_as_html() {
+    var html_content = "data:text/html," + diagram.innerHTML;
+    html_content.remove(
+      'const diagram = document.getElementById("diagram-container");'
+    );
+    html_content = html_content.remove('diagram.style.width = "50%";');
+
+    const downloadBtn = document.createElement("i");
+    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
+    downloadBtn.style.color = "blue";
+    downloadBtn.style.fontSize = "35px";
+    downloadBtn.addEventListener("click", () => {
+      const downloadLink = document.createElement("a");
+      downloadLink.href = html_content;
+      downloadLink.download =
+        "{{c1}}".split("(")[0] +
+        "_" +
+        "{{c2}}".split("(")[0] +
+        "_" +
+        "{{c3}}".split("(")[0] +
+        ".html";
+      downloadLink.click();
+    });
+
+    diagram.appendChild(downloadBtn);
+  }
+
+  function enable_download() {
+    const downloadBtn = document.createElement("i");
+    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
+    downloadBtn.style.color = "green";
+    downloadBtn.style.fontSize = "35px";
+    downloadBtn.addEventListener("click", () => {
+      let img_uri = chart.toBase64Image();
+
+      const downloadLink = document.createElement("a");
+      downloadLink.href = img_uri;
+      downloadLink.download =
+        "{{c1}}".split("(")[0] +
+        "_" +
+        "{{c2}}".split("(")[0] +
+        "_" +
+        "{{c3}}".split("(")[0] +
+        ".png";
+      downloadLink.click();
+    });
+
+    diagram.appendChild(downloadBtn);
+  }
+
+  const ctx = document.querySelector(".chartCanvas");
+
   x = [0, 1, 0, 0];
   y = [0, 0, 1, 0];
   baseTriangle = [
@@ -24,15 +104,25 @@
       data: baseTriangle,
       showLine: true,
       borderColor: "black",
+      backgroundColor: "black",
+      legend: false,
     },
   ];
 
-  function createXYValues(x, y) {
+  function createXYValues(x, y, t) {
     xyValues = [];
+    pos = "inside";
     for (var i = 0; i < x.length; i++) {
-      xyValues.push({ x: x[i], y: y[i] });
+      xyValues.push({ x: x[i], y: y[i], t: t[i] });
     }
     return xyValues;
+  }
+
+  function addPrefixToCurves(curves) {
+    for (let i = 0; i < curves.length; i++) {
+      curves[i] = "T : " + curves[i] + "°C";
+    }
+    return curves;
   }
 
   function draw() {
@@ -40,33 +130,101 @@
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
     const jsonEncodedString = doc.documentElement.textContent;
-
-    //console.log(jsonEncodedString);
     curve_list = JSON.parse(jsonEncodedString);
+    const colors = ["red", "blue", "green"];
 
     for (var i = 0; i < curve_list.length; i++) {
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
-      xyValues = createXYValues(x, y);
+      t = addPrefixToCurves(curve_list[i]["T"]);
+      xyValues = createXYValues(x, y, t);
 
       datasets.push({
         data: xyValues,
         showLine: true,
-        borderColor: "black",
+        borderColor: colors[i],
+        backgroundColor: colors[i],
       });
     }
-    new Chart(ctx, {
+
+    for (var i = 0; i < curve_list.length; i++) {
+      point_azeotrope = [];
+      intersection = curve_list[i]["azeo"];
+      if (intersection[0] == true) {
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][0],
+          y: curve_list[i]["x2"][0],
+        });
+      }
+
+      if (intersection[-1] == true) {
+        length = curve_list[i]["x1"].length;
+        point_azeotrope.push({
+          x: curve_list[i]["x1"][length - 1],
+          y: curve_list[i]["x2"][length - 1],
+        });
+      }
+      datasets.push({
+        data: point_azeotrope,
+        showLine: false,
+        pointRadius: 10,
+        pointBackgroundColor: colors[i],
+      });
+    }
+
+    return new Chart(ctx, {
       type: "scatter",
       data: {
+        labels: t,
         datasets: datasets,
       },
       options: {
         responsive: false,
         maintainAspectRatio: false,
         aspectRatio: 1,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: "xy",
+            },
+          },
+        },
+
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50,
+          },
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true,
+        },
       },
     });
   }
 
-  draw();
+  const diagram = document.getElementById("diagram-container");
+  diagram.style.width = "50%";
+  var chart = draw();
+  chart.render();
+  setTimeout(() => {
+    enable_download();
+    download_as_html();
+  }, 200);
 </script>

@@ -1,4 +1,18 @@
+function show_equation_eventlistener(equation_name){
+  const icon = document.getElementById("tooltip-" + equation_name);
+  const container = document.getElementById(equation_name);
+
+  icon.addEventListener('mouseover', () => {
+    container.style.display = 'block';
+  });
+
+  container.addEventListener('mouseleave', () => {
+    container.style.display = 'none';
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
@@ -59,5 +73,16 @@ document.addEventListener("DOMContentLoaded", function () {
       relationForm.style.display === "none" ? "block" : "none";
   });
 
+  /* close icon */
+  const close_icons = document.getElementsByClassName("fa-sharp fa-regular fa-circle-xmark");
+  for (let i=0; i<close_icons.length; i++){
+    (close_icons[i]).addEventListener("click", (event) => {
+      close_icons[i].parentElement.style.display = "none";
+    });
+  }
+
+  /** Tooltip for equation imgs */
+  show_equation_eventlistener("antoine");
+  show_equation_eventlistener("nrtl");
 
 });

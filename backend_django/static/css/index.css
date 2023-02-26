@@ -1,8 +1,22 @@
+.tooltip-container {
+  text-align: center;
+}
+
+.tooltip-container img {
+  width: 35%;
+  margin: auto;
+  display: block;
+}
+
 h1 {
   color: rgb(16, 65, 114);
   text-align: center;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+body {
+  background-color: hsl(0, 0%, 98%);
 }
 
 .component {
@@ -18,6 +32,7 @@ h1 {
   flex-direction: row;
 }
 
+
 #main {
   position: relative;
   width: 50%;
@@ -28,9 +43,24 @@ h1 {
 }
 
 #diagram-container {
-  width: 50%;
+  width: 0%;
   padding: 20px;
 
+}
+
+.fa-circle-xmark {
+  color: red;
+  float: right;
+}
+
+.fa-circle-info {
+  color: rgba(48, 150, 227, 0.767);
+}
+
+i:hover {
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 .hidden {
@@ -142,7 +172,6 @@ select {
 
 .title {
   color: #26408B;
-  text-transform: uppercase;
   font-size: 30px;
   letter-spacing: 2px;
   position: relative;
@@ -251,4 +280,30 @@ select {
 
 #compound-form input[type="text"] {
   width: 180px;
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background-color: #cae5db;
+
+}
+
+.radio-group input[type="radio"]:checked+label {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+
+.fa-square-question {
+  color: rgba(154, 197, 230, 0.767);
 }
