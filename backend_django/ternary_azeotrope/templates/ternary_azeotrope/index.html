@@ -202,13 +202,13 @@ Home {%endblock%} {% block head %}
     <div class="tooltip-container" style="display: none" id="nrtl">
       PS: A is propotional to gamma :
       <br>
-      <img src={% static "img/nrtl_equation.png" %}/>
+      <img src="{% static 'img/nrtl_equation.png' %}"/>
     </div>
 
     <div class="tooltip-container" style="display: none" id="antoine">
       The pressure of a compound i :
       <br>
-      <img src={% static "img/antoine_equation.png" %}/>
+      <img src="{% static 'img/antoine_equation.png' %}"/>
     </div>
 
       {% if not curves %}
