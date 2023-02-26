@@ -1,5 +1,16 @@
-<html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% load static %}
+
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compounds and Binary Relations</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
+
+</head>
 
 
 <body>
@@ -26,6 +37,7 @@
             <button onclick="toggleEdit('row{{ forloop.counter }}')">
               <i class="fas fa-pencil-alt"></i>
             </button>
+            <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
           </td>
 
           <td editable="false">
@@ -67,186 +79,16 @@
           <td>{{ element.a12 }}</td>
           <td>{{ element.a21 }}</td>
           <td>{{ element.alpha }}</td>
+          {% if element.sessions.all|length > 0 %}
+            <td>
+              <i class="fa-solid fa-trash"
+                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
+            </td>
+            {% endif %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 
-  <script type="text/javascript">
-    let fic 
-  </script>
-
-  <script>
-    var originalValues = new Map();
-    function toggleEdit(rowId) {
-      let row = document.getElementById(rowId);
-      const data = {}
-      const keys = ["id", "name", "a", "b", "c"]
-      let cells = row.getElementsByTagName("td");
-      for (let i = 0; i < cells.length - 3; i++) {
-        if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
-          if (cells[i].getAttribute("noneditable") === "true") {
-            data[keys[i]] = cells[i].innerHTML;
-            continue;
-          }
-          data[keys[i]] = cells[i].innerHTML;
-          let input = document.createElement("input");
-          input.type = "text";
-          input.value = cells[i].innerHTML;
-          input.style.width = cells[i].offsetWidth + "px";
-          cells[i].innerHTML = "";
-          cells[i].appendChild(input);
-          cells[i].setAttribute("editable", "true");
-          data[keys[i]]
-        }
-        else {
-          if (cells[i].getAttribute("noneditable") === "true") continue;
-          cells[i].setAttribute("editable", "false");
-          let input = cells[i].querySelector("input");
-          cells[i].innerHTML = `${input.value}`;
-          data[keys[i]] = input.value;
-        }
-      }
-      originalValues.set(rowId, data)
-    }
-
-    async function saveChanges(rowId) {
-      row = document.getElementById(rowId);
-      const keys = ['id', 'name', 'a', 'b', 'c']
-      data = {}
-      var cells = row.getElementsByTagName("td");
-      for (var j = 0; j < cells.length - 3; j++) {
-        var input = cells[j].querySelector("input");
-        if (input) {
-          data[keys[j]] = input.value;
-          this.toggleEdit(rowId);
-        }
-        else {
-          data[keys[j]] = cells[j].innerHTML;
-        }
-      }
-      console.log("data", data) // FORM OF THE DATA
-      await fetch(`http://localhost:8000/update_component/${data.id}`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" }, body: data
-      });
-    }
-
-    function cancelChanges(rowId) {
-      var row = document.getElementById(rowId);
-      const keys = ["id", "name", "a", "b", "c"]
-      // Get the original values of the row
-      // Set the input values to the original values
-      let cells = row.getElementsByTagName("td");
-      let editable = cells[1].getAttribute("editable");
-      for (let i = 0; i < cells.length - 3; i++) {
-        if (editable === "true") {
-          let input = cells[i].querySelector("input");
-          if (input) input.value = originalValues.get(rowId)[keys[i]];
-        }
-      }
-      if (editable === "true") toggleEdit(rowId);
-    }
-
-
-  </script>
-
-
-
-
-
-  }
-  </script>
-
-
-
-</body>
-
-</html>
-{% load static %}
-
-
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compounds and Binary Relations</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
-
-</head>
-
-<body>
-  <div class="container">
-    <div class="search-container">
-      <input type="text" id="search" onkeyup="perform_search()" placeholder="Search ...">
-    </div>
-    <h2>Compounds for Antoine model</h2>
-    <input type="text" id="compound-filter" placeholder="Search for a compound..." onkeyup="perform_compound_search()">
-    <div class="table-container">
-      <table id="compound-table">
-        <thead>
-          <tr>
-            {% for key in component_keys %}
-            <th>{{key}}</th>
-            {% endfor %}
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for element in components %}
-          <tr>
-            <td>{{ element.id }}</td>
-            <td>{{ element.name }}</td>
-            <td>{{ element.a }}</td>
-            <td>{{ element.b }}</td>
-            <td>{{ element.c }}</td>
-            {% if element.sessions.all|length > 0 %}
-            <td>
-              <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
-            </td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-    <h2>Binary relations for NRTL model</h2>
-    <input type="text" id="binary-relations-search" onkeyup="perform_binary_relations_search()"
-      placeholder="Search in binary relations...">
-    <div class="table-container">
-      <table id="binary-relations-table">
-        <thead>
-          <tr>
-            {% for key in relation_keys %}
-            <th>{{key}}</th>
-            {% endfor %}
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for element in relations %}
-          <tr>
-            <td>{{ element.id }}</td>
-            <td>{{ element.component1.name }}</td>
-            <td>{{ element.component2.name }}</td>
-            <td>{{ element.a12 }}</td>
-            <td>{{ element.a21 }}</td>
-            <td>{{ element.alpha }}</td>
-            {% if element.sessions.all|length > 0 %}
-            <td>
-              <i class="fa-solid fa-trash"
-                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
-            </td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-</body>
-
-</html>
+  </html>
