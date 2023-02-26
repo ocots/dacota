@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ternary_azeotrope",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -157,5 +156,5 @@ class ContainerLanguage:
 
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
 
-
+# the duration for a session to expire in seconds. now set to 7 days
 SESSION_EXPIRY_DURATION = 7 * (60 * 60 * 24)
