@@ -184,17 +184,17 @@ function saveChanges(rowId) {
 }
 
 function cancelChanges(rowId) {
-var row = document.getElementById(rowId);
-const keys = ["id", "name", "a", "b", "c"]
-// Get the original values of the row
-// Set the input values to the original values
-let cells = row.getElementsByTagName("td");
-let editable = cells[1].getAttribute("editable");
-for (let i = 0; i < cells.length - 3; i++) {
-  if (editable === "true") {
-    let input = cells[i].querySelector("input");
-    if (input) input.value = originalValues.get(rowId)[keys[i]];
+  var row = document.getElementById(rowId);
+  const keys = ["id", "name", "a", "b", "c"]
+  // Get the original values of the row
+  // Set the input values to the original values
+  let cells = row.getElementsByTagName("td");
+  let editable = cells[1].getAttribute("editable");
+  for (let i = 0; i < cells.length - 3; i++) {
+    if (editable === "true") {
+      let input = cells[i].querySelector("input");
+      if (input) input.value = originalValues.get(rowId)[keys[i]];
+    }
   }
-}
-if (editable === "true") toggleEdit(rowId);
+  if (editable === "true") toggleEdit(rowId);
 }
