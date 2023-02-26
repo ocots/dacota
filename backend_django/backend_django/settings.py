@@ -162,4 +162,4 @@ class ContainerLanguage:
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
 
 # the duration for a session to expire in seconds. now set to 7 days
-SESSION_EXPIRY_DURATION = 7 * (60 * 60 * 24)
+SESSION_EXPIRY_DURATION = 1 * (60 * 60 * 24)
