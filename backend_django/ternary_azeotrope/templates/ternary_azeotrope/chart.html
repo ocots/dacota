@@ -38,6 +38,29 @@
 </div>
 
 <script>
+  function enable_download() {
+    //console.log(img_uri);
+    const downloadBtn = document.createElement("i");
+    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
+    downloadBtn.style.color = "green";
+    downloadBtn.style.fontSize = "35px";
+    downloadBtn.addEventListener("click", () => {
+      let img_uri = chart.toBase64Image();
+      const downloadLink = document.createElement("a");
+      downloadLink.href = img_uri;
+      downloadLink.download =
+        "{{c1}}".split("(")[0] +
+        "_" +
+        "{{c2}}".split("(")[0] +
+        "_" +
+        "{{c3}}".split("(")[0] +
+        ".jpg";
+      downloadLink.click();
+    });
+
+    diagram.appendChild(downloadBtn);
+  }
+
   const ctx = document.querySelector(".chartCanvas");
 
   // The following data is used to create the triangle that contains the curves
@@ -88,7 +111,7 @@
       y = curve_list[i]["x2"];
       t = addPrefixToCurves(curve_list[i]["T"]);
       xyValues = createXYValues(x, y, t);
-      console.log(xyValues);
+      //console.log(xyValues);
 
       datasets.push({
         data: xyValues,
@@ -124,7 +147,7 @@
       });
     }
 
-    new Chart(ctx, {
+    return new Chart(ctx, {
       type: "scatter",
       data: {
         labels: t,
@@ -161,5 +184,9 @@
 
   const diagram = document.getElementById("diagram-container");
   diagram.style.width = "50%";
-  draw();
+  var chart = draw();
+  chart.render();
+  setTimeout(() => {
+    enable_download();
+  }, 200);
 </script>
