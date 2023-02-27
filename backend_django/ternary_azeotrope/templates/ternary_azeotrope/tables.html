@@ -76,8 +76,8 @@
         {% for element in relations %}
         <tr id="relation-row{{ forloop.counter }}">
           <td noneditable="true">{{ element.id }}</td>
-          <td editable="false">{{ element.component1.name }}</td>
-          <td editable="false">{{ element.component2.name }}</td>
+          <td editable="false">{{ element.component1.name }} (ID : {{element.component1.id}})</td>
+          <td editable="false">{{ element.component2.name }} (ID : {{element.component2.id}})</td>
           <td editable="false">{{ element.a12 }}</td>
           <td editable="false">{{ element.a21 }}</td>
           <td editable="false">{{ element.alpha }}</td>
