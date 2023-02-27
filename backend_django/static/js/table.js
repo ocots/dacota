@@ -135,7 +135,7 @@ function toggleEdit(rowId) {
       cells[i].innerHTML = "";
       cells[i].appendChild(input);
       cells[i].setAttribute("editable", "true");
-      data[keys[i]]
+      //data[keys[i]]
     }
     else {
       if (cells[i].getAttribute("noneditable") === "true") continue;
@@ -218,7 +218,7 @@ function cancelChanges(rowId) {
   console.log(originalValues);
   let cells = row.getElementsByTagName("td");
   let editable = cells[1].getAttribute("editable");
-  for (let i = 0; i < cells.length - 3; i++) {
+  for (let i = 0; i < cells.length - 1; i++) {
     if (editable === "true") {
       let input = cells[i].querySelector("input");
       if (input) input.value = originalValues.get(rowId)[keys[i]];
@@ -226,38 +226,3 @@ function cancelChanges(rowId) {
   }
   if (editable === "true") toggleEdit(rowId);
 }
-
-
-/*var originalValuesBinaryRelations = new Map();
-function toggleEditBinaryRelations(rowId) {
-  let row = document.getElementById(rowId);
-  const data = {};
-
-  let cells = row.getElementsByTagName("td");
-  for (let i = 1; i < cells.length - 1; i++) {
-    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
-      if (cells[i].getAttribute("noneditable") === "true") {
-        data[keys[i]] = cells[i].innerHTML;
-        continue;
-      }
-      data[keys[i]] = cells[i].innerHTML;
-      let input = document.createElement("input");
-      input.type = "text";
-      input.value = cells[i].innerHTML;
-      input.style.width = cells[i].offsetWidth + "px";
-      cells[i].innerHTML = "";
-      cells[i].appendChild(input);
-      cells[i].setAttribute("editable", "true");
-      data[keys[i]]
-    }
-    else {
-      if (cells[i].getAttribute("noneditable") === "true") continue;
-      cells[i].setAttribute("editable", "false");
-      let input = cells[i].querySelector("input");
-      cells[i].innerHTML = `${input.value}`;
-      data[keys[i]] = input.value;
-    }
-  }
-  originalValuesBinaryRelations.set(rowId, data);
-  console.log(originalValuesBinaryRelations);
-}*/
