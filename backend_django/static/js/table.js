@@ -115,9 +115,9 @@ function toggleEdit(rowId) {
   let cells = row.getElementsByTagName("td");
   var keys;
 
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
 
@@ -145,9 +145,9 @@ function toggleEdit(rowId) {
       data[keys[i]] = input.value;
     }
   }
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     originalValuesComponent.set(rowId, data);
-  }else{
+  } else {
     originalValuesRelation.set(rowId, data);
   }
 }
@@ -155,15 +155,15 @@ function toggleEdit(rowId) {
 function getCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
+    }
   }
   return cookieValue;
 }
@@ -172,9 +172,9 @@ function saveChanges(rowId) {
   row = document.getElementById(rowId);
   var keys;
 
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
   data = {}
@@ -207,10 +207,10 @@ function cancelChanges(rowId) {
   var row = document.getElementById(rowId);
   var keys, originalValues;
 
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     keys = component_keys;
     originalValues = originalValuesComponent;
-  }else{
+  } else {
     keys = relation_keys;
     originalValues = originalValuesRelation;
   }
