@@ -1,4 +1,4 @@
-function perform_compound_search(){
+function perform_compound_search() {
   // Get the input field and table
   let filterInput = document.getElementById("compound-filter");
   let table = document.getElementById("compound-table");
@@ -104,13 +104,14 @@ function Delete_relation(id, name1, name2) {
   }
 }
 
+
 var originalValues = new Map();
 function toggleEdit(rowId) {
   let row = document.getElementById(rowId);
   const data = {}
   const keys = ["id", "name", "a", "b", "c"]
   let cells = row.getElementsByTagName("td");
-  for (let i = 0; i < cells.length - 3; i++) {
+  for (let i = 1; i < cells.length - 1; i++) {
     if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
       if (cells[i].getAttribute("noneditable") === "true") {
         data[keys[i]] = cells[i].innerHTML;
@@ -137,40 +138,101 @@ function toggleEdit(rowId) {
   originalValues.set(rowId, data)
 }
 
-async function saveChanges(rowId) {
-row = document.getElementById(rowId);
-const keys = ['id', 'name', 'a', 'b', 'c']
-data = {}
-var cells = row.getElementsByTagName("td");
-for (var j = 0; j < cells.length - 3; j++) {
-  var input = cells[j].querySelector("input");
-  if (input) {
-    data[keys[j]] = input.value;
-    this.toggleEdit(rowId);
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
   }
-  else {
-    data[keys[j]] = cells[j].innerHTML;
-  }
+  return cookieValue;
 }
-console.log("data", data) // FORM OF THE DATA
-await fetch(`http://localhost:8000/update_component/${data.id}`, {
-  method: 'PUT',
-  headers: { "Content-Type": "application/json" }, body: data
-});
+
+function saveChanges(rowId) {
+  row = document.getElementById(rowId);
+  const keys = ['id', 'name', 'a', 'b', 'c']
+  data = {}
+  var cells = row.getElementsByTagName("td");
+  var csrftoken = getCookie('csrftoken');
+
+  for (var j = 0; j < cells.length - 1; j++) {
+    var input = cells[j].querySelector("input");
+    if (input) {
+      data[keys[j]] = input.value;
+      this.toggleEdit(rowId);
+    }
+    else {
+      data[keys[j]] = cells[j].innerHTML;
+    }
+  }
+  console.log("data", data) // FORM OF THE DATA
+  var headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('X-CSRFToken', csrftoken);
+
+  fetch("edit_component", {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data),
+  });
 }
 
 function cancelChanges(rowId) {
-var row = document.getElementById(rowId);
-const keys = ["id", "name", "a", "b", "c"]
-// Get the original values of the row
-// Set the input values to the original values
-let cells = row.getElementsByTagName("td");
-let editable = cells[1].getAttribute("editable");
-for (let i = 0; i < cells.length - 3; i++) {
-  if (editable === "true") {
-    let input = cells[i].querySelector("input");
-    if (input) input.value = originalValues.get(rowId)[keys[i]];
+  var row = document.getElementById(rowId);
+  const keys = ["id", "name", "a", "b", "c"]
+  // Get the original values of the row
+  // Set the input values to the original values
+  let cells = row.getElementsByTagName("td");
+  let editable = cells[1].getAttribute("editable");
+  for (let i = 0; i < cells.length - 3; i++) {
+    if (editable === "true") {
+      let input = cells[i].querySelector("input");
+      if (input) input.value = originalValues.get(rowId)[keys[i]];
+    }
   }
+  if (editable === "true") toggleEdit(rowId);
 }
-if (editable === "true") toggleEdit(rowId);
+
+
+var originalValuesBinaryRelations = new Map();
+function toggleEditBinaryRelations(rowId) {
+  /*let table = document.getElementById('binary-relations-table');
+  let trs = table.getElementsByTagName("tr");
+  console.log(trs);*/
+  let row = document.getElementById(rowId);
+  const data = {};
+  const keys = ["id", "component1", "component2", "a12", "a21", "alpha"]
+  let cells = row.getElementsByTagName("td");
+  for (let i = 1; i < cells.length - 1; i++) {
+    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
+      if (cells[i].getAttribute("noneditable") === "true") {
+        data[keys[i]] = cells[i].innerHTML;
+        continue;
+      }
+      data[keys[i]] = cells[i].innerHTML;
+      let input = document.createElement("input");
+      input.type = "text";
+      input.value = cells[i].innerHTML;
+      input.style.width = cells[i].offsetWidth + "px";
+      cells[i].innerHTML = "";
+      cells[i].appendChild(input);
+      cells[i].setAttribute("editable", "true");
+      data[keys[i]]
+    }
+    else {
+      if (cells[i].getAttribute("noneditable") === "true") continue;
+      cells[i].setAttribute("editable", "false");
+      let input = cells[i].querySelector("input");
+      cells[i].innerHTML = `${input.value}`;
+      data[keys[i]] = input.value;
+    }
+  }
+  originalValuesBinaryRelations.set(rowId, data);
+  console.log(originalValuesBinaryRelations);
 }

@@ -243,15 +243,11 @@ def edit_relation(request):
 
 def edit_component(request):
     if request.method == "POST":
-        id = request.POST["id"]
-        name = request.POST["name"]
-        a = request.POST["a"]
-        b = request.POST["b"]
-        c = request.POST["c"]
-
+        json_data = request.body.decode("utf-8")
+        data = json.loads(json_data)
+        id = data.pop("id")
         component = Component.objects.get(pk=id)
-        new_vals = {"name": name, "a": a, "b": b, "c": c}
-        edit_element(request.session.session_key, component, new_vals)
+        edit_element(request.session.session_key, component, data)
 
         return redirect("index")
 
