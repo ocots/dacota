@@ -86,13 +86,13 @@
 
 
           <td editable="false">
-            <button onclick="toggleEditBinaryRelations('relation-row{{ forloop.counter }}')">
+            <button onclick="toggleEdit('relation-row{{ forloop.counter }}')">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button onclick="cancelChangesBinaryRelations('relation-row{{ forloop.counter }}')" class="cancel-button">
+            <button onclick="cancelChanges('relation-row{{ forloop.counter }}')" class="cancel-button">
               <i class="fas fa-times-circle"></i>
             </button>
-            <button onclick="saveChangesBinaryRelations('relation-row{{ forloop.counter }}')" class="save-row">
+            <button onclick="saveChanges('relation-row{{ forloop.counter }}')" class="save-row">
               <i class="fa-solid fa-floppy-disk"></i>
             </button>
             <i class="fa-solid fa-trash"
