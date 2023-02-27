@@ -40,15 +40,9 @@
           <td editable="false">{{ element.b }}</td>
           <td editable="false">{{ element.c }}</td>
           <td editable="false">
-            <button onclick="toggleEdit('component-row{{ forloop.counter }}')">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
-            <button onclick="saveChanges('component-row{{ forloop.counter }}')" class="save-row">
-              <i class="fa-solid fa-floppy-disk"></i>
-            </button>
-            <button onclick="cancelChanges('component-row{{ forloop.counter }}')" class="cancel-button">
-              <i class="fas fa-times-circle"></i>
-            </button>
+            <i class="fas fa-pencil-alt" onclick="toggleEdit('component-row{{ forloop.counter }}')"></i>
+            <i class="fa-solid fa-floppy-disk" onclick="saveChanges('component-row{{ forloop.counter }}')" class="save-row"></i>
+            <i class="fas fa-times-circle" onclick="cancelChanges('component-row{{ forloop.counter }}')" class="cancel-button"></i>
             <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
           </td>
 
@@ -86,15 +80,9 @@
 
 
           <td editable="false">
-            <button onclick="toggleEdit('relation-row{{ forloop.counter }}')">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
-            <button onclick="cancelChanges('relation-row{{ forloop.counter }}')" class="cancel-button">
-              <i class="fas fa-times-circle"></i>
-            </button>
-            <button onclick="saveChanges('relation-row{{ forloop.counter }}')" class="save-row">
-              <i class="fa-solid fa-floppy-disk"></i>
-            </button>
+            <i class="fas fa-pencil-alt" onclick="toggleEdit('relation-row{{ forloop.counter }}')"></i>
+            <i class="fas fa-times-circle" onclick="cancelChanges('relation-row{{ forloop.counter }}')" class="cancel-button"></i>
+            <i class="fa-solid fa-floppy-disk" onclick="saveChanges('relation-row{{ forloop.counter }}')" class="save-row"></i>
             <i class="fa-solid fa-trash"
               onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
           </td>

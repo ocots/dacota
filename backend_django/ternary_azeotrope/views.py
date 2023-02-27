@@ -222,8 +222,10 @@ def edit_relation(request):
         data = json.loads(json_data)
         id = data.pop("id")
         relation = BinaryRelation.objects.get(pk=id)
-        data.pop("component1")
-        data.pop("component2")
+        if "component1" in data:
+            data.pop("component1")
+        if "component2" in data:
+            data.pop("component2")
 
         edit_element(request.session.session_key, relation, data)
 
