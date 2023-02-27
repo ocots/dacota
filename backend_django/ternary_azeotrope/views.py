@@ -218,25 +218,14 @@ def add_relation(request):
 
 def edit_relation(request):
     if request.method == "POST":
-        new_vals = {
-            field.lower().replace(" ", ""): None
-            for field in BinaryRelation.fields()
-        }
-
-        id = request.POST.get("id")
+        json_data = request.body.decode("utf-8")
+        data = json.loads(json_data)
+        id = data.pop("id")
         relation = BinaryRelation.objects.get(pk=id)
+        data.pop("component1")
+        data.pop("component2")
 
-        for key in new_vals.keys():
-            try:
-                if key != "id":
-                    new_vals[key] = float(request.POST.get(key))
-            except:
-                new_vals[key] = request.POST.get(key)
-
-            if new_vals[key] is None:
-                new_vals[key] = getattr(relation, key)
-
-        edit_element(request.session.session_key, relation, new_vals)
+        edit_element(request.session.session_key, relation, data)
 
         return redirect("index")
 
