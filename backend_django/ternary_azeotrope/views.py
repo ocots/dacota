@@ -42,22 +42,6 @@ def index(request):
     return render(request, "ternary_azeotrope/index.html", extra_context)
 
 
-def members(request):
-    # check if the request comes from a new client
-    if not request.session.has_key("created_in"):
-        # create a new session instance
-        request.session["created_in"] = datetime.now().strftime(
-            "%d/%m/%Y, %H:%M:%S"
-        )
-        request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
-
-        # remove expired session
-        call_command(command_name="clean_expired_sessions")
-
-    extra_context = get_context(request)
-    return render(request, "ternary_azeotrope/members.html", extra_context)
-
-
 def run(request):
     if request.method == "POST":
         try:

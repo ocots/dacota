@@ -110,3 +110,7 @@ table {
   box-shadow: 0 0 8px rgba(81, 203, 238, 0.8);
   width: 50%;
 }
+
+.fontAwesome {
+  font-family: 'Helvetica', FontAwesome, sans-serif;
+}
