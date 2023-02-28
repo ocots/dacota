@@ -12,6 +12,8 @@ function show_equation_eventlistener(equation_name) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  // radio input for diagram type
   const radioButtons = document.querySelectorAll(
     '.radio-group input[type="radio"]'
   );
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ).value;
     console.log(selectedOption);
   });
+
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
