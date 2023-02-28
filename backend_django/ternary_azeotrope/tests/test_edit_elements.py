@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from django.test import Client, TestCase

@@ -134,7 +134,10 @@ def add_component(request):
                 c.sessions.add(curr_session)
                 c.save()
                 msg = f"Compound {c} added successfuly."
-                request.session["context"] = {"message": msg, "type": "info"}
+                request.session["context"] = {
+                    "message": msg,
+                    "type": "success",
+                }
             else:
                 # component already available for the session
                 msg = f"{c} already exists !"
@@ -147,7 +150,7 @@ def add_component(request):
             new_compound.sessions.add(curr_session)
 
             msg = f"Compound {new_compound} added successfuly."
-            request.session["context"] = {"message": msg, "type": "info"}
+            request.session["context"] = {"message": msg, "type": "success"}
 
         return HttpResponseRedirect(reverse("index"))
 
@@ -223,7 +226,7 @@ def add_relation(request):
             )
             relation.sessions.add(curr_session)
             msg = f"Binary relation {relation} added successfuly."
-            request.session["context"] = {"message": msg, "type": "info"}
+            request.session["context"] = {"message": msg, "type": "success"}
         return redirect("index")
 
 
