@@ -4,7 +4,7 @@ import os
 
 import requests
 
-from backend_django.settings import AUTH_TOKEN, MS_ENDPOINT, PORT
+from backend_django.settings import AUTH_TOKEN, MS_ENDPOINT, MS_PORT
 
 
 def call_microservice(c1, c2, c3, a, alpha):
@@ -30,7 +30,7 @@ def call_microservice(c1, c2, c3, a, alpha):
     # The endpoint is the IP address of the server where the microservice is running
     endpoint = MS_ENDPOINT
     # The port is the port where the microservice is listening
-    port = PORT
+    port = MS_PORT
     # The path is the path of the endpoint
     path = "/ternary-diagram"
     # The url is the combination of the endpoint, the port and the path
