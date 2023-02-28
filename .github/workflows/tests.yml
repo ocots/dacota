@@ -32,8 +32,8 @@ jobs:
       run: |
         touch backend_django/.env
         echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/.env
-        echo MS_ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/.env
-        echo MS_PORT=${{ secrets.PORT }} >> backend_django/.env
+        echo MS_ENDPOINT=${{ secrets.MS_ENDPOINT }} >> backend_django/.env
+        echo MS_PORT=${{ secrets.MS_PORT }} >> backend_django/.env
         echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> backend_django/.env
         echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> backend_django/.env
         echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> backend_django/.env
