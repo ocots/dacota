@@ -30,11 +30,11 @@ jobs:
         black .
     - name: 'Create .env file'
       run: |
-        touch backend_django/backend_django/.env
-        echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/backend_django/.env
-        echo MS_ENDPOINT=${{ secrets.MS_ENDPOINT }} >> backend_django/backend_django/.env
-        echo MS_PORT=${{ secrets.MS_PORT }} >> backend_django/backend_django/.env
-        echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/backend_django/.env
+        touch backend_django/.env
+        echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/.env
+        echo MS_ENDPOINT=${{ secrets.MS_ENDPOINT }} >> backend_django/.env
+        echo MS_PORT=${{ secrets.MS_PORT }} >> backend_django/.env
+        echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/.env
     - name: Run test and coverage report
       run: |
         cd backend_django
