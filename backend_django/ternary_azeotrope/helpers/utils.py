@@ -87,12 +87,19 @@ def edit_element(session_id, instance, new_data):
         new_instance = (
             Component()
             if isinstance(instance, Component)
-            else BinaryRelation()
+            else BinaryRelation(
+                component1=instance.component1, component2=instance.component2
+            )
         )
 
         for attr, val in new_data.items():
             if attr != "id":
                 setattr(new_instance, attr, val)
+
+        """for field in instance.__class__.fields():
+            attr = field.lower().replace(" ", "")
+            if attr != "id" and getattr(new_instance, attr) is None:
+                setattr(new_instance, attr, getattr(instance, attr))"""
 
         new_instance.save()
         new_instance.sessions.add(curr_session)
