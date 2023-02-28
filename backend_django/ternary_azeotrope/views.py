@@ -43,6 +43,17 @@ def index(request):
 
 
 def run(request):
+    """Function to launch the calculation to generate the diagram
+
+    Args:
+        request (_type_): the request
+
+    Raises:
+        ValueError: where the mixture compounds selected are not distinct
+
+    Returns:
+        the diagram of the compound selected in the page
+    """
     if request.method == "POST":
         try:
             id1 = request.POST["component1"]
@@ -101,6 +112,14 @@ def run(request):
 
 
 def add_component(request):
+    """ "Function to add a new compound
+
+    Args:
+        request (_type_): the request
+
+    Returns:
+        redirect to the updated page with the new compound in the table of compounds
+    """
     if request.method == "POST":
         name = request.POST["name"]
         a = request.POST["a"]
@@ -137,6 +156,14 @@ def add_component(request):
 
 
 def add_relation(request):
+    """Function to add a new relation between two compounds
+
+    Args:
+        request (_type_): the request
+
+    Returns:
+        redirect to the updated page with the new relation in the table of relations
+    """
     if request.method == "POST":
         component1_id = request.POST.get("component1")
         component2_id = request.POST.get("component2")
@@ -204,6 +231,14 @@ def add_relation(request):
 
 
 def edit_relation(request):
+    """Function to edit the parameters of a relation in the table
+
+    Args:
+        request (_type_): the request
+
+    Returns:
+        redirect to the principal page with a updated table
+    """
     if request.method == "POST":
         json_data = request.body.decode("utf-8")
         data = json.loads(json_data)
@@ -220,6 +255,15 @@ def edit_relation(request):
 
 
 def edit_component(request):
+    """Function to edit the parameters of a compound in the table
+
+    Args:
+        request (_type_): the request
+
+    Returns:
+        redirect to the principal page with a updated table
+
+    """
     if request.method == "POST":
         json_data = request.body.decode("utf-8")
         data = json.loads(json_data)
@@ -231,6 +275,15 @@ def edit_component(request):
 
 
 def delete_relation(request, relation_id: str):
+    """Function to delete a relation from the table by the icon in Actions
+
+
+    Args:
+        request (_type_): the request
+        relation_id (str):  the id of the relation to remove
+    Returns:
+        redirect to the principal page with a updated table
+    """
     if request.method == "GET":
         relation = BinaryRelation.objects.get(pk=int(relation_id))
         delete_item(relation, request.session.session_key)
@@ -239,6 +292,14 @@ def delete_relation(request, relation_id: str):
 
 
 def delete_compound(request, compound_id: str):
+    """Function to delete a compound from the table by the icon in Actions
+
+    Args:
+        request (_type_): the request
+        compound_id (str): the id of the compound to remove
+    Returns:
+        redirect to the principal page with a updated table
+    """
     if request.method == "GET":
         component = Component.objects.get(pk=int(compound_id))
         delete_item(component, request.session.session_key)
