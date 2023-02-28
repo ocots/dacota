@@ -12,6 +12,26 @@ function show_equation_eventlistener(equation_name) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  const radioButtons = document.querySelectorAll(
+    '.radio-group input[type="radio"]'
+  );
+
+  radioButtons.forEach((radioButton) => {
+    radioButton.addEventListener("click", () => {
+      radioButtons.forEach((rb) => (rb.checked = false));
+      radioButton.checked = true;
+    });
+  });
+  const radioGroup = document.querySelector(".radio-group");
+  var selectedOption = radioGroup.querySelector(
+    'input[name="option"]:checked'
+  ).value;
+  radioGroup.addEventListener("change", () => {
+    selectedOption = radioGroup.querySelector(
+      'input[name="option"]:checked'
+    ).value;
+    console.log(selectedOption);
+  });
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
