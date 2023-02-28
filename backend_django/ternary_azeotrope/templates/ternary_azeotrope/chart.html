@@ -39,33 +39,6 @@
 </div>
 
 <script>
-  function download_as_html() {
-    var html_content = "data:text/html," + diagram.innerHTML;
-    html_content.remove(
-      'const diagram = document.getElementById("diagram-container");'
-    );
-    html_content = html_content.remove('diagram.style.width = "50%";');
-
-    const downloadBtn = document.createElement("i");
-    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
-    downloadBtn.style.color = "blue";
-    downloadBtn.style.fontSize = "35px";
-    downloadBtn.addEventListener("click", () => {
-      const downloadLink = document.createElement("a");
-      downloadLink.href = html_content;
-      downloadLink.download =
-        "{{c1}}".split("(")[0] +
-        "_" +
-        "{{c2}}".split("(")[0] +
-        "_" +
-        "{{c3}}".split("(")[0] +
-        ".html";
-      downloadLink.click();
-    });
-
-    diagram.appendChild(downloadBtn);
-  }
-
   function enable_download() {
     const downloadBtn = document.createElement("i");
     downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
@@ -225,6 +198,5 @@
   chart.render();
   setTimeout(() => {
     enable_download();
-    download_as_html();
   }, 200);
 </script>
