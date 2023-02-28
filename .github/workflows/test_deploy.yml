@@ -33,11 +33,13 @@ jobs:
         black .
     - name: 'Create env file'
       run: |
-        touch backend_django/backend_django/.env
-        echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/backend_django/.env
-        echo ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/backend_django/.env
-        echo PORT=${{ secrets.PORT }} >> backend_django/backend_django/.env
-        echo ALLOWED_HOST=${{ secrets.ALLOWED_HOST }} >> backend_django/backend_django/.env
+        touch backend_django/.env
+        echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/.env
+        echo MS_ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/.env
+        echo MS_PORT=${{ secrets.PORT }} >> backend_django/.env
+        echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> backend_django/.env
+        echo SECRET_KEY=${{ secrects.SECRET_KEY }} >> backend_djang/.env
+        echo DB_ENGINE=${{ secrects.DB_ENGINE }} >> backend_djang/.env
     - name: Coverage report
       run: |
         source venv/bin/activate
