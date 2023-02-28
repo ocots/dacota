@@ -38,8 +38,8 @@ jobs:
         echo MS_ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/.env
         echo MS_PORT=${{ secrets.PORT }} >> backend_django/.env
         echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> backend_django/.env
-        echo SECRET_KEY=${{ secrects.SECRET_KEY }} >> backend_djang/.env
-        echo DB_ENGINE=${{ secrects.DB_ENGINE }} >> backend_djang/.env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> backend_django/.env
+        echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> backend_django/.env
     - name: Coverage report
       run: |
         source venv/bin/activate
