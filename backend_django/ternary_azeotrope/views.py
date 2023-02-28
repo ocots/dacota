@@ -21,8 +21,10 @@ from .helpers.utils import *
 def get_context(request):
     if "context" in request.session:
         data = request.session.get("context", {})
-        request.session.pop("context")
+        to_keep = ["c1_selected", "c2_selected", "c3_selected"]
+        request.session["context"] = {k: data[k] for k in to_keep}
         return data
+
     return {}
 
 
@@ -97,9 +99,6 @@ def run(request):
 
                 request.session["context"] = {
                     "curves": curves,
-                    "c1": str(component1),
-                    "c2": str(component2),
-                    "c3": str(component3),
                 }
 
         except ValueError:
@@ -107,6 +106,17 @@ def run(request):
                 "message": "The mixture compounds should be distinct !",
                 "type": "danger",
             }
+
+        request.session["context"].update(
+            {
+                "c1": str(component1),
+                "c2": str(component2),
+                "c3": str(component3),
+                "c1_selected": component1.id,
+                "c2_selected": component2.id,
+                "c3_selected": component3.id,
+            }
+        )
 
         return redirect("index")
 

@@ -39,28 +39,40 @@ Home {%endblock%} {% block head %}
       {% csrf_token %}
       <div id="componenetsSelection">
         <div class="component">
-          <label for="my-select">Compound 1</label>
+          <label>Compound 1</label>
           <select name="component1" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+            {% for component in components %} {%if component.id == c1_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 2</label>
+          <label>Compound 2</label>
           <select name="component2" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+            {% for component in components %} {%if component.id == c2_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 3</label>
+          <label>Compound 3</label>
           <select name="component3" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+            {% for component in components %} {%if component.id == c3_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
@@ -201,30 +213,29 @@ Home {%endblock%} {% block head %}
 
     <div class="tooltip-container" style="display: none" id="nrtl">
       PS: A is propotional to gamma :
-      <br>
-      <img src="{% static 'img/nrtl_equation.png' %}"/>
+      <br />
+      <img src="{% static 'img/nrtl_equation.png' %}" />
     </div>
 
     <div class="tooltip-container" style="display: none" id="antoine">
       The pressure of a compound i :
-      <br>
-      <img src="{% static 'img/antoine_equation.png' %}"/>
+      <br />
+      <img src="{% static 'img/antoine_equation.png' %}" />
     </div>
 
-      {% if not curves %}
-      <div
-        id="spinner"
-        class="spinner-border text-primary"
-        role="status"
-        style="display: none"
-      ></div>
-      {% endif %}
-    </div>
-
-    <div class="d-flex justify-content-center" id="diagram-container">
-      {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
-    </div>
+    {% if not curves %}
+    <div
+      id="spinner"
+      class="spinner-border text-primary"
+      role="status"
+      style="display: none"
+    ></div>
+    {% endif %}
   </div>
 
-  {%endblock%}
+  <div class="d-flex justify-content-center" id="diagram-container">
+    {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
+  </div>
 </div>
+
+{%endblock%}
