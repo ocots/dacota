@@ -12,7 +12,6 @@ function show_equation_eventlistener(equation_name) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-
   // radio input for diagram type
   const radioButtons = document.querySelectorAll(
     '.radio-group input[type="radio"]'
