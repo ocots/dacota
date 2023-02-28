@@ -35,7 +35,6 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
-HOME = Path.home()
 
 
 # Application definition
@@ -88,7 +87,7 @@ WSGI_APPLICATION = "backend_django.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": env("DB_ENGINE"),
-        "NAME": HOME / "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
