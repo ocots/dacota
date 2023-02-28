@@ -1,30 +1,36 @@
-function show_equation_eventlistener(equation_name){
+function show_equation_eventlistener(equation_name) {
   const icon = document.getElementById("tooltip-" + equation_name);
   const container = document.getElementById(equation_name);
 
-  icon.addEventListener('mouseover', () => {
-    container.style.display = 'block';
+  icon.addEventListener("mouseover", () => {
+    container.style.display = "block";
   });
 
-  container.addEventListener('mouseleave', () => {
-    container.style.display = 'none';
+  container.addEventListener("mouseleave", () => {
+    container.style.display = "none";
   });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
 
   menuIcon.addEventListener("click", function () {
     menu.classList.toggle("show");
-
   });
 
   var menuToggleIcon = document.getElementById("menu-icons");
 
   menuToggleIcon.addEventListener("click", function () {
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
+    }
+  });
+
+  var menuRemove = document.getElementById("index-content");
+
+  menuRemove.addEventListener("click", function () {
     if (menu.classList.contains("show")) {
       menu.classList.remove("show");
     }
@@ -74,9 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* close icon */
-  const close_icons = document.getElementsByClassName("fa-sharp fa-regular fa-circle-xmark");
-  for (let i=0; i<close_icons.length; i++){
-    (close_icons[i]).addEventListener("click", (event) => {
+  const close_icons = document.getElementsByClassName(
+    "fa-sharp fa-regular fa-circle-xmark"
+  );
+  for (let i = 0; i < close_icons.length; i++) {
+    close_icons[i].addEventListener("click", (event) => {
       close_icons[i].parentElement.style.display = "none";
     });
   }
@@ -84,5 +92,4 @@ document.addEventListener("DOMContentLoaded", function () {
   /** Tooltip for equation imgs */
   show_equation_eventlistener("antoine");
   show_equation_eventlistener("nrtl");
-
 });
