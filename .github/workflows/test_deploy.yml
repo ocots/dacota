@@ -1,0 +1,58 @@
+name: Django tests and deploy on prod
+
+on:
+  push:
+    branches: [ "prod" ]
+  pull_request:
+    branches: [ "prod" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.8.10
+        cache: 'pip'
+#      env:
+#        AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
+    - name: Install Dependencies
+      run: |
+        python3 -m venv ./venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+
+    - name: Format code with black
+      run: |
+        source venv/bin/activate
+        black .
+    - name: 'Create env file'
+      run: |
+        touch backend_django/.env
+        echo APP_AUTH_TOKEN=${{ secrets.APP_AUTH_TOKEN }} >> backend_django/.env
+        echo MS_ENDPOINT=${{ secrets.ENDPOINT }} >> backend_django/.env
+        echo MS_PORT=${{ secrets.PORT }} >> backend_django/.env
+        echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> backend_django/.env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> backend_django/.env
+        echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> backend_django/.env
+    - name: Coverage report
+      run: |
+        source venv/bin/activate
+        cd backend_django
+        coverage run manage.py test
+        coverage report
+    - name: Run Tests
+      run: |
+        source venv/bin/activate
+        cd backend_django
+        python manage.py test
+    - name: Restart services
+      run: |
+        sudo systemctl restart nginx
+        sudo systemctl restart gunicorn
+        sudo systemctl restart gunicorn.socket

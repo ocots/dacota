@@ -35,6 +35,8 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
+HOME = Path.home()
+
 
 # Application definition
 
@@ -86,7 +88,7 @@ WSGI_APPLICATION = "backend_django.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": env("DB_ENGINE"),
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": HOME / "db.sqlite3",
     }
 }
 
@@ -151,4 +153,4 @@ class ContainerLanguage:
 CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
 
 # the duration for a session to expire in seconds. now set to 7 days
-SESSION_EXPIRY_DURATION = 7 * (60 * 60 * 24)
+SESSION_EXPIRY_DURATION = 1 * (60 * 60 * 24)
