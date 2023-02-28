@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from django.test import Client, TestCase
@@ -88,13 +90,14 @@ class TestSessions(TestCase):
         # client 2 will edit compound 1 that was also added by client 2 so a new instance will be created for the edited compound
         self.client2.post(
             reverse("edit_component"),
-            {
+            data={
                 "id": c1.id,
                 "name": "compound2",
                 "a": 1,
                 "b": 0,
                 "c": 0,
             },
+            content_type="application/json",
         )
 
         # a new instance is created
@@ -155,13 +158,14 @@ class TestSessions(TestCase):
         # client 2 will edit compound 1 that was also added by client 2 so a new instance will be created for the edited compound
         self.client2.post(
             reverse("edit_component"),
-            {
+            data={
                 "id": c1.id,
                 "name": "compound1",
                 "a": 1,
                 "b": 0,
                 "c": 0,
             },
+            content_type="application/json",
         )
 
         self.assertEqual(
@@ -179,10 +183,13 @@ class TestSessions(TestCase):
 
         self.client1.post(
             reverse("edit_relation"),
-            {
+            data={
                 "id": self.acetone_benzene.id,
+                "a12": self.acetone_benzene.a12,
+                "a21": self.acetone_benzene.a21,
                 "alpha": 0,
             },
+            content_type="application/json",
         )
 
         self.assertEqual(
@@ -204,10 +211,13 @@ class TestSessions(TestCase):
         self.assertEqual(r.sessions.count(), 2)
         self.client2.post(
             reverse("edit_relation"),
-            {
+            data={
                 "id": r.id,
+                "a12": r.a12,
+                "a21": r.a21,
                 "alpha": 5,
             },
+            content_type="application/json",
         )
 
         self.assertEqual(

@@ -1,4 +1,4 @@
-function perform_compound_search(){
+function perform_compound_search() {
   // Get the input field and table
   let filterInput = document.getElementById("compound-filter");
   let table = document.getElementById("compound-table");
@@ -102,4 +102,126 @@ function Delete_relation(id, name1, name2) {
     var path = "delete_relation/" + id;
     document.location.href = path;
   }
+}
+
+const component_keys = ["id", "name", "a", "b", "c"];
+const relation_keys = ["id", "component1", "component2", "a12", "a21", "alpha"];
+var originalValuesComponent = new Map();
+var originalValuesRelation = new Map();
+
+function toggleEdit(rowId) {
+  let row = document.getElementById(rowId);
+  const data = {}
+  let cells = row.getElementsByTagName("td");
+  var keys;
+
+  if (rowId.startsWith("component")){
+    keys = component_keys;
+  }else{
+    keys = relation_keys;
+  }
+
+  for (let i = 0; i < cells.length - 1; i++) {
+    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
+      if (cells[i].getAttribute("noneditable") === "true") {
+        data[keys[i]] = cells[i].innerHTML;
+        continue;
+      }
+      data[keys[i]] = cells[i].innerHTML;
+      let input = document.createElement("input");
+      input.type = "text";
+      input.value = cells[i].innerHTML;
+      input.style.width = cells[i].offsetWidth + "px";
+      cells[i].innerHTML = "";
+      cells[i].appendChild(input);
+      cells[i].setAttribute("editable", "true");
+      //data[keys[i]]
+    }
+    else {
+      if (cells[i].getAttribute("noneditable") === "true") continue;
+      cells[i].setAttribute("editable", "false");
+      let input = cells[i].querySelector("input");
+      cells[i].innerHTML = `${input.value}`;
+      data[keys[i]] = input.value;
+    }
+  }
+  if (rowId.startsWith("component")){
+    originalValuesComponent.set(rowId, data);
+  }else{
+    originalValuesRelation.set(rowId, data);
+  }
+}
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+function saveChanges(rowId) {
+  row = document.getElementById(rowId);
+  var keys;
+
+  if (rowId.startsWith("component")){
+    keys = component_keys;
+  }else{
+    keys = relation_keys;
+  }
+  data = {}
+  var cells = row.getElementsByTagName("td");
+  var csrftoken = getCookie('csrftoken');
+
+  for (var j = 0; j < cells.length - 1; j++) {
+    var input = cells[j].querySelector("input");
+    if (input) {
+      data[keys[j]] = input.value;
+      this.toggleEdit(rowId);
+    }
+    else {
+      data[keys[j]] = cells[j].innerHTML;
+    }
+  }
+  console.log("data", data) // FORM OF THE DATA
+  var headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('X-CSRFToken', csrftoken);
+
+  fetch("edit_" + rowId.split("-")[0], {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+}
+
+function cancelChanges(rowId) {
+  var row = document.getElementById(rowId);
+  var keys, originalValues;
+
+  if (rowId.startsWith("component")){
+    keys = component_keys;
+    originalValues = originalValuesComponent;
+  }else{
+    keys = relation_keys;
+    originalValues = originalValuesRelation;
+  }
+
+  let cells = row.getElementsByTagName("td");
+  let editable = cells[1].getAttribute("editable");
+  for (let i = 0; i < cells.length - 1; i++) {
+    if (editable === "true") {
+      let input = cells[i].querySelector("input");
+      if (input) input.value = originalValues.get(rowId)[keys[i]];
+    }
+  }
+  if (editable === "true") toggleEdit(rowId);
 }
