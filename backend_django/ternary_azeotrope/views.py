@@ -22,7 +22,11 @@ def get_context(request):
     if "context" in request.session:
         data = request.session.get("context", {})
         to_keep = ["c1_selected", "c2_selected", "c3_selected"]
-        request.session["context"] = {k: data[k] for k in to_keep}
+        selected = {}
+        for k in to_keep:
+            if k in data:
+                selected[k] = data[k]
+        request.session["context"] = selected
         return data
 
     return {}
