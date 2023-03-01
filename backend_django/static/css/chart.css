@@ -1,11 +1,11 @@
 #myChart {
     position: relative;
-    width: 750px;
+    width: 700px;
 }
 
 .chart-text {
     position: absolute;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: rgb(40, 38, 38);
 }
@@ -27,5 +27,10 @@
 
 .chartCanvas {
     position: relative;
-    width: 750px;
+    width: 700px;
+}
+
+#download-diagram {
+    color: green;
+    font-size: medium;
 }

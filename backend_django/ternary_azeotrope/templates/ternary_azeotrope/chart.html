@@ -10,17 +10,18 @@
   <div id="c3" class="chart-text">{{c3}}</div>
 </div>
 
-<script>
-  function enable_download(chart, diagram) {
-    const downloadBtn = document.createElement("i");
-    downloadBtn.classList.add("fa", "fa-download");
-    downloadBtn.style.color = "green";
-    downloadBtn.style.fontSize = "35px";
-    diagram.appendChild(downloadBtn);
+<i
+  class="fas fa-download fa-2xl"
+  id="downlaod-diagram"
+  style="color: green"
+></i>
 
+<script>
+  function enable_download(chart) {
+    const downloadBtn = document.getElementById("downlaod-diagram");
+    console.log(downloadBtn);
     downloadBtn.addEventListener("click", () => {
       let img_uri = chart.toBase64Image();
-
       const downloadLink = document.createElement("a");
       downloadLink.href = img_uri;
       downloadLink.download =
@@ -76,7 +77,6 @@
         showLine: true,
         borderColor: colors[i],
         backgroundColor: colors[i],
-        pointRadius: 0,
       });
     }
 
@@ -211,12 +211,11 @@
     chart = draw(checkedOption);
     chart.render();
     setTimeout(() => {
-      //enable_download(chart, diagram);
+      enable_download(chart);
     }, 200);
   }
 
   const ctx = document.querySelector(".chartCanvas").getContext("2d");
-  //ctx.canvas.height = 700;
   const radioGroup = document.querySelector(".radio-group");
   const diagram = document.getElementById("diagram-container");
   var checkedOption = document.querySelector(
