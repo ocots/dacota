@@ -7,6 +7,7 @@
   background-color: #ccc;
   transition: left 0.5s;
   z-index: 2;
+  overflow-y: visible;
 
 }
 
