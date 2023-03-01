@@ -127,8 +127,8 @@
         datasets: datasets,
       },
       options: {
-        responsive: false,
-        maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: true,
         aspectRatio: 1,
         plugins: {
           legend: {
@@ -214,7 +214,8 @@
     }, 200);
   }
 
-  const ctx = document.querySelector(".chartCanvas");
+  const ctx = document.querySelector(".chartCanvas").getContext("2d");
+  //ctx.canvas.height = 700;
   const radioGroup = document.querySelector(".radio-group");
   const diagram = document.getElementById("diagram-container");
   var checkedOption = document.querySelector(
