@@ -1,35 +1,7 @@
+{% load static %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
-<style>
-  #myChart {
-    position: relative;
-    width: 750px;
-  }
-
-  .chart-text {
-    position: absolute;
-    font-size: 14px;
-    font-weight: bold;
-    color: rgb(40, 38, 38);
-  }
-  #c1 {
-    bottom: 0;
-    right: 0;
-  }
-  #c2 {
-    top: 0;
-    left: 0;
-  }
-
-  #c3 {
-    bottom: 0;
-    left: 0;
-  }
-  .chartCanvas {
-    position: relative;
-    width: 750px;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'css/chart.css' %}" />
 
 <div id="myChart">
   <canvas class="chartCanvas"></canvas>
@@ -39,11 +11,13 @@
 </div>
 
 <script>
-  function enable_download() {
+  function enable_download(chart, diagram) {
     const downloadBtn = document.createElement("i");
-    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
+    downloadBtn.classList.add("fa", "fa-download");
     downloadBtn.style.color = "green";
     downloadBtn.style.fontSize = "35px";
+    diagram.appendChild(downloadBtn);
+
     downloadBtn.addEventListener("click", () => {
       let img_uri = chart.toBase64Image();
 
@@ -58,86 +32,23 @@
         ".png";
       downloadLink.click();
     });
-
-    diagram.appendChild(downloadBtn);
   }
 
-  const ctx = document.querySelector(".chartCanvas");
-
-  const option1 = document.querySelector("#option1");
-  const option2 = document.querySelector("#option2");
-
-  // Check if a value is stored in localStorage
-  let storedOption = localStorage.getItem("selectedOption");
-
-  // Set the default checked radio button based on the stored value, or default to option1 if nothing is stored
-  option1.checked = storedOption === "2" ? false : true;
-  option2.checked = storedOption === "2" ? true : false;
-
-  // Set the initial selected option based on the stored value, or default to option1 if nothing is stored
-  let selectedOption = storedOption || option1.value;
-
-  // Add event listener to each radio button
-  option1.addEventListener("click", function () {
-    selectedOption = option1.value;
-    localStorage.setItem("selectedOption", selectedOption);
-  });
-
-  option2.addEventListener("click", function () {
-    selectedOption = option2.value;
-    localStorage.setItem("selectedOption", selectedOption);
-  });
-  x = [0, 1, 0, 0];
-  y = [0, 0, 1, 0];
-
-  var selected_type;
-  if (selectedOption == 1) {
-    selected_type = "Rectangle";
-    baseTriangle = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 0, y: 1 },
-      { x: 0, y: 0 },
-    ];
-    function createXYValues(x, y, t) {
-      xyValues = [];
-      for (var i = 0; i < x.length; i++) {
+  function createXYValues(x, y, t, type) {
+    xyValues = [];
+    for (var i = 0; i < x.length; i++) {
+      if (type == "Rectangle") {
         xyValues.push({ x: x[i], y: y[i], t: t[i] });
-      }
-      return xyValues;
-    }
-  } else {
-    selected_type = "Equilateral";
-    baseTriangle = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 1 / 2, y: Math.sqrt(3) / 2 },
-      { x: 0, y: 0 },
-    ];
-    function createXYValues(x, y, t) {
-      xyValues = [];
-      pos = "inside";
-      for (var i = 0; i < x.length; i++) {
+      } else {
         xyValues.push({
           x: x[i] + y[i] / 2,
           y: (y[i] * Math.sqrt(3)) / 2,
           t: t[i],
         });
       }
-      return xyValues;
     }
+    return xyValues;
   }
-  console.log(selected_type);
-
-  datasets = [
-    {
-      data: baseTriangle,
-      showLine: true,
-      borderColor: "black",
-      backgroundColor: "black",
-      legend: false,
-    },
-  ];
 
   function addPrefixToCurves(curves) {
     for (let i = 0; i < curves.length; i++) {
@@ -146,7 +57,7 @@
     return curves;
   }
 
-  function draw() {
+  function draw(selected_type) {
     const graph = "{{curves}}";
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
@@ -158,7 +69,7 @@
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
       t = addPrefixToCurves(curve_list[i]["T"]);
-      xyValues = createXYValues(x, y, t);
+      xyValues = createXYValues(x, y, t, selected_type);
 
       datasets.push({
         data: xyValues,
@@ -172,7 +83,7 @@
       point_azeotrope = [];
       intersection = curve_list[i]["azeo"];
       if (intersection[0] == true) {
-        if (selectedOption == 1) {
+        if (selected_type == "Rectangle") {
           point_azeotrope.push({
             x: curve_list[i]["x1"][0],
             y: curve_list[i]["x2"][0],
@@ -187,7 +98,7 @@
 
       if (intersection[-1] == true) {
         length = curve_list[i]["x1"].length;
-        if (selectedOption == 1) {
+        if (selected_type == "Rectangle") {
           point_azeotrope.push({
             x: curve_list[i]["x1"][length - 1],
             y: curve_list[i]["x2"][length - 1],
@@ -256,11 +167,63 @@
     });
   }
 
+  function get_baseTriangle(type) {
+    x = [0, 1, 0, 0];
+    y = [0, 0, 1, 0];
+
+    if (type == "Rectangle") {
+      return [
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 0, y: 1 },
+        { x: 0, y: 0 },
+      ];
+    } else {
+      return [
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 1 / 2, y: Math.sqrt(3) / 2 },
+        { x: 0, y: 0 },
+      ];
+    }
+  }
+
+  function add_diagram(checkedOption) {
+    if (chart) {
+      chart.destroy();
+    }
+    checkedOption = document.querySelector(
+      'input[name="option"]:checked'
+    ).value;
+
+    datasets = [
+      {
+        data: get_baseTriangle(checkedOption),
+        showLine: true,
+        borderColor: "black",
+        backgroundColor: "black",
+        legend: false,
+      },
+    ];
+
+    diagram.style.width = "50%";
+    chart = draw(checkedOption);
+    chart.render();
+    setTimeout(() => {
+      //enable_download(chart, diagram);
+    }, 200);
+  }
+
+  const ctx = document.querySelector(".chartCanvas");
+  const radioGroup = document.querySelector(".radio-group");
   const diagram = document.getElementById("diagram-container");
-  diagram.style.width = "50%";
-  var chart = draw();
-  chart.render();
-  setTimeout(() => {
-    enable_download();
-  }, 200);
+  var checkedOption = document.querySelector(
+    'input[name="option"]:checked'
+  ).value;
+  var chart;
+
+  add_diagram();
+  radioGroup.addEventListener("change", () => {
+    add_diagram();
+  });
 </script>

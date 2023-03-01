@@ -12,33 +12,6 @@ function show_equation_eventlistener(equation_name) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Get the radio buttons
-  const option1 = document.querySelector("#option1");
-  const option2 = document.querySelector("#option2");
-
-  // Check if a value is stored in localStorage
-  let storedOption = localStorage.getItem("selectedOption");
-
-  // Set the default checked radio button based on the stored value, or default to option1 if nothing is stored
-  option1.checked = storedOption === "2" ? false : true;
-  option2.checked = storedOption === "2" ? true : false;
-
-  // Set the initial selected option based on the stored value, or default to option1 if nothing is stored
-  let selectedOption = storedOption || option1.value;
-
-  // Add event listener to each radio button
-  option1.addEventListener("click", function () {
-    selectedOption = option1.value;
-    localStorage.setItem("selectedOption", selectedOption);
-  });
-
-  option2.addEventListener("click", function () {
-    selectedOption = option2.value;
-    localStorage.setItem("selectedOption", selectedOption);
-  });
-
-  // You can access the selected option value anytime by using the selectedOption variable
-  console.log(selectedOption);
 
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
