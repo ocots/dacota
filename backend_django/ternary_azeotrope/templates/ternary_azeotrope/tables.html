@@ -1,22 +1,17 @@
 {% load static %}
-
-
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compounds and Binary Relations</title>
   <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
-
 </head>
-
 
 <body>
   <div class="container">
     <div class="search-container">
-      <input type="text" id="search" onkeyup="perform_search()" placeholder="&#xF002; Search" class="fontAwesome">
+      <input type="text" id="search" onkeyup="perform_search()" placeholder="&#xF002; Search for compound or relation" class="fontAwesome">
     </div>
     <h2>Compounds for Antoine model</h2>
     <div class="table-container">
@@ -74,8 +69,8 @@
           {% for element in relations %}
           <tr id="relation-row{{ forloop.counter }}">
             <td noneditable="true">{{ element.id }}</td>
-            <td editable="false">{{ element.component1.name }} (ID : {{element.component1.id}})</td>
-            <td editable="false">{{ element.component2.name }} (ID : {{element.component2.id}})</td>
+            <td noneditable="true">{{ element.component1.name }} (ID : {{element.component1.id}})</td>
+            <td noneditable="true">{{ element.component2.name }} (ID : {{element.component2.id}})</td>
             <td editable="false">{{ element.a12 }}</td>
             <td editable="false">{{ element.a21 }}</td>
             <td editable="false">{{ element.alpha }}</td>
