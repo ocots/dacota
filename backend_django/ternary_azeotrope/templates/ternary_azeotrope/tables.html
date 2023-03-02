@@ -7,7 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compounds and Binary Relations</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
 
@@ -45,7 +44,7 @@
             <i class="fas fa-times-circle" onclick="cancelChanges('component-row{{ forloop.counter }}')" class="cancel-button"></i>
             <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
             {% else %}
-            <i class="fa-sharp fa-regular fa-ban">
+            <i class="fa-sharp fa-solid fa-ban">
             {% endif %}
           </td>
 
@@ -88,7 +87,7 @@
             <i class="fa-solid fa-trash"
               onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
             {% else %}
-            <i class="fa-sharp fa-regular fa-ban">
+            <i class="fa-sharp fa-solid fa-ban">
             {% endif %}
           </td>
 
