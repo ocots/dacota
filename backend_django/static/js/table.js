@@ -1,3 +1,10 @@
+/*(function () {
+  var buttons = document.getElementsByTagName('i');
+  for (var i = 0; i <= buttons.length - 1; i++) {
+    buttons[i].style.display = "none";
+  }
+})();*/
+
 function perform_compound_search() {
   // Get the input field and table
   let filterInput = document.getElementById("compound-filter");
@@ -115,11 +122,23 @@ function toggleEdit(rowId) {
   let cells = row.getElementsByTagName("td");
   var keys;
 
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
+
+  var buttons = row.getElementsByTagName("i");
+  var edit = cells[1].getAttribute("editable") === 'false' || cells[1].getAttribute("editable") === null;
+  if (edit) {
+    buttons[0].style.display = "none";
+    buttons[3].style.display = "none";
+    buttons[1].style.display = "inline-block";
+    buttons[2].style.display = "inline-block";
+  }
+
+
+
 
   for (let i = 0; i < cells.length - 1; i++) {
     if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
@@ -135,7 +154,7 @@ function toggleEdit(rowId) {
       cells[i].innerHTML = "";
       cells[i].appendChild(input);
       cells[i].setAttribute("editable", "true");
-      //data[keys[i]]
+      data[keys[i]]
     }
     else {
       if (cells[i].getAttribute("noneditable") === "true") continue;
@@ -145,9 +164,9 @@ function toggleEdit(rowId) {
       data[keys[i]] = input.value;
     }
   }
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     originalValuesComponent.set(rowId, data);
-  }else{
+  } else {
     originalValuesRelation.set(rowId, data);
   }
 }
@@ -155,15 +174,15 @@ function toggleEdit(rowId) {
 function getCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
+    }
   }
   return cookieValue;
 }
@@ -172,9 +191,17 @@ function saveChanges(rowId) {
   row = document.getElementById(rowId);
   var keys;
 
-  if (rowId.startsWith("component")){
+  var buttons = row.getElementsByTagName("i");
+  buttons[0].style.display = "inline-block";
+  buttons[1].style.display = "none";
+  buttons[2].style.display = "none";
+  buttons[3].style.display = "inline-block";
+
+
+
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
   data = {}
@@ -207,14 +234,21 @@ function cancelChanges(rowId) {
   var row = document.getElementById(rowId);
   var keys, originalValues;
 
-  if (rowId.startsWith("component")){
+  var buttons = row.getElementsByTagName("i");
+  buttons[0].style.display = "inline-block";
+  buttons[1].style.display = "none";
+  buttons[2].style.display = "none";
+  buttons[3].style.display = "inline-block";
+
+  if (rowId.startsWith("component")) {
     keys = component_keys;
     originalValues = originalValuesComponent;
-  }else{
+  } else {
     keys = relation_keys;
     originalValues = originalValuesRelation;
   }
 
+  console.log(originalValues);
   let cells = row.getElementsByTagName("td");
   let editable = cells[1].getAttribute("editable");
   for (let i = 0; i < cells.length - 1; i++) {
@@ -225,3 +259,38 @@ function cancelChanges(rowId) {
   }
   if (editable === "true") toggleEdit(rowId);
 }
+
+
+/*var originalValuesBinaryRelations = new Map();
+function toggleEditBinaryRelations(rowId) {
+  let row = document.getElementById(rowId);
+  const data = {};
+
+  let cells = row.getElementsByTagName("td");
+  for (let i = 1; i < cells.length - 1; i++) {
+    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
+      if (cells[i].getAttribute("noneditable") === "true") {
+        data[keys[i]] = cells[i].innerHTML;
+        continue;
+      }
+      data[keys[i]] = cells[i].innerHTML;
+      let input = document.createElement("input");
+      input.type = "text";
+      input.value = cells[i].innerHTML;
+      input.style.width = cells[i].offsetWidth + "px";
+      cells[i].innerHTML = "";
+      cells[i].appendChild(input);
+      cells[i].setAttribute("editable", "true");
+      data[keys[i]]
+    }
+    else {
+      if (cells[i].getAttribute("noneditable") === "true") continue;
+      cells[i].setAttribute("editable", "false");
+      let input = cells[i].querySelector("input");
+      cells[i].innerHTML = `${input.value}`;
+      data[keys[i]] = input.value;
+    }
+  }
+  originalValuesBinaryRelations.set(rowId, data);
+  console.log(originalValuesBinaryRelations);
+}*/
