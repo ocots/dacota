@@ -28,11 +28,6 @@ footer {
   font-size: small;
 }
 
-#index-content {
-  margin-bottom: 20px;
-}
-
-
 .component {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -44,6 +39,7 @@ footer {
 #index-content {
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 
