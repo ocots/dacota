@@ -1,10 +1,3 @@
-/*(function () {
-  var buttons = document.getElementsByTagName('i');
-  for (var i = 0; i <= buttons.length - 1; i++) {
-    buttons[i].style.display = "none";
-  }
-})();*/
-
 function perform_compound_search() {
   // Get the input field and table
   let filterInput = document.getElementById("compound-filter");
@@ -259,38 +252,3 @@ function cancelChanges(rowId) {
   }
   if (editable === "true") toggleEdit(rowId);
 }
-
-
-/*var originalValuesBinaryRelations = new Map();
-function toggleEditBinaryRelations(rowId) {
-  let row = document.getElementById(rowId);
-  const data = {};
-
-  let cells = row.getElementsByTagName("td");
-  for (let i = 1; i < cells.length - 1; i++) {
-    if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
-      if (cells[i].getAttribute("noneditable") === "true") {
-        data[keys[i]] = cells[i].innerHTML;
-        continue;
-      }
-      data[keys[i]] = cells[i].innerHTML;
-      let input = document.createElement("input");
-      input.type = "text";
-      input.value = cells[i].innerHTML;
-      input.style.width = cells[i].offsetWidth + "px";
-      cells[i].innerHTML = "";
-      cells[i].appendChild(input);
-      cells[i].setAttribute("editable", "true");
-      data[keys[i]]
-    }
-    else {
-      if (cells[i].getAttribute("noneditable") === "true") continue;
-      cells[i].setAttribute("editable", "false");
-      let input = cells[i].querySelector("input");
-      cells[i].innerHTML = `${input.value}`;
-      data[keys[i]] = input.value;
-    }
-  }
-  originalValuesBinaryRelations.set(rowId, data);
-  console.log(originalValuesBinaryRelations);
-}*/

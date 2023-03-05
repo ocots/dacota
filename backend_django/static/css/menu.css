@@ -37,11 +37,7 @@ p {
   top: 0;
   right: 0;
   padding: 10px;
-  background-color: aquamarine;
-}
-
-#menu-close-icon i {
-  color: white !important;
+  margin: 10px;
 }
 
 .back-icon {
@@ -51,10 +47,12 @@ p {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: white;
   font-size: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
+  color: white;
+  background-color: rgb(124, 166, 143);
+  text-align: center;
 }
 
 .back-icon:hover {

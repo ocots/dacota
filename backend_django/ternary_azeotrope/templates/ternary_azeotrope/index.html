@@ -119,7 +119,6 @@ Home {%endblock%} {% block head %}
           >
             {% for component in components %} {%if component.id == c1_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
-
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
@@ -138,7 +137,6 @@ Home {%endblock%} {% block head %}
           >
             {% for component in components %} {%if component.id == c2_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
-
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
@@ -157,7 +155,6 @@ Home {%endblock%} {% block head %}
           >
             {% for component in components %} {%if component.id == c3_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
-
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
