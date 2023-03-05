@@ -150,18 +150,5 @@ else:
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-# This variable is used to determine if we calculate the diagram locally or not
-LOCAL = 0
-
-
-# The following contains the variables used to determine the container language
-class ContainerLanguage:
-    PYTHON = "python"
-    JULIA = "julia"
-
-
-CONTAINER_LANGUAGE = ContainerLanguage.PYTHON
-
 # the duration for a session to expire in seconds. now set to 7 days
 SESSION_EXPIRY_DURATION = 7 * (60 * 60 * 24)
