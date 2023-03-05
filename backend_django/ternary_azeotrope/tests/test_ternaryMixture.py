@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.test import Client, TestCase
 from ternary_azeotrope.helpers.ternary_mixture import TernaryMixture
+from ternary_azeotrope.helpers.utils import load_json
 from ternary_azeotrope.models import BinaryRelation, Component
 
 """
@@ -185,78 +186,7 @@ class TestModels(TestCase):
             self.methylacetate_hexane,
         )
 
-    # This test is working, launching multiple times the same function does not consume a lot of memory, it's cpu bound.
-    # Calculating the diagram takes approximately 4 seconds on my computer.
-    def test_100_diagram(self):
-        for i in range(0):
-            diagram = self.mix1.diagram()
-
-    def test_parameters_for_diagram(self):
-        # Test the parameters for the diagram: Acetone, Chloroforme, Methanol
-        c1, c2, c3, a, alpha = self.mix1.getParameterForDiagram()
-        self.assertEqual(c1, [7.11714, 1210.595, 229.664])
-        self.assertEqual(c2, [6.95465, 1170.966, 226.232])
-        self.assertEqual(c3, [8.08097, 1582.271, 239.726])
-        self.assertEqual(
-            a,
-            [
-                [0, -643.277, 184.701],
-                [228.457, 0, 2736.86],
-                [222.645, -1244.03, 0],
-            ],
-        )
-        self.assertEqual(
-            alpha,
-            [[0, 0.3043, 0.3084], [0.3043, 0, 0.095], [0.3084, 0.095, 0]],
-        )
-
-    def test_parameters_for_diagram2(self):
-        # Test the parameters for the diagram: Acetone, Chloroforme, Benzene
-        c1, c2, c3, a, alpha = self.mix2.getParameterForDiagram()
-        self.assertEqual(c1, [7.11714, 1210.595, 229.664])
-        self.assertEqual(c2, [6.95465, 1170.966, 226.232])
-        self.assertEqual(c3, [6.87087, 1196.760, 219.161])
-        self.assertEqual(
-            a,
-            [
-                [0, -643.277, -193.34],
-                [228.457, 0, 176.8791],
-                [569.931, -288.2136, 0],
-            ],
-        )
-        self.assertEqual(
-            alpha,
-            [[0, 0.3043, 0.3007], [0.3043, 0, 0.3061], [0.3007, 0.3061, 0]],
-        )
-
-    def test_parameters_for_diagram3(self):
-        # Test the parameters for the diagram: Acetone, Ethylacetate, Benzene
-        c1, c2, c3, a, alpha = self.mix3.getParameterForDiagram()
-        self.assertEqual(c1, [7.11714, 1210.595, 229.664])
-        self.assertEqual(c2, [7.10179, 1244.951, 217.881])
-        self.assertEqual(c3, [6.87087, 1196.760, 219.161])
-        self.assertEqual(
-            a,
-            [[0, 529.7, -193.34], [-360, 0, -273.017], [569.931, 383.126, 0]],
-        )
-        self.assertEqual(
-            alpha, [[0, 0.2, 0.3007], [0.2, 0, 0.3194], [0.3007, 0.3194, 0]]
-        )
-
-    def test_parameters_for_diagram4(self):
-        # Test the parameters for the diagram: Methylacetate, Methanol, Hexane
-        c1, c2, c3, a, alpha = self.mix4.getParameterForDiagram()
-        self.assertEqual(c1, [7.06524, 1157.630, 219.726])
-        self.assertEqual(c2, [8.08097, 1582.271, 239.726])
-        self.assertEqual(c3, [6.91058, 1189.640, 226.280])
-        self.assertEqual(
-            a,
-            [
-                [0, 441.452, 647.05],
-                [304.005, 0, 1619.38],
-                [403.459, 1622.29, 0],
-            ],
-        )
-        self.assertEqual(
-            alpha, [[0, 0.1174, 0.2], [0.1174, 0, 0.4365], [0.2, 0.4365, 0]]
-        )
+    def test_diagram(self):
+        diagram = self.mix1.diagram()
+        expected_result = load_json("graph.json")
+        self.assertEqual(diagram, expected_result)

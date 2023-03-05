@@ -148,22 +148,6 @@ def load_json(path):
     return data
 
 
-def formatParameters(c1, c2, c3, a, alpha):
-    c1Formatted = str(c1)
-    c2Formatted = str(c2)
-    c3Formatted = str(c3)
-    aFormatted = str(a)
-    alphaFormatted = str(alpha)
-
-    return (
-        c1Formatted,
-        c2Formatted,
-        c3Formatted,
-        aFormatted,
-        alphaFormatted,
-    )
-
-
 def get_binaryRelations_fromDB(component1, component2, component3):
     r1 = BinaryRelation.objects.get(
         component1=component1, component2=component2

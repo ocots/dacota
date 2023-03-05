@@ -1,7 +1,3 @@
-# This is the endpoint of the microservice, it is the IP address of the server where the microservice is running
-import json
-import os
-
 import requests
 
 from backend_django.settings import AUTH_TOKEN, MS_ENDPOINT, MS_PORT
