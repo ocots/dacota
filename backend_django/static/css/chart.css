@@ -1,0 +1,36 @@
+#myChart {
+    position: relative;
+    width: 700px;
+}
+
+.chart-text {
+    position: absolute;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(40, 38, 38);
+}
+
+#c1 {
+    bottom: 0;
+    right: 0;
+}
+
+#c2 {
+    top: 0;
+    left: 0;
+}
+
+#c3 {
+    bottom: 0;
+    left: 0;
+}
+
+.chartCanvas {
+    position: relative;
+    width: 700px;
+}
+
+#download-diagram {
+    color: green;
+    font-size: medium;
+}

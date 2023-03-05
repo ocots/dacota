@@ -4,6 +4,7 @@ from django.contrib.sessions.models import Session
 from django.db.models import Q
 
 from ..models import BinaryRelation, Component
+from .ternary_mixture import TernaryMixture
 
 
 def compounds_of_session(session_key):
@@ -18,6 +19,46 @@ def relations_of_session(session_key):
     return BinaryRelation.objects.filter(
         Q(sessions__pk=session_key) | Q(sessions__isnull=True)
     ).order_by("component1")
+
+
+def ternary_mixture_defined(component1, component2, component3, session_key):
+    """returns true if the mixture can be run"""
+    r1, r2, r3 = get_relations(
+        session_key,
+        component1,
+        component2,
+        component3,
+    )
+    return len(r1) != 0 and len(r2) != 0 and len(r3) != 0
+
+
+def get_relations_of_compound(compound, session_key):
+    """return all binary relation that has as component1 the compound given"""
+    return BinaryRelation.objects.get(component1=compound).filter(
+        Q(sessions__pk=session_key) | Q(sessions__isnull=True)
+    )
+
+
+def defined_ternary_mixtures(session_key):
+    """Find all ternary mixtures that we can run in a session
+
+    Args:
+        session_key (str): session key of the session
+
+    Returns:
+        list(TernaryMixtures): a list of all ternary mixtures with defined relations
+    """
+
+    compounds = compounds_of_session(session_key)
+    defined_mix = []
+    for c1 in compounds:
+        for c2 in compounds:
+            for c3 in compounds:
+                if ternary_mixture_defined(c1, c2, c3, session_key):
+                    defined_mix.append(
+                        f"{c1.name} ({c1.id}) - {c2.name} ({c2.id}) - {c3.name} ({c3.id})"
+                    )
+    return defined_mix
 
 
 def delete_item(item, session_key):
@@ -146,22 +187,6 @@ def load_json(path):
     with open(path, "r") as f:
         data = json.load(f)
     return data
-
-
-def formatParameters(c1, c2, c3, a, alpha):
-    c1Formatted = str(c1)
-    c2Formatted = str(c2)
-    c3Formatted = str(c3)
-    aFormatted = str(a)
-    alphaFormatted = str(alpha)
-
-    return (
-        c1Formatted,
-        c2Formatted,
-        c3Formatted,
-        aFormatted,
-        alphaFormatted,
-    )
 
 
 def get_binaryRelations_fromDB(component1, component2, component3):

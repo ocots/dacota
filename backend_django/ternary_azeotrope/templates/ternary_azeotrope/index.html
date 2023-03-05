@@ -30,6 +30,77 @@ Home {%endblock%} {% block head %}
       <span class="value">NRTL</span>
     </div>
 
+    <script type="text/javascript">
+      let relations = {{ relations_json }};
+      let components = {{ components_json }};
+      let ind = function (x) {
+        let c = components.indexOf(x);
+        return c == -1 ? undefined : c;
+      }
+      let choices = {
+        1: ind({{ c1_selected }}),
+      2: ind({{ c2_selected }}),
+        3: ind({{ c3_selected }})
+      };
+
+      var relationMap = {};
+      for (let i = 0; i < components.length; i++) {
+        relationMap[components[i]] = [];
+      }
+
+      for (let i = 0; i < relations.length; i++) {
+        relationMap[relations[i][0]].push(relations[i][1]);
+        //relationMap[relations[i][1]].push(relations[i][0]);
+      }
+
+      console.log("relationMap", relationMap);
+
+      function getRelatedComponents(selectId) {
+        switch (selectId) {
+          case 1:
+            return components;
+          case 2:
+            let componentId = components[choices[1]];
+            return relationMap[componentId];
+          case 3:
+            let componentId1 = components[choices[1]];
+            let componentId2 = components[choices[2]];
+            return relationMap[componentId1].filter(cId => relationMap[componentId2].includes(cId));
+        }
+        return [];
+      }
+
+      function updateChoices(selectId, index) {
+        let lastChoice = choices[selectId];
+        choices[selectId] = index;
+        if (selectId == 3) {
+          return;
+        }
+
+        let related = getRelatedComponents(selectId + 1);
+
+        let select = document.getElementById("select-component" + (selectId + 1));
+        let options = select.getElementsByTagName("option");
+
+        for (let j = 0; j < components.length; j++) {
+          options[j].hidden = related.indexOf(components[j]) == -1;
+        }
+
+        for (let j = selectId + 1; j <= 3; j++) {
+          document.getElementById("select-component" + j).selectedIndex = -1;
+          choices[j] = undefined;
+        }
+      }
+
+      window.onload = function () {
+        console.log("Load");
+        for (let i = 1; i <= 3; i++) {
+          let select = document.getElementById("select-component" + i);
+          select.selectedIndex = choices[i] == undefined ? -1 : choices[i];
+        }
+      }
+    </script>
+
     <form
       action="{% url 'run' %}"
       method="post"
@@ -39,28 +110,58 @@ Home {%endblock%} {% block head %}
       {% csrf_token %}
       <div id="componenetsSelection">
         <div class="component">
-          <label for="my-select">Compound 1</label>
-          <select name="component1" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+          <label>Compound 1</label>
+          <select
+            id="select-component1"
+            name="component1"
+            class="form-select"
+            onclick="updateChoices(1, this.selectedIndex);"
+          >
+            {% for component in components %} {%if component.id == c1_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 2</label>
-          <select name="component2" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+          <label>Compound 2</label>
+          <select
+            id="select-component2"
+            name="component2"
+            class="form-select"
+            onclick="updateChoices(2, this.selectedIndex);"
+          >
+            {% for component in components %} {%if component.id == c2_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
 
         <div class="component">
-          <label for="my-select">Compound 3</label>
-          <select name="component3" class="form-select">
-            {% for component in components%}
-            <option value="{{component.id}}">{{component}}</option>
+          <label>Compound 3</label>
+          <select
+            id="select-component3"
+            name="component3"
+            class="form-select"
+            onclick="updateChoices(3, this.selectedIndex);"
+          >
+            {% for component in components %} {%if component.id == c3_selected%}
+            <option value="{{ component.id }}" selected>{{ component }}</option>
+
+            {% else %}
+            <option value="{{ component.id }}">{{ component }}</option>
+            {% endif %} {% empty %}
+            <option value="">No compound available</option>
             {% endfor %}
           </select>
         </div>
@@ -69,11 +170,18 @@ Home {%endblock%} {% block head %}
         <div class="alert alert-{{type}}" role="alert">{{ message }}</div>
         {% endif %}
       </div>
+
       <div class="radio-group" style="margin-bottom: 20px">
-        <input type="radio" name="option" id="option1" value="1" />
+        <input
+          type="radio"
+          name="option"
+          id="option1"
+          value="Rectangle"
+          checked
+        />
         <label for="option1">Rectangle</label>
 
-        <input type="radio" name="option" id="option2" value="2" />
+        <input type="radio" name="option" id="option2" value="Equilateral" />
         <label for="option2">Equilateral</label>
       </div>
 
@@ -96,6 +204,8 @@ Home {%endblock%} {% block head %}
         value="Add new binary relation"
         class="btn btn-primary"
       />
+
+      <i class="fa-solid fa-circle-info fa-2xl" id="tooltip-mixture"></i>
     </form>
 
     <div class="d-flex justify-content-center">
@@ -200,31 +310,37 @@ Home {%endblock%} {% block head %}
     </div>
 
     <div class="tooltip-container" style="display: none" id="nrtl">
-      PS: A is propotional to gamma :
-      <br>
-      <img src="{% static 'img/nrtl_equation.png' %}"/>
+      PS: A is propotional to tau :
+      <br />
+      <img src="{% static 'img/nrtl_equation_3.png' %}" />
     </div>
 
     <div class="tooltip-container" style="display: none" id="antoine">
       The pressure of a compound i :
-      <br>
-      <img src="{% static 'img/antoine_equation.png' %}"/>
+      <br />
+      <img src="{% static 'img/antoine_equation.png' %}" />
     </div>
 
-      {% if not curves %}
-      <div
-        id="spinner"
-        class="spinner-border text-primary"
-        role="status"
-        style="display: none"
-      ></div>
-      {% endif %}
+    <div id="mixture" class="tooltip-container" style="display: none">
+      <label>Defined mixtures you can run</label>
+      {% for mix in mixtures %}
+      <p>{{mix}}</p>
+      {%endfor%}
     </div>
 
-    <div class="d-flex justify-content-center" id="diagram-container">
-      {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
-    </div>
+    {% if not curves %}
+    <div
+      id="spinner"
+      class="spinner-border text-primary"
+      role="status"
+      style="display: none"
+    ></div>
+    {% endif %}
   </div>
 
-  {%endblock%}
+  <div class="d-flex justify-content-center" id="diagram-container">
+    {% if curves %} {% include "ternary_azeotrope/chart.html"%} {% endif %}
+  </div>
 </div>
+
+{%endblock%}

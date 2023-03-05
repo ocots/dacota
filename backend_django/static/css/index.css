@@ -19,6 +19,15 @@ body {
   background-color: hsl(0, 0%, 98%);
 }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: small;
+}
+
 .component {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -30,6 +39,7 @@ body {
 #index-content {
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 
@@ -102,7 +112,7 @@ i:hover {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   display: inline-block;
   margin-bottom: 10px;
@@ -172,7 +182,7 @@ select {
 
 .title {
   color: #26408B;
-  font-size: 30px;
+  font-size: 25px;
   letter-spacing: 2px;
   position: relative;
   z-index: 1;
@@ -201,7 +211,7 @@ select {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -275,7 +285,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #compound-form input[type="text"] {

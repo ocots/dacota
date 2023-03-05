@@ -1,23 +1,17 @@
 {% load static %}
-
-
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compounds and Binary Relations</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="{% static 'js/table.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
-
 </head>
-
 
 <body>
   <div class="container">
     <div class="search-container">
-      <input type="text" id="search" onkeyup="perform_search()" placeholder="&#xF002; Search" class="fontAwesome">
+      <input type="text" id="search" onkeyup="perform_search()" placeholder="&#xF002; Search for compound or relation" class="fontAwesome">
     </div>
     <h2>Compounds for Antoine model</h2>
     <div class="table-container">
@@ -31,71 +25,75 @@
           </tr>
         </thead>
         <tbody>
-        {% for element in components %}
-        <tr id="component-row{{ forloop.counter }}">
-          <td noneditable="true">{{ element.id }}</td>
-          <td editable="false">{{ element.name }}</td>
-          <td editable="false">{{ element.a }}</td>
-          <td editable="false">{{ element.b }}</td>
-          <td editable="false">{{ element.c }}</td>
-          <td editable="false">
-            {% if element.sessions.all|length > 0%}
-            <i class="fas fa-pencil-alt" onclick="toggleEdit('component-row{{ forloop.counter }}')"></i>
-            <i class="fa-solid fa-floppy-disk" onclick="saveChanges('component-row{{ forloop.counter }}')" class="save-row"></i>
-            <i class="fas fa-times-circle" onclick="cancelChanges('component-row{{ forloop.counter }}')" class="cancel-button"></i>
-            <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
-            {% else %}
-            <i class="fa-sharp fa-regular fa-ban">
-            {% endif %}
-          </td>
+          {% for element in components %}
+          <tr id="component-row{{ forloop.counter }}">
+            <td noneditable="true">{{ element.id }}</td>
+            <td editable="false">{{ element.name }}</td>
+            <td editable="false">{{ element.a }}</td>
+            <td editable="false">{{ element.b }}</td>
+            <td editable="false">{{ element.c }}</td>
+            <td editable="false">
+              {% if element.sessions.all|length > 0%}
+              <i class="fas fa-pencil-alt" onclick="toggleEdit('component-row{{ forloop.counter }}')"></i>
+              <i class="fa-solid fa-floppy-disk" style="display: none;"
+                onclick="saveChanges('component-row{{ forloop.counter }}')" class="save-row"></i>
+              <i class="fas fa-times-circle" style="display: none;"
+                onclick="cancelChanges('component-row{{ forloop.counter }}')" class="cancel-button"></i>
+              <i class="fa-solid fa-trash" onclick="Delete('{{element.id}}', '{{element.name}}')"></i>
+              {% else %}
+              <i class="fa-sharp fa-solid fa-ban">
+                {% endif %}
+            </td>
 
-        </tr>
+          </tr>
 
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-  <h2>Binary relations for NRTL model</h2>
+    <h2>Binary relations for NRTL model</h2>
     <div class="table-container">
       <table id="binary-relations-table">
         <thead>
-        <tr>
-          {% for key in relation_keys %}
-          <th>{{key}}</th>
+          <tr>
+            {% for key in relation_keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+            <th>
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in relations %}
+          <tr id="relation-row{{ forloop.counter }}">
+            <td noneditable="true">{{ element.id }}</td>
+            <td noneditable="true">{{ element.component1.name }} (ID : {{element.component1.id}})</td>
+            <td noneditable="true">{{ element.component2.name }} (ID : {{element.component2.id}})</td>
+            <td editable="false">{{ element.a12 }}</td>
+            <td editable="false">{{ element.a21 }}</td>
+            <td editable="false">{{ element.alpha }}</td>
+
+
+            <td editable="false">
+              {% if element.sessions.all|length > 0%}
+              <i class="fas fa-pencil-alt" onclick="toggleEdit('relation-row{{ forloop.counter }}')"></i>
+              <i class="fas fa-times-circle" onclick="cancelChanges('relation-row{{ forloop.counter }}')"
+                style="display: none;" class="cancel-button"></i>
+              <i class="fa-solid fa-floppy-disk" onclick="saveChanges('relation-row{{ forloop.counter }}')"
+                style="display: none;" class="save-row"></i>
+              <i class="fa-solid fa-trash"
+                onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
+              {% else %}
+              <i class="fa-sharp fa-solid fa-ban">
+                {% endif %}
+            </td>
+
+          </tr>
           {% endfor %}
-          <th>
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for element in relations %}
-        <tr id="relation-row{{ forloop.counter }}">
-          <td noneditable="true">{{ element.id }}</td>
-          <td editable="false">{{ element.component1.name }} (ID : {{element.component1.id}})</td>
-          <td editable="false">{{ element.component2.name }} (ID : {{element.component2.id}})</td>
-          <td editable="false">{{ element.a12 }}</td>
-          <td editable="false">{{ element.a21 }}</td>
-          <td editable="false">{{ element.alpha }}</td>
-
-
-          <td editable="false">
-            {% if element.sessions.all|length > 0%}
-            <i class="fas fa-pencil-alt" onclick="toggleEdit('relation-row{{ forloop.counter }}')"></i>
-            <i class="fas fa-times-circle" onclick="cancelChanges('relation-row{{ forloop.counter }}')" class="cancel-button"></i>
-            <i class="fa-solid fa-floppy-disk" onclick="saveChanges('relation-row{{ forloop.counter }}')" class="save-row"></i>
-            <i class="fa-solid fa-trash"
-              onclick="Delete_relation('{{element.id}}', '{{element.component1.name}}', '{{element.component2.name}}')"></i>
-            {% else %}
-            <i class="fa-sharp fa-regular fa-ban">
-            {% endif %}
-          </td>
-
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
 
 </html>

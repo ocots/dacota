@@ -1,4 +1,4 @@
-function show_equation_eventlistener(equation_name) {
+function tooltip_eventlistener(equation_name, leave_on_icon) {
   const icon = document.getElementById("tooltip-" + equation_name);
   const container = document.getElementById(equation_name);
 
@@ -6,12 +6,14 @@ function show_equation_eventlistener(equation_name) {
     container.style.display = "block";
   });
 
-  container.addEventListener("mouseleave", () => {
+  let leave_element = leave_on_icon ? icon : container;
+  leave_element.addEventListener("mouseleave", () => {
     container.style.display = "none";
   });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+
   /* SLIDING BAR CODE*/
   const menuIcon = document.getElementById("menu-icon");
   const menu = document.getElementById("menu");
@@ -90,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /** Tooltip for equation imgs */
-  show_equation_eventlistener("antoine");
-  show_equation_eventlistener("nrtl");
+  tooltip_eventlistener("antoine", false);
+  tooltip_eventlistener("nrtl", false);
+  tooltip_eventlistener("mixture", true);
 });

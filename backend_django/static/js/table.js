@@ -115,11 +115,23 @@ function toggleEdit(rowId) {
   let cells = row.getElementsByTagName("td");
   var keys;
 
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
+
+  var buttons = row.getElementsByTagName("i");
+  var edit = cells[1].getAttribute("editable") === 'false' || cells[1].getAttribute("editable") === null;
+  if (edit) {
+    buttons[0].style.display = "none";
+    buttons[3].style.display = "none";
+    buttons[1].style.display = "inline-block";
+    buttons[2].style.display = "inline-block";
+  }
+
+
+
 
   for (let i = 0; i < cells.length - 1; i++) {
     if (cells[i].getAttribute("editable") === 'false' || cells[i].getAttribute("editable") === null) {
@@ -135,7 +147,7 @@ function toggleEdit(rowId) {
       cells[i].innerHTML = "";
       cells[i].appendChild(input);
       cells[i].setAttribute("editable", "true");
-      //data[keys[i]]
+      data[keys[i]]
     }
     else {
       if (cells[i].getAttribute("noneditable") === "true") continue;
@@ -145,9 +157,9 @@ function toggleEdit(rowId) {
       data[keys[i]] = input.value;
     }
   }
-  if (rowId.startsWith("component")){
+  if (rowId.startsWith("component")) {
     originalValuesComponent.set(rowId, data);
-  }else{
+  } else {
     originalValuesRelation.set(rowId, data);
   }
 }
@@ -155,15 +167,15 @@ function toggleEdit(rowId) {
 function getCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
+    }
   }
   return cookieValue;
 }
@@ -172,9 +184,17 @@ function saveChanges(rowId) {
   row = document.getElementById(rowId);
   var keys;
 
-  if (rowId.startsWith("component")){
+  var buttons = row.getElementsByTagName("i");
+  buttons[0].style.display = "inline-block";
+  buttons[1].style.display = "none";
+  buttons[2].style.display = "none";
+  buttons[3].style.display = "inline-block";
+
+
+
+  if (rowId.startsWith("component")) {
     keys = component_keys;
-  }else{
+  } else {
     keys = relation_keys;
   }
   data = {}
@@ -207,14 +227,21 @@ function cancelChanges(rowId) {
   var row = document.getElementById(rowId);
   var keys, originalValues;
 
-  if (rowId.startsWith("component")){
+  var buttons = row.getElementsByTagName("i");
+  buttons[0].style.display = "inline-block";
+  buttons[1].style.display = "none";
+  buttons[2].style.display = "none";
+  buttons[3].style.display = "inline-block";
+
+  if (rowId.startsWith("component")) {
     keys = component_keys;
     originalValues = originalValuesComponent;
-  }else{
+  } else {
     keys = relation_keys;
     originalValues = originalValuesRelation;
   }
 
+  console.log(originalValues);
   let cells = row.getElementsByTagName("td");
   let editable = cells[1].getAttribute("editable");
   for (let i = 0; i < cells.length - 1; i++) {

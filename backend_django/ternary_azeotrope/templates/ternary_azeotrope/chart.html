@@ -1,35 +1,7 @@
+{% load static %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
-<style>
-  #myChart {
-    position: relative;
-    width: 750px;
-  }
-
-  .chart-text {
-    position: absolute;
-    font-size: 14px;
-    font-weight: bold;
-    color: rgb(40, 38, 38);
-  }
-  #c1 {
-    bottom: 0;
-    right: 0;
-  }
-  #c2 {
-    top: 0;
-    left: 0;
-  }
-
-  #c3 {
-    bottom: 0;
-    left: 0;
-  }
-  .chartCanvas {
-    position: relative;
-    width: 750px;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'css/chart.css' %}" />
 
 <div id="myChart">
   <canvas class="chartCanvas"></canvas>
@@ -38,42 +10,18 @@
   <div id="c3" class="chart-text">{{c3}}</div>
 </div>
 
+<i
+  class="fas fa-download fa-2xl"
+  id="downlaod-diagram"
+  style="color: green"
+></i>
+
 <script>
-  function download_as_html() {
-    var html_content = "data:text/html," + diagram.innerHTML;
-    html_content.remove(
-      'const diagram = document.getElementById("diagram-container");'
-    );
-    html_content = html_content.remove('diagram.style.width = "50%";');
-
-    const downloadBtn = document.createElement("i");
-    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
-    downloadBtn.style.color = "blue";
-    downloadBtn.style.fontSize = "35px";
-    downloadBtn.addEventListener("click", () => {
-      const downloadLink = document.createElement("a");
-      downloadLink.href = html_content;
-      downloadLink.download =
-        "{{c1}}".split("(")[0] +
-        "_" +
-        "{{c2}}".split("(")[0] +
-        "_" +
-        "{{c3}}".split("(")[0] +
-        ".html";
-      downloadLink.click();
-    });
-
-    diagram.appendChild(downloadBtn);
-  }
-
-  function enable_download() {
-    const downloadBtn = document.createElement("i");
-    downloadBtn.classList.add("fa", "fa-download", "fa-2xl");
-    downloadBtn.style.color = "green";
-    downloadBtn.style.fontSize = "35px";
+  function enable_download(chart) {
+    const downloadBtn = document.getElementById("downlaod-diagram");
+    console.log(downloadBtn);
     downloadBtn.addEventListener("click", () => {
       let img_uri = chart.toBase64Image();
-
       const downloadLink = document.createElement("a");
       downloadLink.href = img_uri;
       downloadLink.download =
@@ -85,35 +33,20 @@
         ".png";
       downloadLink.click();
     });
-
-    diagram.appendChild(downloadBtn);
   }
 
-  const ctx = document.querySelector(".chartCanvas");
-
-  x = [0, 1, 0, 0];
-  y = [0, 0, 1, 0];
-  baseTriangle = [
-    { x: 0, y: 0 },
-    { x: 1, y: 0 },
-    { x: 0, y: 1 },
-    { x: 0, y: 0 },
-  ];
-  datasets = [
-    {
-      data: baseTriangle,
-      showLine: true,
-      borderColor: "black",
-      backgroundColor: "black",
-      legend: false,
-    },
-  ];
-
-  function createXYValues(x, y, t) {
+  function createXYValues(x, y, t, type) {
     xyValues = [];
-    pos = "inside";
     for (var i = 0; i < x.length; i++) {
-      xyValues.push({ x: x[i], y: y[i], t: t[i] });
+      if (type == "Rectangle") {
+        xyValues.push({ x: x[i], y: y[i], t: t[i] });
+      } else {
+        xyValues.push({
+          x: x[i] + y[i] / 2,
+          y: (y[i] * Math.sqrt(3)) / 2,
+          t: t[i],
+        });
+      }
     }
     return xyValues;
   }
@@ -125,7 +58,7 @@
     return curves;
   }
 
-  function draw() {
+  function draw(selected_type) {
     const graph = "{{curves}}";
     const parser = new DOMParser();
     const doc = parser.parseFromString(graph, "text/html");
@@ -137,10 +70,11 @@
       x = curve_list[i]["x1"];
       y = curve_list[i]["x2"];
       t = addPrefixToCurves(curve_list[i]["T"]);
-      xyValues = createXYValues(x, y, t);
+      xyValues = createXYValues(x, y, t, selected_type);
 
       datasets.push({
         data: xyValues,
+        pointRadius: 1,
         showLine: true,
         borderColor: colors[i],
         backgroundColor: colors[i],
@@ -151,18 +85,34 @@
       point_azeotrope = [];
       intersection = curve_list[i]["azeo"];
       if (intersection[0] == true) {
-        point_azeotrope.push({
-          x: curve_list[i]["x1"][0],
-          y: curve_list[i]["x2"][0],
-        });
+        if (selected_type == "Rectangle") {
+          point_azeotrope.push({
+            x: curve_list[i]["x1"][0],
+            y: curve_list[i]["x2"][0],
+          });
+        } else {
+          point_azeotrope.push({
+            x: curve_list[i]["x1"][0] + curve_list[i]["x2"][0] / 2,
+            y: (curve_list[i]["x2"][0] * Math.sqrt(3)) / 2,
+          });
+        }
       }
 
       if (intersection[-1] == true) {
         length = curve_list[i]["x1"].length;
-        point_azeotrope.push({
-          x: curve_list[i]["x1"][length - 1],
-          y: curve_list[i]["x2"][length - 1],
-        });
+        if (selected_type == "Rectangle") {
+          point_azeotrope.push({
+            x: curve_list[i]["x1"][length - 1],
+            y: curve_list[i]["x2"][length - 1],
+          });
+        } else {
+          point_azeotrope.push({
+            x:
+              curve_list[i]["x1"][length - 1] +
+              curve_list[i]["x2"][length - 1] / 2,
+            y: (curve_list[i]["x2"][length - 1] * Math.sqrt(3)) / 2,
+          });
+        }
       }
       datasets.push({
         data: point_azeotrope,
@@ -179,8 +129,8 @@
         datasets: datasets,
       },
       options: {
-        responsive: false,
-        maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: true,
         aspectRatio: 1,
         plugins: {
           legend: {
@@ -219,12 +169,63 @@
     });
   }
 
+  function get_baseTriangle(type) {
+    x = [0, 1, 0, 0];
+    y = [0, 0, 1, 0];
+
+    if (type == "Rectangle") {
+      return [
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 0, y: 1 },
+        { x: 0, y: 0 },
+      ];
+    } else {
+      return [
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 1 / 2, y: Math.sqrt(3) / 2 },
+        { x: 0, y: 0 },
+      ];
+    }
+  }
+
+  function add_diagram(checkedOption) {
+    if (chart) {
+      chart.destroy();
+    }
+    checkedOption = document.querySelector(
+      'input[name="option"]:checked'
+    ).value;
+
+    datasets = [
+      {
+        data: get_baseTriangle(checkedOption),
+        showLine: true,
+        borderColor: "black",
+        backgroundColor: "black",
+        legend: false,
+      },
+    ];
+
+    diagram.style.width = "50%";
+    chart = draw(checkedOption);
+    chart.render();
+    setTimeout(() => {
+      enable_download(chart);
+    }, 200);
+  }
+
+  const ctx = document.querySelector(".chartCanvas").getContext("2d");
+  const radioGroup = document.querySelector(".radio-group");
   const diagram = document.getElementById("diagram-container");
-  diagram.style.width = "50%";
-  var chart = draw();
-  chart.render();
-  setTimeout(() => {
-    enable_download();
-    download_as_html();
-  }, 200);
+  var checkedOption = document.querySelector(
+    'input[name="option"]:checked'
+  ).value;
+  var chart;
+
+  add_diagram();
+  radioGroup.addEventListener("change", () => {
+    add_diagram();
+  });
 </script>
