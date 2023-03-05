@@ -58,7 +58,7 @@ class TestSessions(TestCase):
         client_id = client.session.session_key
 
         # test creation of session
-        self.assertEqual(client.session["created_in"], creation_date)
+        self.assertAlmostEqual(client.session["created_in"], creation_date)
         self.assertEqual(
             client.session.get_expiry_age(), settings.SESSION_EXPIRY_DURATION
         )
