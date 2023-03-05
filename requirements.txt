@@ -4,4 +4,3 @@ docker
 djangorestframework
 django-environ
 gunicorn
-psycopg2
