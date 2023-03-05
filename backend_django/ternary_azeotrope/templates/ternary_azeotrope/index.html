@@ -204,6 +204,8 @@ Home {%endblock%} {% block head %}
         value="Add new binary relation"
         class="btn btn-primary"
       />
+
+      <i class="fa-solid fa-circle-info fa-2xl" id="tooltip-mixture"></i>
     </form>
 
     <div class="d-flex justify-content-center">
@@ -317,6 +319,13 @@ Home {%endblock%} {% block head %}
       The pressure of a compound i :
       <br />
       <img src="{% static 'img/antoine_equation.png' %}" />
+    </div>
+
+    <div id="mixture" class="tooltip-container" style="display: none">
+      <label>Defined mixtures you can run</label>
+      {% for mix in mixtures %}
+      <p>{{mix}}</p>
+      {%endfor%}
     </div>
 
     {% if not curves %}

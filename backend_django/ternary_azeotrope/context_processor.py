@@ -1,6 +1,8 @@
+import json
+
+from .helpers import utils
 from .helpers.utils import *
 from .models import BinaryRelation, Component
-import json
 
 
 def common_context(request):
@@ -15,4 +17,7 @@ def common_context(request):
         ),
         "component_keys": Component.fields(),
         "relation_keys": BinaryRelation.fields(),
+        "mixtures": utils.defined_ternary_mixtures(
+            request.session.session_key
+        ),
     }
