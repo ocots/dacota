@@ -53,12 +53,12 @@ class TestSessions(TestCase):
         client = Client()
         # direct the client to index page to create the session
         response, creation_date = client.get(""), datetime.now().strftime(
-            "%d/%m/%Y, %H:%M:%S"
+            "%d/%m/%Y, %H:%M"
         )
         client_id = client.session.session_key
 
         # test creation of session
-        self.assertAlmostEqual(client.session["created_in"], creation_date)
+        self.assertEqual(client.session["created_in"], creation_date)
         self.assertEqual(
             client.session.get_expiry_age(), settings.SESSION_EXPIRY_DURATION
         )
@@ -228,7 +228,7 @@ class TestSessions(TestCase):
         session1.components.add(c)
 
         # set expiry of 10 seconds for test
-        exp_duration = 1
+        exp_duration = 2
         session1.expire_date = timezone.now() + timezone.timedelta(
             seconds=exp_duration
         )
