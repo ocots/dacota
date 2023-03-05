@@ -37,7 +37,7 @@ def index(request):
     if not request.session.has_key("created_in"):
         # create a new session instance
         request.session["created_in"] = datetime.now().strftime(
-            "%d/%m/%Y, %H:%M:%S"
+            "%d/%m/%Y, %H:%M"
         )
         request.session.set_expiry(settings.SESSION_EXPIRY_DURATION)
 
