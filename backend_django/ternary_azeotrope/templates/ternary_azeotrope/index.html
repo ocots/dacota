@@ -23,7 +23,7 @@ Home {%endblock%} {% block head %}
     </div>
 
     <script type="text/javascript">
-
+      let relations = {{ relations_json }};
       let components = {{ components_json }};
       let ind = function (x) {
         let c = components.indexOf(x);
@@ -34,11 +34,38 @@ Home {%endblock%} {% block head %}
       2: ind({{ c2_selected }}),
         3: ind({{ c3_selected }})
       };
-      console.log(choices)
+
+      var relationMap = {};
+      for (let i = 0; i < components.length; i++) {
+        relationMap[components[i]] = [];
+      }
+
+      for (let i = 0; i < relations.length; i++) {
+        relationMap[relations[i][0]].push(relations[i][1]);
+        relationMap[relations[i][1]].push(relations[i][0]);
+      }
+
+      console.log("relationMap", relationMap);
+
+      function getRelatedComponents(selectId) {
+        let result = [];
+        for (let i = 1; i <= 3; i++) {
+          if (choices[i] == undefined) {
+            continue;
+          }
+          let componentId = components[choices[i]];
+          result = result.concat(relationMap[componentId]);
+        }
+
+        return result == [] ? components : result;
+      }
 
       function updateChoices(selectId, index) {
         let lastChoice = choices[selectId];
-        console.log(selectId, index, lastChoice);
+        choices[selectId] = index;
+        let related = getRelatedComponents(selectId);
+        let choicesValues = Object.values(choices);
+
         for (let i = 1; i <= 3; i++) {
           if (i == selectId) {
             continue;
@@ -46,11 +73,11 @@ Home {%endblock%} {% block head %}
 
           let select = document.getElementById("select-component" + i);
           let options = select.getElementsByTagName("option");
-          if (lastChoice >= 0) options[lastChoice].hidden = false;
-          options[index].hidden = true;
-        }
 
-        choices[selectId] = index;
+          for (let j = 0; j < components.length; j++) {
+            options[j].hidden = related.indexOf(components[j]) == -1 || choicesValues.indexOf(j) >= 0;
+          }
+        }
       }
     </script>
 
