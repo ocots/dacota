@@ -115,10 +115,11 @@ Home {%endblock%} {% block head %}
             id="select-component1"
             name="component1"
             class="form-select"
-            onchange="updateChoices(1, this.selectedIndex);"
+            onclick="updateChoices(1, this.selectedIndex);"
           >
             {% for component in components %} {%if component.id == c1_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
+
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
@@ -133,10 +134,11 @@ Home {%endblock%} {% block head %}
             id="select-component2"
             name="component2"
             class="form-select"
-            onchange="updateChoices(2, this.selectedIndex);"
+            onclick="updateChoices(2, this.selectedIndex);"
           >
             {% for component in components %} {%if component.id == c2_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
+
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
@@ -151,10 +153,11 @@ Home {%endblock%} {% block head %}
             id="select-component3"
             name="component3"
             class="form-select"
-            onchange="updateChoices(3, this.selectedIndex);"
+            onclick="updateChoices(3, this.selectedIndex);"
           >
             {% for component in components %} {%if component.id == c3_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
+
             {% else %}
             <option value="{{ component.id }}">{{ component }}</option>
             {% endif %} {% empty %}
