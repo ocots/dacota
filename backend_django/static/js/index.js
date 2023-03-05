@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /** Tooltip for equation imgs */
+  /** Tooltip for equation imgs and mixtures */
   tooltip_eventlistener("antoine", false);
   tooltip_eventlistener("nrtl", false);
   tooltip_eventlistener("mixture", true);
