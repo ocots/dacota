@@ -1,71 +1,187 @@
-# Ternary univolatility diagram generator
+# Installation
 
-## General description
+Copy the folder in the vm:
 
-This web application allows users to draw a Ternary univolatility diagram of a ternary mixtures in termodynamics. The user selects three compounds then click on run to view the chart that will be displayed by default in a rectangle triangle, user can then switch between equilateral/rectangle triangle. Users can add new compounds and relations that are not predefined in the database and can also edit the values of the added elements. A session is created for each client and elements added by the client will remain available in the website as long as the session is not expired yet. The expiry duration is set in settings.py. To generate a diragram, the compounds of the mixture selected should be distinct and defined, meaning that binary relations between compound 1 and compound 2, compound 2 and compound 3 and compound 1 and compound 3 sould be defined.
+```
+ scp -r web-thermo/ YOUR_VM:~
 
-This web application is developped with Python using the Django framework.
+```
 
-## Set up your project directory :
+Connect to your VM and install docker:
 
-To contribute in this project follow these steps to set up your project :
+```
+sudo bash web-thermo/install.sh
+```
 
-- Clone this github repository.
-- Install the prerequisities and requirements :
+To start the containers, go to the folder `web-thermo/` and do:
 
-  ### Prerequisites
+```
+docker compose up
+```
 
-  - Python 3.10
-  - Docker installed in your system.
+You can now access the django app by using your vm address.
 
-  ### Installation
+Make sure that you have the necessary environment files in their respective locations:
 
-    <!-- https://www.architecture-performance.fr/ap_blog/some-pre-commit-git-hooks-for-python/ -->
-    <!-- https://marcobelo.medium.com/setting-up-python-black-on-visual-studio-code-5318eba4cd00 -->
+- One `.env` file in `ms-smith-python`
+- One `.env` file in `backend_django`
+- One `.env` file in `db`
 
-  ```
-  python3 -m pip install -r requirements.txt
-  python3 -m pip install -r requirements-dev.txt
-  python3 -m pre-commit install
-  ```
+The first time you launch application, you will have to populate the database, to do so, you will have to execute these commands in the folder where `docker-compose.yml` is located
 
-- Load the database :
+```
+docker compose exec backend_django python manage.py migrate
+docker compose exec backend_django python manage.py load_component_data
+```
 
-  ```
-  python3 manage.py migrate
-  python3 managy.py load_component_data
-  ```
+# Explanation
 
-- Create your admin page by running this command and choosing your username and password:
+The application is composed of 4 containers:
 
-  ```
-  python3 manage.py createsuperuser
-  ```
+- `nginx`
+- `backend_django`
+- `ms-smith-python`
+- `db`
 
-- To start the server on your local host :
+Each container has its own `Dockerfile` that is used to build the container.
 
-  ```
-  python managy.py runserver
-  ```
+The `docker-compose.yml` file is used to define the containers and their dependencies.
 
-- To open the web application, paste the server link : http://127.0.0.1:8000/ in your browser
+The `nginx` container is used as a proxy for the `backend_django` container. It is used to serve static files and to redirect requests to the `backend_django` container.
 
-## Database of the web application
+The `backend_django` container is the django app. It serves the html pages and the api requests.
 
-The database register compounds and relations that are available to the users. The predefined elements that are available to all users do not depend on sessions. An element that was added by one or multiple users will have the session keys in its chosen sessions list and an element with an empty chosen sessions means that the element is predefined.
+The `ms-smith-python` container is the python microservice that does the diagram calculation.
 
-To edit these predefined elements or add new elements. you have two options :
+The `nginx` container is defined as follows:
 
-- option 1 with the admin page :
-  Open the admin page with this link : http://127.0.0.1:8000/admin then connect with credentials you used while creating the admin. Once connected you can see all tables of the database. As an administrator, you can view, add, edit or delete compounds and binary relations. To do so, click on a table, click on add and enter values then save. Or click on the id of the element to edit, edit its values then save.
+```yml
+nginx:
+  build:
+    context: ./nginx/
+  volumes:
+    - static:/app/static/
+  ports:
+    - 80:80
+  depends_on:
+    - backend_django
+  networks:
+    - django_network
+```
 
-- option 2 with csv files :
-  you can edit directly the csv files `binary_relations_data.csv` and `component_data.csv` then run the command `python3 manage load_component_data`
+It is built from the `Dockerfile` in the `nginx` folder.
+It is exposed on port `80`.
 
-## Sessions
+The `backend_django` container is defined as follows:
 
-When a new client opens the website, a new session will be created for them. The expiry duration is set in the `SESSION_EXPIRY_DURATION` variable in `settings.py`. This variable can be changed but when the session is expired the user will no longer have access to its added elements and will be considered as a new client. When the session is expired, all added elements will be removed from the database once a new client opens the web application. If you want to manually remove expired data you can run the following command `python3 manage.py clear_expired_data`
+```yml
+backend_django:
+  build:
+    context: ./backend_django/
+  command: gunicorn backend_django.wsgi:application --bind 0.0.0.0:8000
+  volumes:
+    - ./backend_django/:/app/
+    - static:/app/static/
+  expose:
+    - 8000
+  depends_on:
+    - db
+  networks:
+    - django_network
+```
 
-## Tests
+It is built from the `Dockerfile` in the `backend_django` folder.
+It is exposed internally in the `django_network` on port `8000`.
+It depends on the `db` container.
 
-For the majority of the functionnalities implemented, unit tests were added inside the directory `test`. For additional tests, you can create a new file in this folder and add your tests. To run these tests, you can use `python3 manage.py test` an OK should displayed at the end to indicate that all tests were passed.
+The `ms-smith-python` container is defined as follows:
+
+```yml
+ms-smith-python:
+  build:
+    context: ./ms-smith-python/
+  command: uvicorn app.main:app --host 0.0.0.0 --port 5000
+  expose:
+    - 5000
+  env_file:
+    - ./ms-smith-python/.env
+  networks:
+    - django_network
+```
+
+It is built from the `Dockerfile` in the `ms-smith-python` folder.
+It is exposed internally in the `django_network` on port `5000`.
+
+The `db` container is defined as follows:
+
+```yml
+db:
+  image: postgres
+  volumes:
+    - postgres_data:/var/lib/postgresql/data/
+  env_file:
+    - ./db/.env
+  networks:
+    - django_network
+```
+
+It is built from the `postgres` image.
+It is exposed internally in the `django_network` on port `5432`.
+
+The `networks` section defines the networks used by the containers.
+
+```yml
+networks:
+  django_network:
+    name: django_network
+```
+
+The `volumes` section defines the volumes used by the containers. The `static` volume is used by the `nginx` and `backend_django` containers. The `postgres_data` volume is used by the `db` container. This allows the data to persist between container restarts.
+
+```yml
+volumes:
+  static:
+    name: static
+  db_data:
+    name: db_data
+```
+
+
+# Architecture
+
+![Architecture](./docs/img/architecture.jpg)
+
+
+# Switch microservice from python to julia
+
+To switch the microservice from python to julia, you will have to use the `julia` image instead of the `python` image in the `docker-compose.yml` file.
+
+This means that you have to uncomment the following lines:
+
+```yml
+  ms-smith-julia:
+    build:
+      context: ./ms-smith-julia/
+    command: julia main.jl # le port est défini dans le fichier main.jl
+    expose:
+      - 5000
+    networks:
+      - django_network
+```
+
+and comment the following lines:
+
+```yml
+  ms-smith-python:
+    build:
+      context: ./ms-smith-python/
+    command: uvicorn app.main:app --host 0.0.0.0 --port 5000
+    expose:
+      - 5000
+    env_file:
+      - ./ms-smith-python/.env
+    networks:
+      - django_network
+```
+
+You will also have to change the following line in `backend_django/.env` from `MS_ENDPOINT=ms-smith-python` to `MS_ENDPOINT=ms-smith-julia`.
