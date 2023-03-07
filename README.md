@@ -4,7 +4,10 @@ Copy the folder in the vm:
 
 ```
  scp -r web-thermo/ YOUR_VM:~
-
+```
+or connect to your vm and:
+```
+git clone https://github.com/Voyinno/web-thermo.git
 ```
 
 Connect to your VM and install docker:
@@ -19,8 +22,6 @@ To start the containers, go to the folder `web-thermo/` and do:
 docker compose up
 ```
 
-You can now access the django app by using your vm address.
-
 Make sure that you have the necessary environment files in their respective locations:
 
 - One `.env` file in `ms-smith-python`
@@ -33,6 +34,9 @@ The first time you launch application, you will have to populate the database, t
 docker compose exec backend_django python manage.py migrate
 docker compose exec backend_django python manage.py load_component_data
 ```
+
+You can now access the django app by using your vm address.
+
 
 # Explanation
 
