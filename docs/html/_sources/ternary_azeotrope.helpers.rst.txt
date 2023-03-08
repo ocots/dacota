@@ -1,0 +1,53 @@
+ternary\_azeotrope.helpers package
+==================================
+
+Submodules
+----------
+
+ternary\_azeotrope.helpers.diagram\_calculator module
+-----------------------------------------------------
+
+.. automodule:: ternary_azeotrope.helpers.diagram_calculator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.helpers.microservice\_caller module
+------------------------------------------------------
+
+.. automodule:: ternary_azeotrope.helpers.microservice_caller
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.helpers.plotter module
+-----------------------------------------
+
+.. automodule:: ternary_azeotrope.helpers.plotter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.helpers.ternary\_mixture module
+--------------------------------------------------
+
+.. automodule:: ternary_azeotrope.helpers.ternary_mixture
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.helpers.utils module
+---------------------------------------
+
+.. automodule:: ternary_azeotrope.helpers.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ternary_azeotrope.helpers
+   :members:
+   :undoc-members:
+   :show-inheritance:

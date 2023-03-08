@@ -24,6 +24,7 @@ jobs:
       run: |
         python3 -m venv ./venv
         source venv/bin/activate
+        cd backend_django
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
 

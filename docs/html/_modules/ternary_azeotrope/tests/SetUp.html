@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ternary_azeotrope.tests.SetUp &mdash; Ternary univolatility diagram generator 2023 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            Ternary univolatility diagram generator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">backend_django</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ternary univolatility diagram generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ternary_azeotrope.tests.SetUp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for ternary_azeotrope.tests.SetUp</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..models</span> <span class="kn">import</span> <span class="n">BinaryRelation</span><span class="p">,</span> <span class="n">Component</span>
+
+
+<div class="viewcode-block" id="init"><a class="viewcode-back" href="../../../ternary_azeotrope.tests.html#ternary_azeotrope.tests.SetUp.init">[docs]</a><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">acetone</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;acetone&quot;</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">=</span><span class="mf">7.11714</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="mf">1210.595</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="mf">229.664</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">chloroforme</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;chloroforme&quot;</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">=</span><span class="mf">6.95465</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="mf">1170.966</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="mf">226.232</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">benzene</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;benzene&quot;</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">=</span><span class="mf">6.87087</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="mf">1196.760</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="mf">219.161</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">methanol</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;methanol&quot;</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">=</span><span class="mf">8.08097</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="mf">1582.271</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="mf">239.726</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">obj</span><span class="o">.</span><span class="n">acetone_chloroforme</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">acetone</span><span class="p">,</span>
+        <span class="n">component2</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">chloroforme</span><span class="p">,</span>
+        <span class="n">a12</span><span class="o">=-</span><span class="mf">643.277</span><span class="p">,</span>
+        <span class="n">a21</span><span class="o">=</span><span class="mf">228.457</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3043</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">acetone_benzene</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">acetone</span><span class="p">,</span>
+        <span class="n">component2</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">benzene</span><span class="p">,</span>
+        <span class="n">a12</span><span class="o">=-</span><span class="mf">193.34</span><span class="p">,</span>
+        <span class="n">a21</span><span class="o">=</span><span class="mf">569.931</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3007</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">chloroforme_benzene</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">chloroforme</span><span class="p">,</span>
+        <span class="n">component2</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">benzene</span><span class="p">,</span>
+        <span class="n">a12</span><span class="o">=</span><span class="mf">176.8791</span><span class="p">,</span>
+        <span class="n">a21</span><span class="o">=-</span><span class="mf">288.2136</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3061</span><span class="p">,</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, ENSEEIHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

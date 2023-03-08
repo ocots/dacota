@@ -1,3 +1,5 @@
+docs/source/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -200,7 +202,7 @@ Temporary Items
 
 
 
-
+/docs/source/
 
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
