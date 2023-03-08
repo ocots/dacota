@@ -1,0 +1,29 @@
+ternary\_azeotrope.migrations package
+=====================================
+
+Submodules
+----------
+
+ternary\_azeotrope.migrations.0001\_initial module
+--------------------------------------------------
+
+.. automodule:: ternary_azeotrope.migrations.0001_initial
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.migrations.0002\_remove\_binaryrelation\_unique\_components module
+-------------------------------------------------------------------------------------
+
+.. automodule:: ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ternary_azeotrope.migrations
+   :members:
+   :undoc-members:
+   :show-inheritance:

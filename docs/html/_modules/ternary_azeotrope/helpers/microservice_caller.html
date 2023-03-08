@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ternary_azeotrope.helpers.microservice_caller &mdash; Ternary univolatility diagram generator 2023 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            Ternary univolatility diagram generator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">backend_django</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ternary univolatility diagram generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ternary_azeotrope.helpers.microservice_caller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for ternary_azeotrope.helpers.microservice_caller</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">backend_django.settings</span> <span class="kn">import</span> <span class="n">AUTH_TOKEN</span><span class="p">,</span> <span class="n">MS_ENDPOINT</span><span class="p">,</span> <span class="n">MS_PORT</span>
+
+
+<div class="viewcode-block" id="call_microservice"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.microservice_caller.call_microservice">[docs]</a><span class="k">def</span> <span class="nf">call_microservice</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="c1"># Call the microservice to generate the curves, the data is sent as a json object with the following structure:</span>
+    <span class="c1"># {</span>
+    <span class="c1">#     &quot;c1&quot;: [a, b, c],</span>
+    <span class="c1">#     &quot;c2&quot;: [a, b, c],</span>
+    <span class="c1">#     &quot;c3&quot;: [a, b, c],</span>
+    <span class="c1">#     &quot;a&quot;: [[0, a12, a13], [a21, 0, a23], [a31, a32, 0]],</span>
+    <span class="c1">#     &quot;alpha&quot;: [[0, alpha12, alpha13], [alpha21, 0, alpha23], [alpha31, alpha32, 0]]</span>
+    <span class="c1"># }</span>
+    <span class="c1"># We use the requetes module to send a post request to the microservice</span>
+    <span class="c1"># The request also contains the authorization token that is defined as an environment variable in .env file</span>
+
+    <span class="c1"># The data is sent as a json object</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;c1&quot;</span><span class="p">:</span> <span class="n">c1</span><span class="p">,</span>
+        <span class="s2">&quot;c2&quot;</span><span class="p">:</span> <span class="n">c2</span><span class="p">,</span>
+        <span class="s2">&quot;c3&quot;</span><span class="p">:</span> <span class="n">c3</span><span class="p">,</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="c1"># The endpoint is the IP address of the server where the microservice is running</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">MS_ENDPOINT</span>
+    <span class="c1"># The port is the port where the microservice is listening</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">MS_PORT</span>
+    <span class="c1"># The path is the path of the endpoint</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/ternary-diagram&quot;</span>
+    <span class="c1"># The url is the combination of the endpoint, the port and the path</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://&quot;</span> <span class="o">+</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="o">+</span> <span class="n">path</span>
+    <span class="c1"># The token is the authorization token that is defined as an environment variable in .env file</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">AUTH_TOKEN</span>
+    <span class="c1"># The headers are the authorization token and the content type</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span> <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+    <span class="c1"># The response is the response of the microservice</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="c1"># The response is a json object that contains the curves</span>
+    <span class="n">curve_list</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">curve_list</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, ENSEEIHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+ternary\_azeotrope package
+==========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   ternary_azeotrope.helpers
+   ternary_azeotrope.migrations
+   ternary_azeotrope.tests
+
+Submodules
+----------
+
+ternary\_azeotrope.admin module
+-------------------------------
+
+.. automodule:: ternary_azeotrope.admin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.apps module
+------------------------------
+
+.. automodule:: ternary_azeotrope.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.context\_processor module
+--------------------------------------------
+
+.. automodule:: ternary_azeotrope.context_processor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.models module
+--------------------------------
+
+.. automodule:: ternary_azeotrope.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.signals module
+---------------------------------
+
+.. automodule:: ternary_azeotrope.signals
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.urls module
+------------------------------
+
+.. automodule:: ternary_azeotrope.urls
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.views module
+-------------------------------
+
+.. automodule:: ternary_azeotrope.views
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ternary_azeotrope
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ternary_azeotrope package &mdash; Ternary univolatility diagram generator 2023 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ternary_azeotrope.helpers package" href="ternary_azeotrope.helpers.html" />
+    <link rel="prev" title="manage module" href="manage.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="index.html" class="icon icon-home">
+            Ternary univolatility diagram generator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">backend_django</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="backend_django.html">backend_django package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ternary_azeotrope package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html">ternary_azeotrope.helpers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html">ternary_azeotrope.migrations package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html">ternary_azeotrope.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.admin">ternary_azeotrope.admin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.admin.BinaryRelationAdmin"><code class="docutils literal notranslate"><span class="pre">BinaryRelationAdmin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.admin.ComponentAdmin"><code class="docutils literal notranslate"><span class="pre">ComponentAdmin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.admin.SessionAdmin"><code class="docutils literal notranslate"><span class="pre">SessionAdmin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.apps">ternary_azeotrope.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.apps.TernaryAzeotropeConfig"><code class="docutils literal notranslate"><span class="pre">TernaryAzeotropeConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.context_processor">ternary_azeotrope.context_processor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.context_processor.common_context"><code class="docutils literal notranslate"><span class="pre">common_context()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.models">ternary_azeotrope.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.models.BinaryRelation"><code class="docutils literal notranslate"><span class="pre">BinaryRelation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.models.Component"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.signals">ternary_azeotrope.signals module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.signals.post_delete_session"><code class="docutils literal notranslate"><span class="pre">post_delete_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.signals.pre_delete_session"><code class="docutils literal notranslate"><span class="pre">pre_delete_session()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.urls">ternary_azeotrope.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope.views">ternary_azeotrope.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.add_component"><code class="docutils literal notranslate"><span class="pre">add_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.add_relation"><code class="docutils literal notranslate"><span class="pre">add_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.delete_compound"><code class="docutils literal notranslate"><span class="pre">delete_compound()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.delete_relation"><code class="docutils literal notranslate"><span class="pre">delete_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.edit_component"><code class="docutils literal notranslate"><span class="pre">edit_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.edit_relation"><code class="docutils literal notranslate"><span class="pre">edit_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.get_context"><code class="docutils literal notranslate"><span class="pre">get_context()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ternary_azeotrope.views.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ternary_azeotrope">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ternary univolatility diagram generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">backend_django</a></li>
+      <li class="breadcrumb-item active">ternary_azeotrope package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ternary_azeotrope.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <section id="ternary-azeotrope-package">
+<h1>ternary_azeotrope package<a class="headerlink" href="#ternary-azeotrope-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ternary_azeotrope.helpers.html">ternary_azeotrope.helpers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers.diagram_calculator">ternary_azeotrope.helpers.diagram_calculator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.diagram_calculator.calculate_diagram"><code class="docutils literal notranslate"><span class="pre">calculate_diagram()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers.microservice_caller">ternary_azeotrope.helpers.microservice_caller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.microservice_caller.call_microservice"><code class="docutils literal notranslate"><span class="pre">call_microservice()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers.plotter">ternary_azeotrope.helpers.plotter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.plotter.get_graph"><code class="docutils literal notranslate"><span class="pre">get_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.plotter.get_plot"><code class="docutils literal notranslate"><span class="pre">get_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers.ternary_mixture">ternary_azeotrope.helpers.ternary_mixture module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture"><code class="docutils literal notranslate"><span class="pre">TernaryMixture</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.component1"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.component1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.component2"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.component2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.component3"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.component3</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.binary_relation1"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.binary_relation1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.binary_relation2"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.binary_relation2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.binary_relation3"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.binary_relation3</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.diagram"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.diagram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#id0"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.diagram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.ternary_mixture.TernaryMixture.getParameterForDiagram"><code class="docutils literal notranslate"><span class="pre">TernaryMixture.getParameterForDiagram()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers.utils">ternary_azeotrope.helpers.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.clear_session_data"><code class="docutils literal notranslate"><span class="pre">clear_session_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.compounds_of_session"><code class="docutils literal notranslate"><span class="pre">compounds_of_session()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.defined_ternary_mixtures"><code class="docutils literal notranslate"><span class="pre">defined_ternary_mixtures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.delete_item"><code class="docutils literal notranslate"><span class="pre">delete_item()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.edit_element"><code class="docutils literal notranslate"><span class="pre">edit_element()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_binaryRelations_fromDB"><code class="docutils literal notranslate"><span class="pre">get_binaryRelations_fromDB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_relations"><code class="docutils literal notranslate"><span class="pre">get_relations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_relations_of_compound"><code class="docutils literal notranslate"><span class="pre">get_relations_of_compound()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.relations_missings_msg"><code class="docutils literal notranslate"><span class="pre">relations_missings_msg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.relations_of_session"><code class="docutils literal notranslate"><span class="pre">relations_of_session()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.ternary_mixture_defined"><code class="docutils literal notranslate"><span class="pre">ternary_mixture_defined()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.helpers.html#module-ternary_azeotrope.helpers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ternary_azeotrope.migrations.html">ternary_azeotrope.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.migrations.html#module-ternary_azeotrope.migrations.0001_initial">ternary_azeotrope.migrations.0001_initial module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0001_initial.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0001_initial.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0001_initial.Migration.initial"><code class="docutils literal notranslate"><span class="pre">Migration.initial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0001_initial.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.migrations.html#module-ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components">ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.migrations.html#ternary_azeotrope.migrations.0002_remove_binaryrelation_unique_components.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.migrations.html#module-ternary_azeotrope.migrations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ternary_azeotrope.tests.html">ternary_azeotrope.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.SetUp">ternary_azeotrope.tests.SetUp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.SetUp.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_edit_elements">ternary_azeotrope.tests.test_edit_elements module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_edit_elements.TestSessions"><code class="docutils literal notranslate"><span class="pre">TestSessions</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_edit_elements.TestSessions.setUp"><code class="docutils literal notranslate"><span class="pre">TestSessions.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_edit_elements.TestSessions.test_edit_component"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_edit_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_edit_elements.TestSessions.test_edit_component2"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_edit_component2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_edit_elements.TestSessions.test_edit_relation"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_edit_relation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_models">ternary_azeotrope.tests.test_models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels"><code class="docutils literal notranslate"><span class="pre">TestModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.setUp"><code class="docutils literal notranslate"><span class="pre">TestModels.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_binary_relation"><code class="docutils literal notranslate"><span class="pre">TestModels.test_binary_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_binary_relation_possible_with_component_with_same_name_but_different_values"><code class="docutils literal notranslate"><span class="pre">TestModels.test_binary_relation_possible_with_component_with_same_name_but_different_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_binary_relation_possible_with_inversed_components"><code class="docutils literal notranslate"><span class="pre">TestModels.test_binary_relation_possible_with_inversed_components()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_component"><code class="docutils literal notranslate"><span class="pre">TestModels.test_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_create_binary_relation_possible_with_different_case_component"><code class="docutils literal notranslate"><span class="pre">TestModels.test_create_binary_relation_possible_with_different_case_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_delete_binary_relation"><code class="docutils literal notranslate"><span class="pre">TestModels.test_delete_binary_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_delete_component"><code class="docutils literal notranslate"><span class="pre">TestModels.test_delete_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_delete_component_with_binary_relation"><code class="docutils literal notranslate"><span class="pre">TestModels.test_delete_component_with_binary_relation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_models.TestModels.test_is_component_case_sensitive"><code class="docutils literal notranslate"><span class="pre">TestModels.test_is_component_case_sensitive()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_ms_diagram">ternary_azeotrope.tests.test_ms_diagram module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ms_diagram.TestMS"><code class="docutils literal notranslate"><span class="pre">TestMS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ms_diagram.TestMS.setUp"><code class="docutils literal notranslate"><span class="pre">TestMS.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ms_diagram.TestMS.test_post_ternary_diagram"><code class="docutils literal notranslate"><span class="pre">TestMS.test_post_ternary_diagram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ms_diagram.TestMS.test_post_ternary_diagram_with_invalid_parameters"><code class="docutils literal notranslate"><span class="pre">TestMS.test_post_ternary_diagram_with_invalid_parameters()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_sessions">ternary_azeotrope.tests.test_sessions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions"><code class="docutils literal notranslate"><span class="pre">TestSessions</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions.setUp"><code class="docutils literal notranslate"><span class="pre">TestSessions.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions.test_delete_session"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_delete_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions.test_expiration_session"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_expiration_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions.test_session_addElement"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_session_addElement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_sessions.TestSessions.test_session_creation"><code class="docutils literal notranslate"><span class="pre">TestSessions.test_session_creation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_ternaryMixture">ternary_azeotrope.tests.test_ternaryMixture module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ternaryMixture.TestModels"><code class="docutils literal notranslate"><span class="pre">TestModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ternaryMixture.TestModels.setUp"><code class="docutils literal notranslate"><span class="pre">TestModels.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_ternaryMixture.TestModels.test_diagram"><code class="docutils literal notranslate"><span class="pre">TestModels.test_diagram()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_urls">ternary_azeotrope.tests.test_urls module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_urls.TestUrls"><code class="docutils literal notranslate"><span class="pre">TestUrls</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ternary_azeotrope.tests.html#ternary_azeotrope.tests.test_urls.TestUrls.test1"><code class="docutils literal notranslate"><span class="pre">TestUrls.test1()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests.test_views">ternary_azeotrope.tests.test_views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ternary_azeotrope.tests.html#module-ternary_azeotrope.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ternary_azeotrope.admin">
+<span id="ternary-azeotrope-admin-module"></span><h2>ternary_azeotrope.admin module<a class="headerlink" href="#module-ternary_azeotrope.admin" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.BinaryRelationAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.admin.</span></span><span class="sig-name descname"><span class="pre">BinaryRelationAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/admin.html#BinaryRelationAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.admin.BinaryRelationAdmin" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.BinaryRelationAdmin.filter_horizontal">
+<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('sessions',)</span></em><a class="headerlink" href="#ternary_azeotrope.admin.BinaryRelationAdmin.filter_horizontal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.BinaryRelationAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'component1',</span> <span class="pre">'component2',</span> <span class="pre">'a12',</span> <span class="pre">'a21',</span> <span class="pre">'alpha')</span></em><a class="headerlink" href="#ternary_azeotrope.admin.BinaryRelationAdmin.list_display" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.BinaryRelationAdmin.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#ternary_azeotrope.admin.BinaryRelationAdmin.media" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.ComponentAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.admin.</span></span><span class="sig-name descname"><span class="pre">ComponentAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/admin.html#ComponentAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.admin.ComponentAdmin" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.ComponentAdmin.filter_horizontal">
+<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('sessions',)</span></em><a class="headerlink" href="#ternary_azeotrope.admin.ComponentAdmin.filter_horizontal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.ComponentAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'a',</span> <span class="pre">'b',</span> <span class="pre">'c')</span></em><a class="headerlink" href="#ternary_azeotrope.admin.ComponentAdmin.list_display" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.ComponentAdmin.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#ternary_azeotrope.admin.ComponentAdmin.media" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.SessionAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.admin.</span></span><span class="sig-name descname"><span class="pre">SessionAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/admin.html#SessionAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.admin.SessionAdmin" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.SessionAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['session_key',</span> <span class="pre">'_session_data',</span> <span class="pre">'expire_date']</span></em><a class="headerlink" href="#ternary_azeotrope.admin.SessionAdmin.list_display" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ternary_azeotrope.admin.SessionAdmin.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#ternary_azeotrope.admin.SessionAdmin.media" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope.apps">
+<span id="ternary-azeotrope-apps-module"></span><h2>ternary_azeotrope.apps module<a class="headerlink" href="#module-ternary_azeotrope.apps" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.apps.TernaryAzeotropeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.apps.</span></span><span class="sig-name descname"><span class="pre">TernaryAzeotropeConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/apps.html#TernaryAzeotropeConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.apps.TernaryAzeotropeConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.apps.TernaryAzeotropeConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#ternary_azeotrope.apps.TernaryAzeotropeConfig.default_auto_field" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.apps.TernaryAzeotropeConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ternary_azeotrope'</span></em><a class="headerlink" href="#ternary_azeotrope.apps.TernaryAzeotropeConfig.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ternary_azeotrope.apps.TernaryAzeotropeConfig.ready">
+<span class="sig-name descname"><span class="pre">ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ternary_azeotrope/apps.html#TernaryAzeotropeConfig.ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.apps.TernaryAzeotropeConfig.ready" title="Permalink to this definition"></a></dt>
+<dd><p>Override this method in subclasses to run code when Django starts.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope.context_processor">
+<span id="ternary-azeotrope-context-processor-module"></span><h2>ternary_azeotrope.context_processor module<a class="headerlink" href="#module-ternary_azeotrope.context_processor" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.context_processor.common_context">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.context_processor.</span></span><span class="sig-name descname"><span class="pre">common_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/context_processor.html#common_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.context_processor.common_context" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope.models">
+<span id="ternary-azeotrope-models-module"></span><h2>ternary_azeotrope.models module<a class="headerlink" href="#module-ternary_azeotrope.models" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.models.</span></span><span class="sig-name descname"><span class="pre">BinaryRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/models.html#BinaryRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>BinaryRelation model : represents the binary relationship between two components.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.component1">
+<span class="sig-name descname"><span class="pre">component1</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.component1" title="Permalink to this definition"></a></dt>
+<dd><p>The first component in the relation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ForeignKey</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.component2">
+<span class="sig-name descname"><span class="pre">component2</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.component2" title="Permalink to this definition"></a></dt>
+<dd><p>The second component in the relation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ForeignKey</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.a12">
+<span class="sig-name descname"><span class="pre">a12</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.a12" title="Permalink to this definition"></a></dt>
+<dd><p>The first interaction parameter between component1 and component2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.a21">
+<span class="sig-name descname"><span class="pre">a21</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.a21" title="Permalink to this definition"></a></dt>
+<dd><p>The first interaction parameter between component2 and component1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.alpha" title="Permalink to this definition"></a></dt>
+<dd><p>The second interaction parameter between component1 and component2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.DoesNotExist" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.MultipleObjectsReturned" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">a12</span></span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">a21</span></span><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">component1</span></span><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.component1_id">
+<span class="sig-name descname"><span class="pre">component1_id</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.component1_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">component2</span></span><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.component2_id">
+<span class="sig-name descname"><span class="pre">component2_id</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.component2_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.fields">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/models.html#BinaryRelation.fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.fields" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.id" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.objects" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.BinaryRelation.sessions">
+<span class="sig-name descname"><span class="pre">sessions</span></span><a class="headerlink" href="#ternary_azeotrope.models.BinaryRelation.sessions" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.models.</span></span><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/models.html#Component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.models.Component" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Component model : represents a single component in a mixture.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.a">
+<span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.a" title="Permalink to this definition"></a></dt>
+<dd><p>The first parameter of the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.b">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.b" title="Permalink to this definition"></a></dt>
+<dd><p>The second parameter of the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.c">
+<span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.c" title="Permalink to this definition"></a></dt>
+<dd><p>The third parameter of the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.DoesNotExist" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.MultipleObjectsReturned" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.component1">
+<span class="sig-name descname"><span class="pre">component1</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.component1" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.component2">
+<span class="sig-name descname"><span class="pre">component2</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.component2" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.fields">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/models.html#Component.fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.models.Component.fields" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.id" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#ternary_azeotrope.models.Component.objects" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ternary_azeotrope.models.Component.sessions">
+<span class="sig-name descname"><span class="pre">sessions</span></span><a class="headerlink" href="#ternary_azeotrope.models.Component.sessions" title="Permalink to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope.signals">
+<span id="ternary-azeotrope-signals-module"></span><h2>ternary_azeotrope.signals module<a class="headerlink" href="#module-ternary_azeotrope.signals" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.signals.post_delete_session">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.signals.</span></span><span class="sig-name descname"><span class="pre">post_delete_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/signals.html#post_delete_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.signals.post_delete_session" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.signals.pre_delete_session">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.signals.</span></span><span class="sig-name descname"><span class="pre">pre_delete_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/signals.html#pre_delete_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.signals.pre_delete_session" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope.urls">
+<span id="ternary-azeotrope-urls-module"></span><h2>ternary_azeotrope.urls module<a class="headerlink" href="#module-ternary_azeotrope.urls" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ternary_azeotrope.views">
+<span id="ternary-azeotrope-views-module"></span><h2>ternary_azeotrope.views module<a class="headerlink" href="#module-ternary_azeotrope.views" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.add_component">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">add_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#add_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.add_component" title="Permalink to this definition"></a></dt>
+<dd><p>“Function to add a new compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>_type_</em>) – the request</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the updated page with the new compound in the table of compounds</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.add_relation">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">add_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#add_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.add_relation" title="Permalink to this definition"></a></dt>
+<dd><p>Function to add a new relation between two compounds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>_type_</em>) – the request</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the updated page with the new relation in the table of relations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.delete_compound">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">delete_compound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compound_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#delete_compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.delete_compound" title="Permalink to this definition"></a></dt>
+<dd><p>Function to delete a compound from the table by the icon in Actions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>_type_</em>) – the request</p></li>
+<li><p><strong>compound_id</strong> (<em>str</em>) – the id of the compound to remove</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the principal page with a updated table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.delete_relation">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">delete_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#delete_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.delete_relation" title="Permalink to this definition"></a></dt>
+<dd><p>Function to delete a relation from the table by the icon in Actions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>_type_</em>) – the request</p></li>
+<li><p><strong>relation_id</strong> (<em>str</em>) – the id of the relation to remove</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the principal page with a updated table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.edit_component">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">edit_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#edit_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.edit_component" title="Permalink to this definition"></a></dt>
+<dd><p>Function to edit the parameters of a compound in the table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>_type_</em>) – the request</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the principal page with a updated table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.edit_relation">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">edit_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#edit_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.edit_relation" title="Permalink to this definition"></a></dt>
+<dd><p>Function to edit the parameters of a relation in the table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>_type_</em>) – the request</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>redirect to the principal page with a updated table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.get_context">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.get_context" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.index">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.index" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ternary_azeotrope.views.run">
+<span class="sig-prename descclassname"><span class="pre">ternary_azeotrope.views.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ternary_azeotrope/views.html#run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ternary_azeotrope.views.run" title="Permalink to this definition"></a></dt>
+<dd><p>Function to launch the calculation to generate the diagram</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>_type_</em>) – the request</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – where the mixture compounds selected are not distinct</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the diagram of the compound selected in the page</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ternary_azeotrope">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ternary_azeotrope" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="manage.html" class="btn btn-neutral float-left" title="manage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ternary_azeotrope.helpers.html" class="btn btn-neutral float-right" title="ternary_azeotrope.helpers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, ENSEEIHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>
