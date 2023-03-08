@@ -1,0 +1,77 @@
+ternary\_azeotrope.tests package
+================================
+
+Submodules
+----------
+
+ternary\_azeotrope.tests.SetUp module
+-------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.SetUp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_edit\_elements module
+----------------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_edit_elements
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_models module
+--------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_ms\_diagram module
+-------------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_ms_diagram
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_sessions module
+----------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_sessions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_ternaryMixture module
+----------------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_ternaryMixture
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_urls module
+------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_urls
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ternary\_azeotrope.tests.test\_views module
+-------------------------------------------
+
+.. automodule:: ternary_azeotrope.tests.test_views
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ternary_azeotrope.tests
+   :members:
+   :undoc-members:
+   :show-inheritance:

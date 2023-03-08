@@ -1,0 +1,45 @@
+backend\_django package
+=======================
+
+Submodules
+----------
+
+backend\_django.asgi module
+---------------------------
+
+.. automodule:: backend_django.asgi
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+backend\_django.settings module
+-------------------------------
+
+.. automodule:: backend_django.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+backend\_django.urls module
+---------------------------
+
+.. automodule:: backend_django.urls
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+backend\_django.wsgi module
+---------------------------
+
+.. automodule:: backend_django.wsgi
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: backend_django
+   :members:
+   :undoc-members:
+   :show-inheritance:
