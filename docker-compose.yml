@@ -20,7 +20,8 @@ services:
     volumes:
       - static:/app/static/
     ports:
-      - 8080:80
+      #- 8080:80 # if using apache
+      - 80:80 # else
     depends_on:
       - backend_django
     networks:
