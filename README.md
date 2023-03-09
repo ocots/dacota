@@ -1,6 +1,6 @@
 # Ternary univolatility diagram generator
 
-[<img src="https://user-images.githubusercontent.com/66357348/224102161-c196e410-042e-4519-a5e0-559f3feb556c.png" alt="web app" height="300px"/>](http://dacota.irit.fr)
+[<img src="https://user-images.githubusercontent.com/66357348/224102161-c196e410-042e-4519-a5e0-559f3feb556c.png" alt="web app" height="400px"/>](http://dacota.irit.fr)
 
 ## Installation
 
