@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ternary_azeotrope.helpers.utils &mdash; Ternary univolatility diagram generator 2023 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            Ternary univolatility diagram generator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">backend_django</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ternary univolatility diagram generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ternary_azeotrope.helpers.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for ternary_azeotrope.helpers.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.sessions.models</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+
+<span class="kn">from</span> <span class="nn">..models</span> <span class="kn">import</span> <span class="n">BinaryRelation</span><span class="p">,</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">.ternary_mixture</span> <span class="kn">import</span> <span class="n">TernaryMixture</span>
+
+
+<div class="viewcode-block" id="compounds_of_session"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.compounds_of_session">[docs]</a><span class="k">def</span> <span class="nf">compounds_of_session</span><span class="p">(</span><span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns compounds of the current client&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="relations_of_session"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.relations_of_session">[docs]</a><span class="k">def</span> <span class="nf">relations_of_session</span><span class="p">(</span><span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns binary relations of the current client&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;component1&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ternary_mixture_defined"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.ternary_mixture_defined">[docs]</a><span class="k">def</span> <span class="nf">ternary_mixture_defined</span><span class="p">(</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">,</span> <span class="n">component3</span><span class="p">,</span> <span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns true if the mixture can be run&quot;&quot;&quot;</span>
+    <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span> <span class="o">=</span> <span class="n">get_relations</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="p">,</span>
+        <span class="n">component1</span><span class="p">,</span>
+        <span class="n">component2</span><span class="p">,</span>
+        <span class="n">component3</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">r3</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="get_relations_of_compound"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_relations_of_compound">[docs]</a><span class="k">def</span> <span class="nf">get_relations_of_compound</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;return all binary relation that has as component1 the compound given&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component1</span><span class="o">=</span><span class="n">compound</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="defined_ternary_mixtures"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.defined_ternary_mixtures">[docs]</a><span class="k">def</span> <span class="nf">defined_ternary_mixtures</span><span class="p">(</span><span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find all ternary mixtures that we can run in a session</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        session_key (str): session key of the session</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list(TernaryMixtures): a list of all ternary mixtures with defined relations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">compounds</span> <span class="o">=</span> <span class="n">compounds_of_session</span><span class="p">(</span><span class="n">session_key</span><span class="p">)</span>
+    <span class="n">defined_mix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c1</span> <span class="ow">in</span> <span class="n">compounds</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c2</span> <span class="ow">in</span> <span class="n">compounds</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c3</span> <span class="ow">in</span> <span class="n">compounds</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ternary_mixture_defined</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">session_key</span><span class="p">):</span>
+                    <span class="n">defined_mix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c1</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">c1</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">) - </span><span class="si">{</span><span class="n">c2</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">c2</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">) - </span><span class="si">{</span><span class="n">c3</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">c3</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">)&quot;</span>
+                    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">defined_mix</span></div>
+
+
+<div class="viewcode-block" id="delete_item"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.delete_item">[docs]</a><span class="k">def</span> <span class="nf">delete_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">session_key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove an instance of either component or binary relation models from a session</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        item (Component | BinaryRelation): instance to remove</span>
+<span class="sd">        session_key (str): session id from which the instance is removed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nb_session</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">nb_session</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># print(f&quot;number of sessions that added {item} is {nb_session}&quot;)</span>
+
+        <span class="k">if</span> <span class="n">nb_session</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># print(&quot;deleting &quot;, item)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="clear_session_data"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.clear_session_data">[docs]</a><span class="k">def</span> <span class="nf">clear_session_data</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove all compounds and binary relations registered for a session.</span>
+<span class="sd">    this function takes either the key of the session and look up for the elements to remove or</span>
+<span class="sd">    takes directly the elements in arguments</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        session_key (str): session id from which the data is removed</span>
+<span class="sd">        compounds (List[Component] | None) components to clear if not none</span>
+<span class="sd">        relation (List[BinaryRelation] | None) BinaryRelations to clear if not none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">compounds</span><span class="p">,</span> <span class="n">relations</span><span class="p">)</span> <span class="o">=</span> <span class="n">compounds</span><span class="p">,</span> <span class="n">relations</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">compounds</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">relations</span><span class="p">:</span>
+        <span class="n">compounds</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">))</span>
+        <span class="n">relations</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_key</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">compounds</span><span class="p">:</span>
+        <span class="n">delete_item</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">session_key</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+        <span class="n">delete_item</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">session_key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="edit_element"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.edit_element">[docs]</a><span class="k">def</span> <span class="nf">edit_element</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">new_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Edit an element of either compound or binary relation for a client</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        session_id (str): session id for the session of the client requesting to edit an element</span>
+<span class="sd">        instance (Component | BinaryRelation): The element to edit.</span>
+<span class="sd">        new_data (Dict): a dictionnary where the keys are the attributes of the element to edit and values the new value for these attributes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nb_session</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="c1"># component added only in current session</span>
+    <span class="k">if</span> <span class="n">nb_session</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">new_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+        <span class="n">instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># same component was added in different sessions</span>
+    <span class="k">elif</span> <span class="n">nb_session</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">curr_session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">session_id</span><span class="p">)</span>
+
+        <span class="n">instance</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">curr_session</span><span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">new_instance</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Component</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">Component</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">BinaryRelation</span><span class="p">(</span>
+                <span class="n">component1</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">component2</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">new_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="o">!=</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">new_instance</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;for field in instance.__class__.fields():</span>
+<span class="sd">            attr = field.lower().replace(&quot; &quot;, &quot;&quot;)</span>
+<span class="sd">            if attr != &quot;id&quot; and getattr(new_instance, attr) is None:</span>
+<span class="sd">                setattr(new_instance, attr, getattr(instance, attr))&quot;&quot;&quot;</span>
+
+        <span class="n">new_instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">new_instance</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">curr_session</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># cannot edit predefined elements</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_relations"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_relations">[docs]</a><span class="k">def</span> <span class="nf">get_relations</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">,</span> <span class="n">component3</span><span class="p">):</span>
+    <span class="n">all_r1</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component2</span>
+    <span class="p">)</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">all_r1</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_id</span><span class="p">))</span>
+
+    <span class="n">all_r2</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component2</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component3</span>
+    <span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">all_r2</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_id</span><span class="p">))</span>
+
+    <span class="n">all_r3</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component3</span>
+    <span class="p">)</span>
+    <span class="n">r3</span> <span class="o">=</span> <span class="n">all_r3</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">sessions__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">sessions__pk</span><span class="o">=</span><span class="n">session_id</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span></div>
+
+
+<div class="viewcode-block" id="relations_missings_msg"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.relations_missings_msg">[docs]</a><span class="k">def</span> <span class="nf">relations_missings_msg</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">,</span> <span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">,</span> <span class="n">component3</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The following binary relations are not defined : &quot;</span>
+
+    <span class="n">missings</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">missings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component1</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">component2</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">missings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component2</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">component3</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">missings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component1</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">component3</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">msg</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missings</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_json"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.load_json">[docs]</a><span class="k">def</span> <span class="nf">load_json</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="get_binaryRelations_fromDB"><a class="viewcode-back" href="../../../ternary_azeotrope.helpers.html#ternary_azeotrope.helpers.utils.get_binaryRelations_fromDB">[docs]</a><span class="k">def</span> <span class="nf">get_binaryRelations_fromDB</span><span class="p">(</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">,</span> <span class="n">component3</span><span class="p">):</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component2</span>
+    <span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component2</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component3</span>
+    <span class="p">)</span>
+    <span class="n">r3</span> <span class="o">=</span> <span class="n">BinaryRelation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">component1</span><span class="o">=</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="o">=</span><span class="n">component3</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, ENSEEIHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

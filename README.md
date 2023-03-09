@@ -3,20 +3,20 @@
 Copy the folder in the vm:
 
 ```
- scp -r web-thermo/ YOUR_VM:~
+ scp -r dacota/ YOUR_VM:~
 ```
 or connect to your vm and:
 ```
-git clone https://github.com/Voyinno/web-thermo.git
+git clone https://github.com/ocots/dacota.git
 ```
 
 Connect to your VM and install docker:
 
 ```
-sudo bash web-thermo/install.sh
+sudo bash dacota/install.sh
 ```
 
-To start the containers, go to the folder `web-thermo/` and do:
+To start the containers, go to the folder `dacota/` and do:
 
 ```
 docker compose up
@@ -66,7 +66,7 @@ nginx:
   volumes:
     - static:/app/static/
   ports:
-    - 80:80
+    - 8080:80
   depends_on:
     - backend_django
   networks:
