@@ -14,77 +14,6 @@ Home {%endblock%} {% block head %}
   charset="utf-8"
 ></script>
 
-<script type="text/javascript">
-  let relations = {{ relations_json }};
-  let components = {{ components_json }};
-  let ind = function (x) {
-    let c = components.indexOf(x);
-    return c == -1 ? undefined : c;
-  }
-  let choices = {
-    1: ind({{ c1_selected }}),
-  2: ind({{ c2_selected }}),
-    3: ind({{ c3_selected }})
-  };
-
-  var relationMap = {};
-  for (let i = 0; i < components.length; i++) {
-    relationMap[components[i]] = [];
-  }
-
-  for (let i = 0; i < relations.length; i++) {
-    relationMap[relations[i][0]].push(relations[i][1]);
-    //relationMap[relations[i][1]].push(relations[i][0]);
-  }
-
-  console.log("relationMap", relationMap);
-
-  function getRelatedComponents(selectId) {
-    switch (selectId) {
-      case 1:
-        return components;
-      case 2:
-        let componentId = components[choices[1]];
-        return relationMap[componentId];
-      case 3:
-        let componentId1 = components[choices[1]];
-        let componentId2 = components[choices[2]];
-        return relationMap[componentId1].filter(cId => relationMap[componentId2].includes(cId));
-    }
-    return [];
-  }
-
-  function updateChoices(selectId, index) {
-    let lastChoice = choices[selectId];
-    choices[selectId] = index;
-    if (selectId == 3) {
-      return;
-    }
-
-    let related = getRelatedComponents(selectId + 1);
-
-    let select = document.getElementById("select-component" + (selectId + 1));
-    let options = select.getElementsByTagName("option");
-
-    for (let j = 0; j < components.length; j++) {
-      options[j].hidden = related.indexOf(components[j]) == -1;
-    }
-
-    for (let j = selectId + 1; j <= 3; j++) {
-      document.getElementById("select-component" + j).selectedIndex = -1;
-      choices[j] = undefined;
-    }
-  }
-
-  window.onload = function () {
-    console.log("Load");
-    for (let i = 1; i <= 3; i++) {
-      let select = document.getElementById("select-component" + i);
-      select.selectedIndex = choices[i] == undefined ? -1 : choices[i];
-    }
-  }
-</script>
-
 {% endblock %} {% block content %}
 <div class="title-bar">
   {% include "ternary_azeotrope/menu.html" %}
@@ -118,12 +47,7 @@ Home {%endblock%} {% block head %}
       <div id="componenetsSelection">
         <div class="component">
           <label>Compound 1</label>
-          <select
-            id="select-component1"
-            name="component1"
-            class="form-select"
-            onclick="updateChoices(1, this.selectedIndex);"
-          >
+          <select id="select-component1" name="component1" class="form-select">
             {% for component in components %} {%if component.id == c1_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
 
@@ -137,12 +61,7 @@ Home {%endblock%} {% block head %}
 
         <div class="component">
           <label>Compound 2</label>
-          <select
-            id="select-component2"
-            name="component2"
-            class="form-select"
-            onclick="updateChoices(2, this.selectedIndex);"
-          >
+          <select id="select-component2" name="component2" class="form-select">
             {% for component in components %} {%if component.id == c2_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
 
@@ -156,12 +75,7 @@ Home {%endblock%} {% block head %}
 
         <div class="component">
           <label>Compound 3</label>
-          <select
-            id="select-component3"
-            name="component3"
-            class="form-select"
-            onclick="updateChoices(3, this.selectedIndex);"
-          >
+          <select id="select-component3" name="component3" class="form-select">
             {% for component in components %} {%if component.id == c3_selected%}
             <option value="{{ component.id }}" selected>{{ component }}</option>
 
