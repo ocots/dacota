@@ -1,4 +1,8 @@
-# Installation
+# Ternary univolatility diagram generator
+
+[<img src="https://user-images.githubusercontent.com/66357348/224102161-c196e410-042e-4519-a5e0-559f3feb556c.png" alt="web app" height="300px"/>](http://dacota.irit.fr)
+
+## Installation
 
 Copy the folder in the vm:
 
@@ -42,7 +46,7 @@ You can now access the django app by using your vm address.
 docker system prune --all
 ```
 
-# Explanation
+## Explanation
 
 The application is composed of 4 containers:
 
@@ -154,13 +158,12 @@ volumes:
     name: db_data
 ```
 
-
-# Architecture
+## Architecture
 
 ![Architecture](./docs/img/architecture.jpg)
 
 
-# Switch microservice from python to julia
+## Switch microservice from python to julia
 
 To switch the microservice from python to julia, you will have to use the `julia` image instead of the `python` image in the `docker-compose.yml` file.
 
