@@ -37,6 +37,10 @@ docker compose exec backend_django python manage.py load_component_data
 
 You can now access the django app by using your vm address.
 
+**Remark.** To clean everything and start again:
+```bash
+docker system prune --all
+```
 
 # Explanation
 
